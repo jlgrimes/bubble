@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pairings utils getNextRoundPairings should get next round pairings 1`] = `
+Array [
+  Object {
+    "playerIds": Array [
+      "0",
+      "2",
+    ],
+  },
+  Object {
+    "playerIds": Array [
+      "2",
+      "3",
+    ],
+  },
+]
+`;
+
+exports[`pairings utils getPairings should pair last person as a bye 1`] = `
+Array [
+  Object {
+    "playerIds": Array [
+      "0",
+      "1",
+    ],
+  },
+  Object {
+    "playerIds": Array [
+      "2",
+    ],
+  },
+]
+`;
+
+exports[`pairings utils getPairings should properly get pairings 1`] = `
+Array [
+  Object {
+    "playerIds": Array [
+      "0",
+      "1",
+    ],
+  },
+  Object {
+    "playerIds": Array [
+      "2",
+      "3",
+    ],
+  },
+]
+`;

@@ -119,7 +119,7 @@ export const shuffleAndFlattenChunkedPlayersByMatchPoints = (chunkedPlayerIdxs: 
  * Used to sort an unsorted array right after match results are applied.
  * Pairings are just grabbing the players list from the top down.
  * 
- * @param players 
+ * @param players Updated players list.
  * @returns 
  */
 export const sortPlayersByMatchPoints = (players: Player[]): Player[] => {
