@@ -12,3 +12,9 @@ export const getUpdatedRecordAfterMatch = (record: Record, result: MatchResult):
 
   return { ...record, ties: record.ties + 1 };
 }
+
+/**
+ * Gets the number of match points a record has.
+ * @returns 
+ */
+ export const getMatchPoints = (record: Record): number => record.wins * 3 + record.ties;

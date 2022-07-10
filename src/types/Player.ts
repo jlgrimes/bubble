@@ -19,6 +19,10 @@ export interface Player {
    */
   record: Record;
   /**
+   * Number of match points a player has
+   */
+  matchPoints: number;
+  /**
    * Dropped status. If true, player is dropped, do not include in pairings.
    */
   dropped?: boolean;

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`player helpers chunkSortedArrayByMatchPoints should chunk array by match points 1`] = `
+Array [
+  Array [
+    0,
+  ],
+  Array [
+    1,
+    2,
+  ],
+  Array [
+    3,
+  ],
+]
+`;

@@ -1,10 +1,13 @@
 export type MatchResult = 'win' | 'loss' | 'tie'
 
-export interface Match {
+export interface Pairing {
   /**
    * Player ids of the paired players
    */
-  playerIds: String[],
+   playerIds: String[],
+}
+
+export interface Match extends Pairing {
   /**
    * Result of the match. First player against second player (ex, win means player 1 beat player 2)
    */
