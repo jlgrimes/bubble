@@ -1,4 +1,4 @@
-import { Match } from "./Match";
+import { Match, PlayerMatch } from "./Match";
 import { Record } from "./Record";
 
 export interface Player {
@@ -13,7 +13,7 @@ export interface Player {
   /**
    * Matches the player has played. Starts as empty array
    */
-  matches: Match[];
+  matches: PlayerMatch[];
   /**
    * The record a player has. Should be updated alongside matches.
    */
@@ -22,4 +22,4 @@ export interface Player {
    * Dropped status. If true, player is dropped, do not include in pairings.
    */
   dropped?: boolean;
-}
+};

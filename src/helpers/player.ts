@@ -1,7 +1,7 @@
-import { Match } from "../types/Match";
+import { Match, MatchResult, PlayerMatch } from "../types/Match";
 import { Player } from "../types/Player";
-import { Result } from "../types/Match";
-import { Record } from "../types/Record";
+import { getUpdatedRecordAfterMatch } from "./record";
+import { inverseResult } from "./match";
 
 export const getActivePlayers = (players: Player[]): Player[] => players.filter(player => !player.dropped);
 
@@ -12,26 +12,33 @@ export const getActivePlayers = (players: Player[]): Player[] => players.filter(
  */
 export const getMatchPoints = (player: Player): number => player.record.wins * 3 + player.record.ties;
 
-export const getUpdatedRecordAfterMatch = (record: Record, result: Result): Record => {
-  if (result === Result.Win) {
-    return { ...record, wins: record.wins + 1 };
+/**
+ * Converts the match object to PlayerMatch, which will be stored in the player object.
+ */
+export const convertMatchToPlayerMatch = (player: Player, match: Match): PlayerMatch => {
+  /**
+   * If the first player is the player we're talking about, the opponent is the second player, keep the result the same.
+   */
+  if (player.id === match.playerIds[0] ) {
+    return {
+      opponentId: match.playerIds[1],
+      result: match.result
+    };
   }
 
-  if (result === Result.Loss) {
-    return { ...record, losses: record.losses + 1 };
-  }
+  /**
+   * If the second player is the player we're talking about, the opponent is the first player, and inverse the match result to store.
+   */
+  return {
+    opponentId: match.playerIds[0],
+    result: inverseResult(match.result)
+  };
+};
 
-  if (result === Result.Tie) {
-    return { ...record, ties: record.ties + 1 };
-  }
-
-  return record;
-}
-
-export const getUpdatedPlayerAfterMatch = (player: Player, match: Match, result: Result): Player => {
+export const getUpdatedPlayerAfterMatch = (player: Player, match: Match, result: MatchResult): Player => {
   return {
     ...player,
-    matches: [...player.matches, match],
+    matches: [...player.matches, convertMatchToPlayerMatch(player, match)],
     record: getUpdatedRecordAfterMatch(player.record, result)
   }
 }
