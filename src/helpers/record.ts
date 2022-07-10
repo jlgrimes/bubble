@@ -10,9 +10,5 @@ export const getUpdatedRecordAfterMatch = (record: Record, result: MatchResult):
     return { ...record, losses: record.losses + 1 };
   }
 
-  if (result === 'tie') {
-    return { ...record, ties: record.ties + 1 };
-  }
-
-  return record;
+  return { ...record, ties: record.ties + 1 };
 }
