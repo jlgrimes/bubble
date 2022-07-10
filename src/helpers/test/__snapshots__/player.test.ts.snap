@@ -1,5 +1,106 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`player helpers applyMatchResultsToPlayers should apply match results to players 1`] = `
+Array [
+  Object {
+    "id": "0",
+    "matchPoints": 9,
+    "matches": Array [
+      Object {
+        "opponentId": "3",
+        "result": "win",
+      },
+      Object {
+        "opponentId": "1",
+        "result": "win",
+      },
+      Object {
+        "opponentId": "4",
+        "result": "win",
+      },
+    ],
+    "name": "Jared",
+    "record": Object {
+      "losses": 0,
+      "ties": 0,
+      "wins": 3,
+    },
+  },
+  Object {
+    "id": "2",
+    "matchPoints": 6,
+    "matches": Array [
+      Object {
+        "opponentId": "1",
+        "result": "loss",
+      },
+      Object {
+        "opponentId": "3",
+        "result": "win",
+      },
+      Object {
+        "opponentId": "5",
+        "result": "win",
+      },
+    ],
+    "name": "Ryan",
+    "record": Object {
+      "losses": 1,
+      "ties": 0,
+      "wins": 2,
+    },
+  },
+  Object {
+    "id": "2",
+    "matchPoints": 3,
+    "matches": Array [
+      Object {
+        "opponentId": "1",
+        "result": "loss",
+      },
+      Object {
+        "opponentId": "3",
+        "result": "win",
+      },
+      Object {
+        "opponentId": "6",
+        "result": "loss",
+      },
+    ],
+    "name": "Ryan",
+    "record": Object {
+      "losses": 2,
+      "ties": 0,
+      "wins": 1,
+    },
+  },
+  Object {
+    "id": "3",
+    "matchPoints": 0,
+    "matches": Array [
+      Object {
+        "opponentId": "0",
+        "result": "loss",
+      },
+      Object {
+        "opponentId": "0",
+        "result": "loss",
+      },
+      Object {
+        "opponentId": "7",
+        "result": "loss",
+      },
+    ],
+    "name": "Kenny",
+    "record": Object {
+      "losses": 3,
+      "ties": 0,
+      "wins": 0,
+    },
+  },
+]
+`;
+
 exports[`player helpers chunkSortedArrayByMatchPoints should chunk array by match points 1`] = `
 Array [
   Array [
@@ -12,5 +113,34 @@ Array [
   Array [
     3,
   ],
+]
+`;
+
+exports[`player helpers getUpdatedPlayerPairAfterMatch should get updated player pair for defined players 1`] = `
+Array [
+  Object {
+    "id": "0",
+    "matchPoints": 9,
+    "matches": Array [
+      Object {
+        "opponentId": "3",
+        "result": "win",
+      },
+      Object {
+        "opponentId": "1",
+        "result": "win",
+      },
+      Object {
+        "opponentId": "4",
+        "result": "win",
+      },
+    ],
+    "name": "Jared",
+    "record": Object {
+      "losses": 0,
+      "ties": 0,
+      "wins": 3,
+    },
+  },
 ]
 `;

@@ -1,3 +1,4 @@
+import { Match } from '../../types/Match';
 import { Player } from '../../types/Player';
 
 export const SAMPLE_PLAYER: Player = {
@@ -83,3 +84,14 @@ export const SAMPLE_UNSORTED_PLAYER_LIST: Player[] = [
 export const SAMPLE_SORTED_PLAYER_LIST: Player[] = [
   JARED, NOAH, RYAN, KENNY
 ];
+
+export const SAMPLE_MATCH_RESULTS: Match[] = [
+  // Jared beat player 4
+  { playerIds: ['4', '0'], result: 'loss' },
+  // Noah beat player 5
+  { playerIds: ['5', '2'], result: 'loss' },
+  // Ryan lost to player 6
+  { playerIds: ['6', '2'], result: 'win' },
+  // Kenny lost to player 7
+  { playerIds: ['3', '7'], result: 'loss' },
+]

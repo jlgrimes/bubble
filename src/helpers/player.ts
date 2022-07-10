@@ -80,6 +80,29 @@ export const getUpdatedPlayerAfterMatch = (player: Player, match: Match): Player
 };
 
 /**
+ * Gets updated players for both players in a match after match results are completed.
+ * 
+ * @param match 
+ * @param players 
+ */
+ export const getUpdatedPlayerPairAfterMatch = (match: Match, players: Player[]): Player[] => {
+  const firstPlayer: Player | undefined = players.find((player) => player.id === match.playerIds[0]);
+  const secondPlayer: Player | undefined = players.find((player) => player.id === match.playerIds[1]);
+
+  let playerPair: Player[] = [];
+
+  if (firstPlayer) {
+    playerPair = [...playerPair, getUpdatedPlayerAfterMatch(firstPlayer, match)]
+  }
+
+  if (secondPlayer) {
+    playerPair = [...playerPair, getUpdatedPlayerAfterMatch(secondPlayer, match)]
+  }
+
+  return playerPair;
+}
+
+/**
  * Shuffles and flattens the list of player idxs. The result is the players array with all match points sorted.
  * 
  * @param chunkedPlayerIdxs Result from chunkSortedArrayByMatchPoints
@@ -91,6 +114,14 @@ export const shuffleAndFlattenChunkedPlayersByMatchPoints = (chunkedPlayerIdxs: 
   }, [])
 };
 
+/**
+ * Sorts the players array by match points, and scrambles them.
+ * Used to sort an unsorted array right after match results are applied.
+ * Pairings are just grabbing the players list from the top down.
+ * 
+ * @param players 
+ * @returns 
+ */
 export const sortPlayersByMatchPoints = (players: Player[]): Player[] => {
   // Players who aren't dropped. Don't pair players who are dropped.
   players = getActivePlayers(players);
@@ -104,3 +135,12 @@ export const sortPlayersByMatchPoints = (players: Player[]): Player[] => {
   const result = shuffledAndFlattenedPlayerIdxs.map((playerIdx) => players[playerIdx]);
   return result;
 };
+
+/**
+ * Right after the match is complete and match results are final, applies these match results to the players.
+ * @param matchResults 
+ * @param players 
+ */
+export const applyMatchResultsToPlayers = (matches: Match[], players: Player[]): Player[] => {
+  return matches.reduce((acc: Player[], match: Match) => [...acc, ...getUpdatedPlayerPairAfterMatch(match, players)], []);
+}

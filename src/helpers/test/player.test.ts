@@ -6,6 +6,8 @@ import {
   chunkSortedArrayByMatchPoints,
   shuffleAndFlattenChunkedPlayersByMatchPoints,
   sortPlayersByMatchPoints,
+  applyMatchResultsToPlayers,
+  getUpdatedPlayerPairAfterMatch,
 } from '../player';
 import { shuffle } from '../shuffle';
 import {
@@ -15,6 +17,7 @@ import {
   NOAH,
   SAMPLE_PLAYER,
   SAMPLE_SORTED_PLAYER_LIST,
+  SAMPLE_MATCH_RESULTS,
 } from './shared';
 
 describe('player helpers', () => {
@@ -68,6 +71,12 @@ describe('player helpers', () => {
     });
   });
 
+  describe('getUpdatedPlayerPairAfterMatch', () => {
+    it('should get updated player pair for defined players', () => {
+      expect(getUpdatedPlayerPairAfterMatch(SAMPLE_MATCH_RESULTS[0], SAMPLE_SORTED_PLAYER_LIST)).toMatchSnapshot();
+    });
+  });
+
   describe('chunkSortedArrayByMatchPoints', () => {
     it('should return empty array if no players', () => {
       expect(chunkSortedArrayByMatchPoints([])).toEqual([]);
@@ -95,10 +104,19 @@ describe('player helpers', () => {
       const scrambledList = shuffle(SAMPLE_SORTED_PLAYER_LIST);
       expect([
         [JARED, NOAH, RYAN, KENNY],
-        [JARED, RYAN, NOAH, KENNY]
-      ]).toContainEqual(
-        sortPlayersByMatchPoints(scrambledList)
-      );
+        [JARED, RYAN, NOAH, KENNY],
+      ]).toContainEqual(sortPlayersByMatchPoints(scrambledList));
+    });
+  });
+
+  describe('applyMatchResultsToPlayers', () => {
+    it('should apply match results to players', () => {
+      expect(
+        applyMatchResultsToPlayers(
+          SAMPLE_MATCH_RESULTS,
+          SAMPLE_SORTED_PLAYER_LIST
+        )
+      ).toMatchSnapshot();
     });
   });
 });
