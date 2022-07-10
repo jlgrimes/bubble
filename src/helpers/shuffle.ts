@@ -1,6 +1,6 @@
 // Unbiased shuffle algorithm.
 // https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
-export const shuffle = (array) => {
+export function shuffle<T>(array: T[]) {
   let currentIndex = array.length, randomIndex;
 
   // While there remain elements to shuffle.
