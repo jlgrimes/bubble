@@ -1,5 +1,5 @@
-import { Match, PlayerMatch } from '../../types/Match';
-import { Player } from '../../types/Player';
+import { Match } from '../../../Pairings/types';
+import { Player, PlayerMatch } from '../../../Player/types';
 import {
   convertMatchToPlayerMatch,
   getUpdatedPlayerAfterMatch,
@@ -9,7 +9,7 @@ import {
   applyMatchResultsToPlayers,
   getUpdatedPlayerPairAfterMatch,
 } from '../player';
-import { shuffle } from '../shuffle';
+import { shuffle } from '../../../../../helpers/shuffle';
 import {
   JARED,
   RYAN,
@@ -18,7 +18,7 @@ import {
   SAMPLE_PLAYER,
   SAMPLE_SORTED_PLAYER_LIST,
   SAMPLE_MATCH_RESULTS,
-} from './shared';
+} from '../../../../../helpers/testConstants';
 
 describe('player helpers', () => {
   describe('convertMatchToPlayerMatch', () => {

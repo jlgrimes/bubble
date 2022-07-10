@@ -1,5 +1,5 @@
 import { getNextRoundPairings, getPairings } from "../pairings";
-import { SAMPLE_MATCH_RESULTS, SAMPLE_SORTED_PLAYER_LIST } from "./shared";
+import { SAMPLE_MATCH_RESULTS, SAMPLE_SORTED_PLAYER_LIST } from "../../../../../helpers/testConstants";
 
 describe('pairings utils', () => {
   describe('getPairings', () => {

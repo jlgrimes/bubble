@@ -1,8 +1,8 @@
-import { Match, PlayerMatch } from "../types/Match";
-import { Player } from "../types/Player";
+import type { Match } from "../../Pairings/types/Match";
+import type { Player, PlayerMatch } from "../types";
 import { getMatchPoints, getUpdatedRecordAfterMatch } from "./record";
-import { inverseResult } from "./match";
-import { shuffle } from "./shuffle";
+import { inverseResult } from "../../Pairings/utils/match";
+import { shuffle } from "../../../../helpers/shuffle";
 
 export const getActivePlayers = (players: Player[]): Player[] => players.filter(player => !player.dropped);
 

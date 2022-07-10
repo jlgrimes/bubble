@@ -1,5 +1,5 @@
-import { Record } from "../types/Record";
-import { MatchResult } from "../types/Match";
+import type { Record } from "../types";
+import type { MatchResult } from "../../Pairings/types";
 
 export const getUpdatedRecordAfterMatch = (record: Record, result: MatchResult): Record => {
   if (result === 'win') {

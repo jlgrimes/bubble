@@ -1,5 +1,5 @@
-import { Match } from '../../types/Match';
-import { Player } from '../../types/Player';
+import type { Match } from '../features/Tournament/Pairings/types';
+import type { Player } from '../features/Tournament/Player/types';
 
 export const SAMPLE_PLAYER: Player = {
   id: '0',

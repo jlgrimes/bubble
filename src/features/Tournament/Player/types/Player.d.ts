@@ -1,4 +1,4 @@
-import { PlayerMatch } from "./Match";
+import { PlayerMatch } from "./PlayerMatch";
 import { Record } from "./Record";
 
 export interface Player {
@@ -26,4 +26,4 @@ export interface Player {
    * Dropped status. If true, player is dropped, do not include in pairings.
    */
   dropped?: boolean;
-};
+}
