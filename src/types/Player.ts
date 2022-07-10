@@ -1,4 +1,4 @@
-import { Match, PlayerMatch } from "./Match";
+import { PlayerMatch } from "./Match";
 import { Record } from "./Record";
 
 export interface Player {

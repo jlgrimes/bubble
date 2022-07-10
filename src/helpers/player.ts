@@ -1,4 +1,4 @@
-import { Match, MatchResult, PlayerMatch } from "../types/Match";
+import { Match, PlayerMatch } from "../types/Match";
 import { Player } from "../types/Player";
 import { getUpdatedRecordAfterMatch } from "./record";
 import { inverseResult } from "./match";
@@ -35,10 +35,12 @@ export const convertMatchToPlayerMatch = (player: Player, match: Match): PlayerM
   };
 };
 
-export const getUpdatedPlayerAfterMatch = (player: Player, match: Match, result: MatchResult): Player => {
+export const getUpdatedPlayerAfterMatch = (player: Player, match: Match): Player => {
+  const matchResult = convertMatchToPlayerMatch(player, match);
+
   return {
     ...player,
-    matches: [...player.matches, convertMatchToPlayerMatch(player, match)],
-    record: getUpdatedRecordAfterMatch(player.record, result)
+    matches: [...player.matches, matchResult],
+    record: getUpdatedRecordAfterMatch(player.record, matchResult.result)
   }
 }
