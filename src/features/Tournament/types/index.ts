@@ -1,3 +1,3 @@
-import { TournamentState } from "./Tournament";
+import { TournamentState } from "./TournamentState";
 
 export type { TournamentState };
