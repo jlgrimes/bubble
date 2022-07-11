@@ -6,7 +6,7 @@ import {
 import { Player } from './Player/types';
 import type { TournamentState } from './TournamentState';
 
-const initialState: TournamentState = {
+export const initialState: TournamentState = {
   round: 0,
   pairings: [],
   players: [],
