@@ -1,5 +1,5 @@
-import type { Pairing, Match } from "../Pairings/types";
-import type { Player } from "../Player/types";
+import type { Pairing, Match } from "./Pairings/types";
+import type { Player } from "./Player/types";
 
 export interface TournamentState {
   round: number,

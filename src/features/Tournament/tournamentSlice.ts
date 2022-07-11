@@ -4,7 +4,7 @@ import {
   getNextRoundPairings,
 } from './Pairings/utils/pairings';
 import { Player } from './Player/types';
-import type { TournamentState } from './types';
+import type { TournamentState } from './TournamentState';
 
 const initialState: TournamentState = {
   round: 0,

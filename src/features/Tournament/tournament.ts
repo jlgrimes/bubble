@@ -1,7 +1,7 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { setError } from "../../Error/errorSlice";
-import { initializeTournament } from "../tournamentSlice";
-import { TournamentState } from "../types";
+import { setError } from "../Error/errorSlice";
+import { initializeTournament } from "./tournamentSlice";
+import { TournamentState } from "./TournamentState";
 
 export const startTournament = () => (state: TournamentState, dispatch: Dispatch) => {
   if (state.players.length < 2) {
