@@ -30,8 +30,8 @@ export const getMatchPoints = (record: Record): number =>
  */
 export const getStylizedRecord = (record: Record): string => {
   if (record.ties === 0) {
-    return `${record.wins}-${record.losses}`;
+    return `${record.wins}-${record.losses} (${getMatchPoints(record)})`;
   }
 
-  return `${record.wins}-${record.losses}-${record.ties}`;
+  return `${record.wins}-${record.losses}-${record.ties} (${getMatchPoints(record)})`;
 };

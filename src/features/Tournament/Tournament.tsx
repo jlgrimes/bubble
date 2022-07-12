@@ -6,6 +6,8 @@ import type { Pairing } from './Pairings/types';
 import type { Player } from './Player/types';
 
 const Tournament = () => {
+  const [expandedPairing, setExpandedPairing] = React.useState<number | boolean>(false);
+
   const pairings: Pairing[] = useSelector(
     (state: RootState) => state.tournament.pairings
   );
@@ -15,8 +17,12 @@ const Tournament = () => {
 
   return (
     <div>
-      {pairings.map((pairing: Pairing) => (
+      {pairings.map((pairing: Pairing, idx: number) => (
         <PairingAccordion
+          expanded={expandedPairing === idx}
+          handleChange={() => (event: React.SyntheticEvent, isExpanded: boolean) => {
+            setExpandedPairing(isExpanded ? idx : false);
+          }}
           firstPlayer={players.find((player) => player.id === pairing.playerIds[0])}
           secondPlayer={players.find((player) => player.id === pairing.playerIds[1])}
         />

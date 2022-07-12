@@ -31,11 +31,6 @@ const PlayerCard = (props: PlayerCardProps) => {
   );
 };
 
-interface PairingProps {
-  firstPlayer: Player | undefined;
-  secondPlayer: Player | undefined;
-}
-
 const PairingHeaderContainer = styled.div`
   display: flex;
   gap: 32px;
@@ -43,7 +38,12 @@ const PairingHeaderContainer = styled.div`
   justify-content: center;
 `;
 
-const PairingHeader = (props: PairingProps) => {
+interface PairingHeaderProps {
+  firstPlayer: Player | undefined;
+  secondPlayer: Player | undefined;
+}
+
+const PairingHeader = (props: PairingHeaderProps) => {
   if (props.firstPlayer && props.secondPlayer) {
     return (
       <PairingHeaderContainer>
@@ -69,9 +69,14 @@ const PairingHeader = (props: PairingProps) => {
   return null;
 }
 
-const PairingAccordion = (props: PairingProps) => {
+interface PairingAccordionProps extends PairingHeaderProps {
+  expanded: boolean;
+  handleChange: Function;
+}
+
+const PairingAccordion = (props: PairingAccordionProps) => {
   return (
-    <Accordion>
+    <Accordion expanded={props.expanded} onChange={props.handleChange()}>
         <AccordionSummary
           aria-controls="panel1a-content"
           id="panel1a-header"
