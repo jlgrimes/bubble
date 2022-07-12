@@ -15,44 +15,22 @@ const PairingHeaderContainer = styled.div`
 `;
 
 export interface PairingHeaderProps {
-  firstPlayer: Player | undefined;
-  secondPlayer: Player | undefined;
+  firstPlayer: Player;
+  secondPlayer: Player;
 }
 
 export const PairingHeader = (props: PairingHeaderProps) => {
-  if (props.firstPlayer && props.secondPlayer) {
-    return (
-      <PairingHeaderContainer>
-        <PlayerCard
-          name={props.firstPlayer.name}
-          record={getStylizedRecord(props.firstPlayer.record)}
-        />
-        <Typography>vs</Typography>
-        <PlayerCard
-          name={props.secondPlayer.name}
-          record={getStylizedRecord(props.secondPlayer.record)}
-        />
-      </PairingHeaderContainer>
-    );
-  }
-
-  if (!props.firstPlayer && props.secondPlayer) {
-    <PairingHeaderContainer>
-      <PlayerCard
-        name={props.secondPlayer.name}
-        record={getStylizedRecord(props.secondPlayer.record)}
-      />
-    </PairingHeaderContainer>;
-  }
-
-  if (props.firstPlayer && !props.secondPlayer) {
+  return (
     <PairingHeaderContainer>
       <PlayerCard
         name={props.firstPlayer.name}
         record={getStylizedRecord(props.firstPlayer.record)}
       />
-    </PairingHeaderContainer>;
-  }
-
-  return null;
+      <Typography>vs</Typography>
+      <PlayerCard
+        name={props.secondPlayer.name}
+        record={getStylizedRecord(props.secondPlayer.record)}
+      />
+    </PairingHeaderContainer>
+  );
 };

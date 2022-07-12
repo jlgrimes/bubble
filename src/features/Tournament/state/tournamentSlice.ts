@@ -54,6 +54,6 @@ const tournamentSlice = createSlice({
   },
 });
 
-export const { addPlayer, removePlayer, initializeTournament, nextRound } =
+export const { addPlayer, removePlayer, initializeTournament, submitMatchResult, reviseMatchResult, nextRound } =
   tournamentSlice.actions;
 export default tournamentSlice.reducer;
