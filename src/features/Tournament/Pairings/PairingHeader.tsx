@@ -10,6 +10,8 @@ const PairingHeaderContainer = styled.div`
   gap: 32px;
   width: 100%;
   justify-content: center;
+  // Offset icon spacing
+  padding-left: 24px;
 `;
 
 export interface PairingHeaderProps {

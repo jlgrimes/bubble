@@ -3,6 +3,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { PairingHeaderProps, PairingHeader } from './PairingHeader';
 
@@ -23,8 +25,11 @@ const PairingAccordion = (props: PairingAccordionProps) => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
+            <ButtonGroup size="large">
+              <Button>Win</Button>
+              <Button>Tie</Button>
+              <Button>Win</Button>
+            </ButtonGroup>
           </Typography>
         </AccordionDetails>
       </Accordion>
