@@ -6,13 +6,20 @@ import type { Pairing } from './Pairings/types';
 import type { Player } from './Player/types';
 
 const Tournament = () => {
-  const pairings: Pairing[] = useSelector((state: RootState) => state.tournament.pairings);
-  const players: Player[] = useSelector((state: RootState) => state.tournament.players);
+  const pairings: Pairing[] = useSelector(
+    (state: RootState) => state.tournament.pairings
+  );
+  const players: Player[] = useSelector(
+    (state: RootState) => state.tournament.players
+  );
 
   return (
     <div>
       {pairings.map((pairing: Pairing) => (
-        <PairingAccordion />
+        <PairingAccordion
+          firstPlayer={players.find((player) => player.id === pairing.playerIds[0])}
+          secondPlayer={players.find((player) => player.id === pairing.playerIds[1])}
+        />
       ))}
     </div>
   );

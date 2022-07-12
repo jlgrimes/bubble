@@ -97,12 +97,6 @@ export const SAMPLE_MATCH_RESULTS: Match[] = [
 ]
 
 export const SAMPLE_PAIRINGS: Pairing[] =  [
-  // Jared beat player 4
-  { playerIds: ['4', '0'] },
-  // Noah beat player 5
-  { playerIds: ['5', '2'] },
-  // Ryan lost to player 6
-  { playerIds: ['6', '2'] },
-  // Kenny lost to player 7
-  { playerIds: ['3', '7'] },
+  { playerIds: ['0', '1'] },
+  { playerIds: ['2', '3'] }
 ];

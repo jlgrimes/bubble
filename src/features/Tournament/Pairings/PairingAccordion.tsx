@@ -6,15 +6,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Pairing } from './types';
 import { Player } from '../Player/types';
-
-const PairingHeader = styled.div`
-  display: flex;
-  gap: 32px;
-  width: 100%;
-  justify-content: center;
-`;
+import { getStylizedRecord } from '../Player/utils/record';
 
 interface PlayerCardProps {
   name: string;
@@ -39,8 +32,41 @@ const PlayerCard = (props: PlayerCardProps) => {
 };
 
 interface PairingProps {
-  firstPlayer: Player;
-  secondPlayer: Player;
+  firstPlayer: Player | undefined;
+  secondPlayer: Player | undefined;
+}
+
+const PairingHeaderContainer = styled.div`
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  justify-content: center;
+`;
+
+const PairingHeader = (props: PairingProps) => {
+  if (props.firstPlayer && props.secondPlayer) {
+    return (
+      <PairingHeaderContainer>
+        <PlayerCard name={props.firstPlayer.name} record={getStylizedRecord(props.firstPlayer.record)} />
+        <Typography>vs</Typography>
+        <PlayerCard name={props.secondPlayer.name} record={getStylizedRecord(props.secondPlayer.record)} />
+      </PairingHeaderContainer>
+    )
+  }
+
+  if (!props.firstPlayer && props.secondPlayer) {
+    <PairingHeaderContainer>
+      <PlayerCard name={props.secondPlayer.name} record={getStylizedRecord(props.secondPlayer.record)} />
+    </PairingHeaderContainer>
+  }
+
+  if (props.firstPlayer && !props.secondPlayer) {
+    <PairingHeaderContainer>
+      <PlayerCard name={props.firstPlayer.name} record={getStylizedRecord(props.firstPlayer.record)} />
+    </PairingHeaderContainer>
+  }
+
+  return null;
 }
 
 const PairingAccordion = (props: PairingProps) => {
@@ -51,11 +77,7 @@ const PairingAccordion = (props: PairingProps) => {
           id="panel1a-header"
           expandIcon={<ExpandMoreIcon />}
         >
-          <PairingHeader>
-            <PlayerCard name="Jared Grimes" record='1-0-1' />
-            <Typography>vs</Typography>
-            <PlayerCard name="Kenny Packala" record='1-0-1' />
-          </PairingHeader>
+          <PairingHeader {...props} />
         </AccordionSummary>
         <AccordionDetails>
           <Typography>

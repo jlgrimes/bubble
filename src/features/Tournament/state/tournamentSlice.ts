@@ -6,12 +6,12 @@ import {
 import { Player } from '../Player/types';
 import { Match } from '../Pairings/types';
 import type { TournamentState } from './TournamentState';
-import { SAMPLE_PAIRINGS } from '../../../helpers/testConstants';
+import { SAMPLE_PAIRINGS, SAMPLE_SORTED_PLAYER_LIST } from '../../../helpers/testConstants';
 
 export const initialState: TournamentState = {
   round: 0,
   pairings: SAMPLE_PAIRINGS,
-  players: [],
+  players: SAMPLE_SORTED_PLAYER_LIST,
   matchResults: [],
 };
 
