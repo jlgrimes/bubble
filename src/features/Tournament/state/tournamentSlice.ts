@@ -2,13 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   getInitialRoundPairings,
   getNextRoundPairings,
-} from './Pairings/utils/pairings';
-import { Player } from './Player/types';
+} from '../Pairings/utils/pairings';
+import { Player } from '../Player/types';
+import { Match } from '../Pairings/types';
 import type { TournamentState } from './TournamentState';
+import { SAMPLE_PAIRINGS } from '../../../helpers/testConstants';
 
 export const initialState: TournamentState = {
   round: 0,
-  pairings: [],
+  pairings: SAMPLE_PAIRINGS,
   players: [],
   matchResults: [],
 };
@@ -38,6 +40,13 @@ const tournamentSlice = createSlice({
     initializeTournament(state) {
       state.pairings = getInitialRoundPairings(state.players);
       state.round = 1;
+    },
+    submitMatchResult(state, action: PayloadAction<Match>) {
+      state.matchResults.push(action.payload);
+    },
+    reviseMatchResult(state, action: PayloadAction<Match>) {
+      state.matchResults = state.matchResults.filter((matchResult) => matchResult.playerIds[0] !== action.payload.playerIds[0]);
+      state.matchResults.push(action.payload);
     },
     nextRound(state) {
       state.pairings = getNextRoundPairings(state.players, state.matchResults);

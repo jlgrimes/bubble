@@ -1,5 +1,5 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { setError } from "../Error/errorSlice";
+import { setError } from "../../Error/errorSlice";
 import { initializeTournament } from "./tournamentSlice";
 import { TournamentState } from "./TournamentState";
 

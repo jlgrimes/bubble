@@ -1,4 +1,4 @@
-import { SAMPLE_PLAYER } from '../../../helpers/testConstants';
+import { SAMPLE_PLAYER } from '../../../../helpers/testConstants';
 import reducer, {
   initialState,
   addPlayer,
