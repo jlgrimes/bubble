@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import React from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { PairingsView } from './PairingsView';
-import { startTournament } from './state/tournamentActions';
+import { startTournament } from './state/tournamentThunks';
 import { TournamentStateView } from './TournamentStateView';
 
 const Item = styled(Paper)(({ theme }) => ({
