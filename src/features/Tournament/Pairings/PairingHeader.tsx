@@ -17,6 +17,7 @@ const PairingHeaderContainer = styled.div`
 export interface PairingHeaderProps {
   firstPlayer: Player;
   secondPlayer: Player;
+  table: number;
 }
 
 export const PairingHeader = (props: PairingHeaderProps) => {
@@ -26,7 +27,7 @@ export const PairingHeader = (props: PairingHeaderProps) => {
         name={props.firstPlayer.name}
         record={getStylizedRecord(props.firstPlayer.record)}
       />
-      <Typography>vs</Typography>
+      <Typography>Table {props.table}</Typography>
       <PlayerCard
         name={props.secondPlayer.name}
         record={getStylizedRecord(props.secondPlayer.record)}

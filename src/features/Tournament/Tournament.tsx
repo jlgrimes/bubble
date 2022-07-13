@@ -45,6 +45,7 @@ const Tournament = () => {
               }}
             firstPlayer={alterWithCompletedMatch(firstPlayer, existingMatch)}
             secondPlayer={alterWithCompletedMatch(secondPlayer, existingMatch)}
+            table={idx + 1}
           />
         );
       })}

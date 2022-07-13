@@ -1,7 +1,7 @@
+import styled from '@emotion/styled';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
@@ -9,24 +9,15 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import { PairingHeaderProps, PairingHeader } from './PairingHeader';
 import { useDispatch } from 'react-redux';
 import { submitMatchResult } from '../state/tournamentSlice';
-import { MatchResult } from './types';
+import type { MatchResult } from './types';
+import type { Player } from '../Player/types';
 
-interface PairingAccordionProps extends PairingHeaderProps {
-  /**
-   * If the accordion is disabled - ie if the match result was already reported.
-   */
-  disabled: boolean;
-  /**
-   * If the accordion is expanded. Controlled by if any other accordion is expanded.
-   */
-  expanded: boolean;
-  /**
-   * handle change when the accordion
-   */
-  handleChange: Function;
+interface PairingButtonProps {
+  firstPlayer: Player;
+  secondPlayer: Player;
 }
 
-const PairingButtons = (props: PairingHeaderProps) => {
+const PairingButtons = (props: PairingButtonProps) => {
   const dispatch = useDispatch();
   const playerIds: string[] = [props.firstPlayer.id, props.secondPlayer.id];
 
@@ -41,6 +32,21 @@ const PairingButtons = (props: PairingHeaderProps) => {
       <Button onClick={() => handleClick('loss')}>Win</Button>
     </ButtonGroup>
   )
+}
+
+interface PairingAccordionProps extends PairingHeaderProps {
+  /**
+   * If the accordion is disabled - ie if the match result was already reported.
+   */
+  disabled: boolean;
+  /**
+   * If the accordion is expanded. Controlled by if any other accordion is expanded.
+   */
+  expanded: boolean;
+  /**
+   * handle change when the accordion
+   */
+  handleChange: Function;
 }
 
 const PairingAccordion = (props: PairingAccordionProps) => {
