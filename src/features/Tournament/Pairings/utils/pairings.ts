@@ -1,7 +1,6 @@
 import type { Match, Pairing } from '../types';
 import type { Player } from '../../Player/types/Player';
 import {
-  applyMatchResultsToPlayers,
   sortPlayersByMatchPoints,
 } from '../../Player/utils/player';
 import { shuffle } from '../../../../helpers/shuffle';
@@ -43,17 +42,14 @@ export const getInitialRoundPairings = (players: Player[]): Pairing[] => {
 /**
  * Gets next round pairings as an array of pairings.
  *
- * @param players Stale players list from state.
+ * @param players Updated players list. Expected "applyMatchResultsToPlayers" to have been run.
  * @returns
  */
 export const getNextRoundPairings = (
   players: Player[],
-  matches: Match[]
 ): Pairing[] => {
-  // Applies match results to the players list.
-  const updatedPlayers = applyMatchResultsToPlayers(matches, players);
   // Sorts the players by match points and scrambles within match point tiers.
-  const sortedPlayers = sortPlayersByMatchPoints(updatedPlayers);
+  const sortedPlayers = sortPlayersByMatchPoints(players);
 
   return getPairings(sortedPlayers);
 };

@@ -1,10 +1,10 @@
-import { Dispatch } from "@reduxjs/toolkit";
+import { ThunkDispatch, Action } from "@reduxjs/toolkit";
+import { AppThunk, RootState } from "../../../app/store";
 import { setError } from "../../Error/errorSlice";
 import { initializeTournament } from "./tournamentSlice";
-import { TournamentState } from "./TournamentState";
 
-export const startTournament = () => (state: TournamentState, dispatch: Dispatch) => {
-  if (state.players.length < 2) {
+export const startTournament = (): AppThunk => (dispatch: ThunkDispatch<RootState, unknown, Action>, getState: () => RootState) => {
+  if (getState().tournament.players.length < 2) {
     dispatch(setError('Must have > 2 players to start a tournament.'));
     return;
   }

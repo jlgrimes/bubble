@@ -14,7 +14,7 @@ describe('pairings utils', () => {
 
   describe('getNextRoundPairings', () => {
     it('should get next round pairings', () => {
-      expect(getNextRoundPairings(SAMPLE_SORTED_PLAYER_LIST, SAMPLE_MATCH_RESULTS)).toMatchSnapshot();
+      expect(getNextRoundPairings(SAMPLE_SORTED_PLAYER_LIST)).toMatchSnapshot();
     });
   });
 });

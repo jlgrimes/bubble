@@ -6,6 +6,7 @@ import {
 import { Player } from '../Player/types';
 import { Match } from '../Pairings/types';
 import type { TournamentState } from './TournamentState';
+import { applyMatchResultsToPlayers } from '../Player/utils/player';
 import { SAMPLE_PAIRINGS, SAMPLE_SORTED_PLAYER_LIST } from '../../../helpers/testConstants';
 
 export const initialState: TournamentState = {
@@ -49,7 +50,11 @@ const tournamentSlice = createSlice({
       state.matchResults.push(action.payload);
     },
     nextRound(state) {
-      state.pairings = getNextRoundPairings(state.players, state.matchResults);
+      const updatedPlayers = applyMatchResultsToPlayers(state.matchResults, state.players);
+      state.players = updatedPlayers;
+      state.pairings = getNextRoundPairings(updatedPlayers);
+      state.matchResults = [];
+      state.round += 1;
     },
   },
 });
