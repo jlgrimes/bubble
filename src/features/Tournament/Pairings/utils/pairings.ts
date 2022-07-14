@@ -55,7 +55,7 @@ export const getNextRoundPairings = (
   return getPairings(sortedPlayers);
 };
 
-export const buildEdgesForMatchPointTier = (players: Player[]): number[][] => {
+export const buildEdgesForMatchPointTier = (players: Player[], randomize: boolean): number[][] => {
   let edges: number[][] = [];
 
   const pairs = players.flatMap(
@@ -68,13 +68,20 @@ export const buildEdgesForMatchPointTier = (players: Player[]): number[][] => {
       continue;
     }
 
-    edges.push([player.id, comparingPlayer.id, 1])
+    const weight = randomize ? Math.floor(Math.random() * 10) : 1;
+    edges.push([player.id, comparingPlayer.id, weight])
   }
 
   return edges;
 }
 
-export const getPairingsGraph = (players: Player[]) => {
+/**
+ * Gets pairings through a graph.
+ * @param players List of players.
+ * @param randomize Whether or not should be randomized.
+ * @returns 
+ */
+export const getPairingsGraph = (players: Player[], randomize: boolean = true) => {
   const matchPointTieredPlayers: {[key: number]: Player[]} = players.reduce((acc: {[key: number]: Player[]}, curr: Player) => {
     if (acc[curr.matchPoints]) {
       return {
@@ -89,7 +96,7 @@ export const getPairingsGraph = (players: Player[]) => {
     }
   }, {});
 
-  const edges = Object.values(matchPointTieredPlayers).map((playerTier: Player[]) => buildEdgesForMatchPointTier(playerTier)).flat();
+  const edges = Object.values(matchPointTieredPlayers).map((playerTier: Player[]) => buildEdgesForMatchPointTier(playerTier, randomize)).flat();
 
   const matching = maximumMatching(edges)
   return [...iter(matching)];

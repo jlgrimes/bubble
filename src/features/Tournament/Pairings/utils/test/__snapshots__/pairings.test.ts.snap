@@ -49,3 +49,45 @@ Array [
   },
 ]
 `;
+
+exports[`pairings utils getPairingsGraph should compute initial pairings graph to be random 1`] = `
+Array [
+  Array [
+    1,
+    8,
+  ],
+  Array [
+    2,
+    7,
+  ],
+  Array [
+    3,
+    6,
+  ],
+  Array [
+    4,
+    5,
+  ],
+]
+`;
+
+exports[`pairings utils getPairingsGraph should correctly pair players in the same match point tier 1`] = `
+Array [
+  Array [
+    0,
+    1,
+  ],
+  Array [
+    2,
+    5,
+  ],
+  Array [
+    3,
+    4,
+  ],
+  Array [
+    6,
+    7,
+  ],
+]
+`;
