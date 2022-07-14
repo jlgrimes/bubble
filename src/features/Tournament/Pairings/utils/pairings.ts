@@ -4,6 +4,7 @@ import {
   sortPlayersByMatchPoints,
 } from '../../Player/utils/player';
 import { shuffle } from '../../../../helpers/shuffle';
+import maximumMatching, {iter} from '@graph-algorithm/maximum-matching';
 
 /**
  * Gets pairings from a list of players. Top-down.
@@ -53,3 +54,43 @@ export const getNextRoundPairings = (
 
   return getPairings(sortedPlayers);
 };
+
+export const buildEdgesForMatchPointTier = (players: Player[]): number[][] => {
+  let edges: number[][] = [];
+
+  const pairs = players.flatMap(
+    (v, i) => players.slice(i+1).map( w => [v, w] )
+  );
+
+  for (const [player, comparingPlayer] of pairs) {
+    // Don't add an edge if the players have played against each other
+    if (player.matches.some((playerMatch) => playerMatch.opponentId === comparingPlayer.id)) {
+      continue;
+    }
+
+    edges.push([player.id, comparingPlayer.id, 1])
+  }
+
+  return edges;
+}
+
+export const getPairingsGraph = (players: Player[]) => {
+  const matchPointTieredPlayers: {[key: number]: Player[]} = players.reduce((acc: {[key: number]: Player[]}, curr: Player) => {
+    if (acc[curr.matchPoints]) {
+      return {
+        ...acc,
+        [curr.matchPoints]: [...acc[curr.matchPoints], curr]
+      }
+    }
+
+    return {
+      ...acc,
+      [curr.matchPoints]: [curr]
+    }
+  }, {});
+
+  const edges = Object.values(matchPointTieredPlayers).map((playerTier: Player[]) => buildEdgesForMatchPointTier(playerTier)).flat();
+
+  const matching = maximumMatching(edges)
+  return [...iter(matching)];
+}

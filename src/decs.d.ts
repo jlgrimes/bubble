@@ -1,0 +1,1 @@
+declare module '@graph-algorithm/maximum-matching';

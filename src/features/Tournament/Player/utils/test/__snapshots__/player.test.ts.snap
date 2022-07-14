@@ -3,19 +3,19 @@
 exports[`player helpers applyMatchResultsToPlayers should apply match results to players 1`] = `
 Array [
   Object {
-    "id": "0",
+    "id": 0,
     "matchPoints": 9,
     "matches": Array [
       Object {
-        "opponentId": "3",
+        "opponentId": 3,
         "result": "win",
       },
       Object {
-        "opponentId": "1",
+        "opponentId": 1,
         "result": "win",
       },
       Object {
-        "opponentId": "4",
+        "opponentId": 4,
         "result": "win",
       },
     ],
@@ -27,19 +27,19 @@ Array [
     },
   },
   Object {
-    "id": "2",
+    "id": 2,
     "matchPoints": 6,
     "matches": Array [
       Object {
-        "opponentId": "1",
+        "opponentId": 1,
         "result": "loss",
       },
       Object {
-        "opponentId": "3",
+        "opponentId": 3,
         "result": "win",
       },
       Object {
-        "opponentId": "5",
+        "opponentId": 5,
         "result": "win",
       },
     ],
@@ -51,19 +51,19 @@ Array [
     },
   },
   Object {
-    "id": "2",
+    "id": 2,
     "matchPoints": 3,
     "matches": Array [
       Object {
-        "opponentId": "1",
+        "opponentId": 1,
         "result": "loss",
       },
       Object {
-        "opponentId": "3",
+        "opponentId": 3,
         "result": "win",
       },
       Object {
-        "opponentId": "6",
+        "opponentId": 6,
         "result": "loss",
       },
     ],
@@ -75,19 +75,19 @@ Array [
     },
   },
   Object {
-    "id": "3",
+    "id": 3,
     "matchPoints": 0,
     "matches": Array [
       Object {
-        "opponentId": "0",
+        "opponentId": 0,
         "result": "loss",
       },
       Object {
-        "opponentId": "0",
+        "opponentId": 0,
         "result": "loss",
       },
       Object {
-        "opponentId": "7",
+        "opponentId": 7,
         "result": "loss",
       },
     ],
@@ -119,19 +119,19 @@ Array [
 exports[`player helpers getUpdatedPlayerPairAfterMatch should get updated player pair for defined players 1`] = `
 Array [
   Object {
-    "id": "0",
+    "id": 0,
     "matchPoints": 9,
     "matches": Array [
       Object {
-        "opponentId": "3",
+        "opponentId": 3,
         "result": "win",
       },
       Object {
-        "opponentId": "1",
+        "opponentId": 1,
         "result": "win",
       },
       Object {
-        "opponentId": "4",
+        "opponentId": 4,
         "result": "win",
       },
     ],
