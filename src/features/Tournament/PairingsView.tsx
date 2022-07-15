@@ -35,9 +35,15 @@ export const PairingsView = () => {
     (state: RootState) => state.tournament.matchResults
   );
 
+  // Collapse any open accordion when round proceeds.
   React.useEffect(() => {
     setExpandedPairing(false);
   }, [round]);
+
+  // Collapse any open accordion when match result is submitted.
+  React.useEffect(() => {
+    setExpandedPairing(false);
+  }, [matchResults.length]);
 
   return (
     <PairingsViewContainer>
@@ -48,8 +54,6 @@ export const PairingsView = () => {
               match.playerIds[0] === pairing[0] &&
               match.playerIds[1] === pairing[1]
           );
-          const matchCompleted = !!existingMatch;
-
           // TODO: error handing for find?
           const firstPlayer: Player = players.find(
             player => player.id === pairing[0]
@@ -61,7 +65,7 @@ export const PairingsView = () => {
           return (
             <PairingAccordion
               completedMatch={existingMatch}
-              expanded={expandedPairing === idx && !matchCompleted}
+              expanded={expandedPairing === idx}
               handleChange={() =>
                 (event: React.SyntheticEvent, isExpanded: boolean) => {
                   setExpandedPairing(isExpanded ? idx : false);

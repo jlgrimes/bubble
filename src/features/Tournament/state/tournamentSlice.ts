@@ -42,9 +42,8 @@ const tournamentSlice = createSlice({
     submitMatchResult(state, action: PayloadAction<Match>) {
       state.matchResults.push(action.payload);
     },
-    reviseMatchResult(state, action: PayloadAction<Match>) {
+    unsubmitMatchResult(state, action: PayloadAction<Match>) {
       state.matchResults = state.matchResults.filter((matchResult) => matchResult.playerIds[0] !== action.payload.playerIds[0]);
-      state.matchResults.push(action.payload);
     },
     nextRound(state) {
       const updatedPlayers = applyMatchResultsToPlayers(state.matchResults, state.players);
@@ -56,6 +55,6 @@ const tournamentSlice = createSlice({
   },
 });
 
-export const { addPlayer, removePlayer, initializeTournament, submitMatchResult, reviseMatchResult, nextRound } =
+export const { addPlayer, removePlayer, initializeTournament, submitMatchResult, unsubmitMatchResult, nextRound } =
   tournamentSlice.actions;
 export default tournamentSlice.reducer;

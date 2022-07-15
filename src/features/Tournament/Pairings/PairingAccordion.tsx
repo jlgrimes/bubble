@@ -45,7 +45,7 @@ const PairingAccordion = (props: PairingAccordionProps) => {
           <PairingHeader {...props} />
         </AccordionSummary>
         <AccordionDetails>
-          <PairingButtons firstPlayer={props.firstPlayer} secondPlayer={props.secondPlayer} />
+          <PairingButtons firstPlayer={props.firstPlayer} secondPlayer={props.secondPlayer} completedMatch={props.completedMatch} />
         </AccordionDetails>
       </Accordion>
   )
