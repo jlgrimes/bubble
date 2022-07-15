@@ -1,59 +1,6 @@
-import type { Match, Pairing } from '../types';
 import type { Player } from '../../Player/types/Player';
-import {
-  sortPlayersByMatchPoints,
-} from '../../Player/utils/player';
-import { shuffle } from '../../../../helpers/shuffle';
 import maximumMatching, {iter} from '@graph-algorithm/maximum-matching';
-
-/**
- * Gets pairings from a list of players. Top-down.
- *
- * @param players Top-down sorted list of players.
- * @returns Pairings list.
- */
-export const getPairings = (players: Player[]): Pairing[] => {
-  let pairings: Pairing[] = [];
-  for (let playerIdx = 0; playerIdx < players.length; playerIdx += 2) {
-    if (playerIdx === players.length - 1) {
-      pairings.push({ playerIds: [players[playerIdx].id] });
-    } else {
-      pairings.push({
-        playerIds: [players[playerIdx].id, players[playerIdx + 1].id],
-      });
-    }
-  }
-
-  return pairings;
-};
-
-/**
- * Gets initial round pairings as an array of matches.
- *
- * @param players Players list.
- * @returns
- */
-export const getInitialRoundPairings = (players: Player[]): Pairing[] => {
-  // Initial round doesn't need to organize by match points.
-  const sortedPlayers = shuffle(players);
-
-  return getPairings(sortedPlayers);
-};
-
-/**
- * Gets next round pairings as an array of pairings.
- *
- * @param players Updated players list. Expected "applyMatchResultsToPlayers" to have been run.
- * @returns
- */
-export const getNextRoundPairings = (
-  players: Player[],
-): Pairing[] => {
-  // Sorts the players by match points and scrambles within match point tiers.
-  const sortedPlayers = sortPlayersByMatchPoints(players);
-
-  return getPairings(sortedPlayers);
-};
+import { Pairing } from '../types';
 
 export const buildEdgesForMatchPointTier = (players: Player[], randomize: boolean): number[][] => {
   let edges: number[][] = [];
@@ -81,7 +28,7 @@ export const buildEdgesForMatchPointTier = (players: Player[], randomize: boolea
  * @param randomize Whether or not should be randomized.
  * @returns 
  */
-export const getPairingsGraph = (players: Player[], randomize: boolean = true) => {
+export const getPairings = (players: Player[], randomize: boolean = true): Pairing[] => {
   const matchPointTieredPlayers: {[key: number]: Player[]} = players.reduce((acc: {[key: number]: Player[]}, curr: Player) => {
     if (acc[curr.matchPoints]) {
       return {

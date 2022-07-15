@@ -23,9 +23,9 @@ import {
 describe('player helpers', () => {
   describe('convertMatchToPlayerMatch', () => {
     it('should preserve match result if player is listed first', () => {
-      const match: Match = { result: 'win', playerIds: ['0', '4'] };
+      const match: Match = { result: 'win', playerIds: [0, 4] };
       const expectedPlayerMatch: PlayerMatch = {
-        opponentId: '4',
+        opponentId: 4,
         result: 'win',
       };
 
@@ -35,9 +35,9 @@ describe('player helpers', () => {
     });
 
     it('should inverse match result if player is listed second', () => {
-      const match: Match = { result: 'win', playerIds: ['4', '0'] };
+      const match: Match = { result: 'win', playerIds: [4, 0] };
       const expectedPlayerMatch: PlayerMatch = {
-        opponentId: '4',
+        opponentId: 4,
         result: 'loss',
       };
 
@@ -49,9 +49,9 @@ describe('player helpers', () => {
 
   describe('getUpdatedPlayerAfterMatch', () => {
     it('should get correct player after match', () => {
-      const match: Match = { result: 'win', playerIds: ['0', '4'] };
+      const match: Match = { result: 'win', playerIds: [0, 4] };
       const expectedPlayerMatch: PlayerMatch = {
-        opponentId: '4',
+        opponentId: 4,
         result: 'win',
       };
       const expectedPlayer: Player = {

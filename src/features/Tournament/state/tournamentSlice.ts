@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  getInitialRoundPairings,
-  getNextRoundPairings,
-} from '../Pairings/utils/pairings';
+import { getPairings } from '../Pairings/utils/pairings';
 import { Player } from '../Player/types';
 import { Match } from '../Pairings/types';
 import type { TournamentState } from './TournamentState';
@@ -33,13 +30,13 @@ const tournamentSlice = createSlice({
      * @param state
      * @param action Payload contains the id of the player removed
      */
-    removePlayer(state, action: PayloadAction<string>) {
+    removePlayer(state, action: PayloadAction<number>) {
       state.players = state.players.filter(
         player => player.id !== action.payload
       );
     },
     initializeTournament(state) {
-      state.pairings = getInitialRoundPairings(state.players);
+      state.pairings = getPairings(state.players);
       state.round = 1;
     },
     submitMatchResult(state, action: PayloadAction<Match>) {
@@ -52,7 +49,7 @@ const tournamentSlice = createSlice({
     nextRound(state) {
       const updatedPlayers = applyMatchResultsToPlayers(state.matchResults, state.players);
       state.players = updatedPlayers;
-      state.pairings = getNextRoundPairings(updatedPlayers);
+      state.pairings = getPairings(updatedPlayers);
       state.matchResults = [];
       state.round += 1;
     },
