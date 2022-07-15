@@ -1,4 +1,4 @@
-import { getPairings } from '../pairings';
+import { getPairings, sortMatchingTables } from '../pairings';
 import {
   SAMPLE_EMPTY_PLAYERS,
   SAMPLE_MATCH_TIERED_PLAYERS,
@@ -6,6 +6,26 @@ import {
 } from '../../../../../helpers/testConstants';
 
 describe('pairings utils', () => {
+  describe('sortMatchingTables', () => {
+    const players = SAMPLE_MATCH_TIERED_PLAYERS;
+
+    it('should preserve a sorted matching', () => {
+      expect(sortMatchingTables([['1', '2'], ['5', '6']], players)).toEqual([['1', '2'], ['5', '6']]);
+    });
+
+    it('should sort pairings out of order', () => {
+      expect(sortMatchingTables([['5', '6'], ['1', '2']], players)).toEqual([['1', '2'], ['5', '6']]);
+    });
+
+    it('should sort players out of order', () => {
+      expect(sortMatchingTables([['2', '1'], ['6', '5']], players)).toEqual([['1', '2'], ['5', '6']]);
+    });
+
+    it('should sort pairings and players out of order', () => {
+      expect(sortMatchingTables([['6', '5'], ['2', '1']], players)).toEqual([['1', '2'], ['5', '6']]);
+    });
+  });
+
   describe('getPairings', () => {
     it('should compute initial pairings graph to be random', () => {
       expect(getPairings(SAMPLE_EMPTY_PLAYERS, false)).toMatchSnapshot();

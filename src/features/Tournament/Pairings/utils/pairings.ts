@@ -46,14 +46,11 @@ const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean) => {
 };
 
 export const buildEdgesForMatchPointTier = (
+  graph: MatchingGraph,
   players: Player[],
   randomize: boolean
-): string[][] => {
-  let edges: string[][] = [];
-
-  let pairs = players.flatMap((v, i) =>
-    players.slice(i + 1).map(w => [v, w])
-  );
+) => {
+  let pairs = players.flatMap((v, i) => players.slice(i + 1).map(w => [v, w]));
 
   if (randomize) {
     pairs = shuffle(pairs);
@@ -69,11 +66,39 @@ export const buildEdgesForMatchPointTier = (
       continue;
     }
 
-    // const weight = randomize ? Math.floor(Math.random() * 10) : 1;
-    edges.push([player.id, comparingPlayer.id]);
+    graph.addEdge(player.id, comparingPlayer.id);
+  }
+};
+
+export const sortMatchingTables = (maxMatching: string[][], players: Player[]) => {
+  let sortedMatching = maxMatching.sort(
+    (firstPair, secondPair) =>
+      Math.max(
+        players.find(player => player.id === secondPair[0])!.matchPoints,
+        players.find(player => player.id === secondPair[1])!.matchPoints
+      ) -
+      Math.max(
+        players.find(player => player.id === firstPair[0])!.matchPoints,
+        players.find(player => player.id === firstPair[1])!.matchPoints
+      )
+  );
+
+  // To fix the case where the down paired player need to be listed first.
+  for (let pairIdx = 0; pairIdx < sortedMatching.length; pairIdx++) {
+    if (
+      players.find(player => player.id === sortedMatching[pairIdx][0])!
+        .matchPoints <
+      players.find(player => player.id === sortedMatching[pairIdx][1])!
+        .matchPoints
+    ) {
+      sortedMatching[pairIdx] = [
+        sortedMatching[pairIdx][1],
+        sortedMatching[pairIdx][0],
+      ];
+    }
   }
 
-  return edges;
+  return sortedMatching;
 };
 
 /**
@@ -93,39 +118,18 @@ export const getPairings = (
     randomize
   );
 
-  const edges = finalPlayers
-    .map((playerTier: Player[]) =>
-      buildEdgesForMatchPointTier(playerTier, randomize)
-    )
-    .flat();
-
-  // Make max matching graph
   const graph = new MatchingGraph();
+
   for (const player of players) {
     graph.addNode(player.id);
   }
-  for (const edge of edges) {
-    graph.addEdge(edge[0], edge[1]);
+
+  for (const playerTier of finalPlayers) {
+    buildEdgesForMatchPointTier(graph, playerTier, randomize);
   }
 
   const maxMatching = maximumMatching(graph);
-  let sortedMatching = maxMatching.sort(
-    (firstPair, secondPair) =>
-      Math.max(
-        players.find(player => player.id === secondPair[0])!.matchPoints,
-        players.find(player => player.id === secondPair[1])!.matchPoints
-      ) -
-      Math.max(
-        players.find(player => player.id === firstPair[0])!.matchPoints,
-        players.find(player => player.id === firstPair[1])!.matchPoints
-      )
-  );
-  // To fix the case where the down paired player need to be listed first.
-  for (let pairIdx = 0; pairIdx < sortedMatching.length; pairIdx++) {
-    if (players.find(player => player.id === sortedMatching[pairIdx][0])!.matchPoints < players.find(player => player.id === sortedMatching[pairIdx][1])!.matchPoints) {
-      sortedMatching[pairIdx] = [sortedMatching[pairIdx][1], sortedMatching[pairIdx][0]];
-    }
-  }
+  const sortedMatching = sortMatchingTables(maxMatching, players);
 
   return sortedMatching;
 };
