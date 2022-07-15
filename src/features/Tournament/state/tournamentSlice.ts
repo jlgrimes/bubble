@@ -30,7 +30,7 @@ const tournamentSlice = createSlice({
      * @param state
      * @param action Payload contains the id of the player removed
      */
-    removePlayer(state, action: PayloadAction<number>) {
+    removePlayer(state, action: PayloadAction<string>) {
       state.players = state.players.filter(
         player => player.id !== action.payload
       );

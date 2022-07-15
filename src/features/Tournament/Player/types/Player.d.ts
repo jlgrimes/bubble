@@ -5,7 +5,7 @@ export interface Player {
   /**
    * Unique identifier of the player
    */
-  id: number;
+  id: string;
   /**
    * Name of the player. Ex. Kenny
    */

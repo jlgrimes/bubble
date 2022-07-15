@@ -8,7 +8,7 @@ import { MatchResult } from "../../Pairings/types/MatchResult"
   /**
    * Id of opponent
    */
-  opponentId: number,
+  opponentId: string,
   /**
    * Result of the match. Current player against the opponentId player.
    */

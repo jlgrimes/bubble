@@ -8,5 +8,5 @@ export interface Match {
   /**
    * Player ids of the paired players
    */
-  playerIds: number[]
+  playerIds: string[]
 }

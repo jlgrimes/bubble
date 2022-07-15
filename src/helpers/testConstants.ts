@@ -2,12 +2,12 @@ import type { Match } from '../features/Tournament/Pairings/types';
 import type { Player } from '../features/Tournament/Player/types';
 
 export const SAMPLE_PLAYER: Player = {
-  id: 0,
+  id: '0',
   name: 'Player',
   matches: [
-    { opponentId: 1, result: 'win' },
-    { opponentId: 2, result: 'loss' },
-    { opponentId: 3, result: 'tie' },
+    { opponentId: '1', result: 'win' },
+    { opponentId: '2', result: 'loss' },
+    { opponentId: '3', result: 'tie' },
   ],
   record: {
     wins: 1,
@@ -18,7 +18,7 @@ export const SAMPLE_PLAYER: Player = {
 };
 
 export const SAMPLE_EMPTY_PLAYERS = [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({
-  id,
+  id: `${id}`,
   name: 'Player',
   matches: [],
   record: {
@@ -31,7 +31,7 @@ export const SAMPLE_EMPTY_PLAYERS = [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({
 
 export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
   {
-    id: 0,
+    id: '0',
     name: 'Player',
     matches: [],
     record: {
@@ -41,7 +41,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 6
   }, {
-    id: 1,
+    id: '1',
     name: 'Player',
     matches: [],
     record: {
@@ -51,7 +51,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 6
   }, {
-    id: 2,
+    id: '2',
     name: 'Player',
     matches: [],
     record: {
@@ -61,7 +61,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 3
   }, {
-    id: 3,
+    id: '3',
     name: 'Player',
     matches: [],
     record: {
@@ -71,7 +71,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 3
   }, {
-    id: 4,
+    id: '4',
     name: 'Player',
     matches: [],
     record: {
@@ -81,7 +81,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 3
   }, {
-    id: 5,
+    id: '5',
     name: 'Player',
     matches: [],
     record: {
@@ -91,7 +91,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 3
   }, {
-    id: 6,
+    id: '6',
     name: 'Player',
     matches: [],
     record: {
@@ -101,7 +101,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 0
   }, {
-    id: 7,
+    id: '7',
     name: 'Player',
     matches: [],
     record: {
@@ -115,7 +115,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
 
 export const SAMPLE_ODD_MATCH_TIERED_PLAYERS: Player[] = [
   {
-    id: 0,
+    id: '0',
     name: 'Player',
     matches: [],
     record: {
@@ -125,7 +125,7 @@ export const SAMPLE_ODD_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 6
   },  {
-    id: 1,
+    id: '1',
     name: 'Player',
     matches: [],
     record: {
@@ -135,7 +135,7 @@ export const SAMPLE_ODD_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 3
   }, {
-    id: 2,
+    id: '2',
     name: 'Player',
     matches: [],
     record: {
@@ -145,7 +145,7 @@ export const SAMPLE_ODD_MATCH_TIERED_PLAYERS: Player[] = [
     },
     matchPoints: 3
   }, {
-    id: 3,
+    id: '3',
     name: 'Player',
     matches: [],
     record: {
@@ -158,11 +158,11 @@ export const SAMPLE_ODD_MATCH_TIERED_PLAYERS: Player[] = [
 ];
 
 export const JARED: Player = {
-  id: 0,
+  id: '0',
   name: 'Jared',
   matches: [
-    { opponentId: 3, result: 'win' },
-    { opponentId: 1, result: 'win' },
+    { opponentId: '3', result: 'win' },
+    { opponentId: '1', result: 'win' },
   ],
   record: {
     wins: 2,
@@ -173,11 +173,11 @@ export const JARED: Player = {
 };
 
 export const NOAH: Player = {
-  id: 1,
+  id: '1',
   name: 'Noah',
   matches: [
-    { opponentId: 2, result: 'win' },
-    { opponentId: 1, result: 'loss' },
+    { opponentId: '2', result: 'win' },
+    { opponentId: '1', result: 'loss' },
   ],
   record: {
     wins: 1,
@@ -188,11 +188,11 @@ export const NOAH: Player = {
 };
 
 export const RYAN: Player = {
-  id: 2,
+  id: '2',
   name: 'Ryan',
   matches: [
-    { opponentId: 1, result: 'loss' },
-    { opponentId: 3, result: 'win' },
+    { opponentId: '1', result: 'loss' },
+    { opponentId: '3', result: 'win' },
   ],
   record: {
     wins: 1,
@@ -203,11 +203,11 @@ export const RYAN: Player = {
 };
 
 export const KENNY: Player = {
-  id: 3,
+  id: '3',
   name: 'Kenny',
   matches: [
-    { opponentId: 0, result: 'loss' },
-    { opponentId: 0, result: 'loss' },
+    { opponentId: '0', result: 'loss' },
+    { opponentId: '0', result: 'loss' },
   ],
   record: {
     wins: 0,
@@ -227,16 +227,16 @@ export const SAMPLE_SORTED_PLAYER_LIST: Player[] = [
 
 export const SAMPLE_MATCH_RESULTS: Match[] = [
   // Jared beat player 4
-  { playerIds: [4, 0], result: 'loss' },
+  { playerIds: ['4', '0'], result: 'loss' },
   // Noah beat player 5
-  { playerIds: [5, 2], result: 'loss' },
+  { playerIds: ['5', '2'], result: 'loss' },
   // Ryan lost to player 6
-  { playerIds: [6, 2], result: 'win' },
+  { playerIds: ['6', '2'], result: 'win' },
   // Kenny lost to player 7
-  { playerIds: [3, 7], result: 'loss' },
+  { playerIds: ['3', '7'], result: 'loss' },
 ]
 
-export const SAMPLE_PAIRINGS: number[][] =  [
-  [0, 1],
-  [2, 3]
+export const SAMPLE_PAIRINGS: string[][] =  [
+  ['0', '1'],
+  ['2', '3']
 ];

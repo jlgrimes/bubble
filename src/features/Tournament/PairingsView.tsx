@@ -11,7 +11,7 @@ export const PairingsView = () => {
     number | boolean
   >(false);
 
-  const pairings: number[][] = useSelector(
+  const pairings: string[][] = useSelector(
     (state: RootState) => state.tournament.pairings
   );
   const players: Player[] = useSelector(
@@ -22,7 +22,7 @@ export const PairingsView = () => {
   );
   return (
     <div>
-      {pairings.map((pairing: number[], idx: number) => {
+      {pairings.map((pairing: string[], idx: number) => {
         const existingMatch: Match | undefined = matchResults.find(
           (match: Match) =>
             match.playerIds[0] === pairing[0] &&

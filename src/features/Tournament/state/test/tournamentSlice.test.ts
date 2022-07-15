@@ -28,7 +28,7 @@ describe('tournament reducers', () => {
         ...initialState,
         players: [SAMPLE_PLAYER],
       };
-      expect(reducer(previousState, removePlayer(0))).toEqual(initialState);
+      expect(reducer(previousState, removePlayer('0'))).toEqual(initialState);
     });
   });
 });

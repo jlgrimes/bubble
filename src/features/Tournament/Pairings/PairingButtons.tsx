@@ -14,7 +14,7 @@ interface PairingButtonProps {
 
 export const PairingButtons = (props: PairingButtonProps) => {
   const dispatch = useDispatch();
-  const playerIds: number[] = [props.firstPlayer.id, props.secondPlayer.id];
+  const playerIds: string[] = [props.firstPlayer.id, props.secondPlayer.id];
 
   const handleClick = (result: MatchResult) => {
     dispatch(submitMatchResult({ playerIds, result }))
