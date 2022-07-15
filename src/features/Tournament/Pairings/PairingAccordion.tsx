@@ -1,16 +1,18 @@
 import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import styled from '@emotion/styled';
 
 import { PairingHeaderProps, PairingHeader } from './PairingHeader';
 import { PairingButtons } from './PairingButtons';
+import { Match } from './types';
 
 interface PairingAccordionProps extends PairingHeaderProps {
   /**
-   * If the accordion is disabled - ie if the match result was already reported.
+   * The completed match if the match was already reported.
    */
-  disabled: boolean;
+  completedMatch?: Match;
   /**
    * If the accordion is expanded. Controlled by if any other accordion is expanded.
    */
@@ -21,13 +23,23 @@ interface PairingAccordionProps extends PairingHeaderProps {
   handleChange: Function;
 }
 
+const AccordionSummary = styled(MuiAccordionSummary)`
+  min-height: 0;
+  &.Mui-expanded {
+    min-height: 0;
+  }
+  
+  .MuiAccordionSummary-content, .MuiAccordionSummary-content.Mui-expanded {
+    margin: 0;
+  }
+`;
+
 const PairingAccordion = (props: PairingAccordionProps) => {
   return (
-    <Accordion disabled={props.disabled} expanded={props.expanded} onChange={props.handleChange()}>
+    <Accordion expanded={props.expanded} onChange={props.handleChange()}>
         <AccordionSummary
           aria-controls="panel1a-content"
           id="panel1a-header"
-          expandIcon={<ExpandMoreIcon />}
         >
           <PairingHeader {...props} />
         </AccordionSummary>

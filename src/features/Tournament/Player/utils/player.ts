@@ -2,7 +2,6 @@ import type { Match } from '../../Pairings/types/Match';
 import type { Player, PlayerMatch } from '../types';
 import { getMatchPoints, getUpdatedRecordAfterMatch } from './record';
 import { inverseResult } from '../../Pairings/utils/match';
-import { shuffle } from '../../../../helpers/shuffle';
 
 export const getActivePlayers = (players: Player[]): Player[] =>
   players.filter(player => !player.dropped);
@@ -52,46 +51,6 @@ export const getUpdatedPlayerAfterMatch = (
 };
 
 /**
- * Chunks the players array by match points. Needed to scramble match point tiers for pairings.
- *
- * @param players Players array
- * @returns Chunked array of player indexes from original player array.
- */
-export const chunkSortedArrayByMatchPoints = (
-  players: Player[]
-): number[][] => {
-  if (players.length === 0) {
-    return [];
-  }
-
-  // Stores a list of player ids to be mapped to players
-  let resultingIdArray: number[][] = [];
-  // Stores player ids
-  let chunk: number[] = [];
-  let chunkMatchPoints: number = players[0].matchPoints;
-
-  for (let playerIdx = 0; playerIdx < players.length; playerIdx++) {
-    const player = players[playerIdx];
-
-    if (player.matchPoints === chunkMatchPoints) {
-      chunk.push(playerIdx);
-    } else {
-      resultingIdArray.push(chunk);
-
-      // if we're at the end of the players array and the match point is different, push it as its own entity.
-      if (playerIdx === players.length - 1) {
-        resultingIdArray.push([playerIdx]);
-      } else {
-        chunkMatchPoints = player.matchPoints;
-        chunk = [playerIdx];
-      }
-    }
-  }
-
-  return resultingIdArray;
-};
-
-/**
  * Gets updated players for both players in a match after match results are completed.
  *
  * @param match
@@ -125,45 +84,6 @@ export const getUpdatedPlayerPairAfterMatch = (
   }
 
   return playerPair;
-};
-
-/**
- * Shuffles and flattens the list of player idxs. The result is the players array with all match points sorted.
- *
- * @param chunkedPlayerIdxs Result from chunkSortedArrayByMatchPoints
- * @returns Flattened array with shuffled player idxs.
- */
-export const shuffleAndFlattenChunkedPlayersByMatchPoints = (
-  chunkedPlayerIdxs: number[][]
-): number[] => {
-  return chunkedPlayerIdxs.reduce((acc, chunk) => {
-    return [...acc, ...shuffle(chunk)];
-  }, []);
-};
-
-/**
- * Sorts the players array by match points, and scrambles them.
- * Used to sort an unsorted array right after match results are applied.
- * Pairings are just grabbing the players list from the top down.
- *
- * @param players Updated players list.
- * @returns
- */
-export const sortPlayersByMatchPoints = (players: Player[]): Player[] => {
-  // Players who aren't dropped. Don't pair players who are dropped.
-  players = getActivePlayers(players);
-  // Sort the players top to bottom by match points.
-  players.sort((a, b) => b.matchPoints - a.matchPoints);
-  // Get players array chunked by match points.
-  const chunkedPlayerIdxs: number[][] = chunkSortedArrayByMatchPoints(players);
-  // Shuffle and flatten player idxs
-  const shuffledAndFlattenedPlayerIdxs =
-    shuffleAndFlattenChunkedPlayersByMatchPoints(chunkedPlayerIdxs);
-
-  const result = shuffledAndFlattenedPlayerIdxs.map(
-    playerIdx => players[playerIdx]
-  );
-  return result;
 };
 
 /**

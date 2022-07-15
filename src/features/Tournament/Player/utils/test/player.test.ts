@@ -3,18 +3,10 @@ import { Player, PlayerMatch } from '../../../Player/types';
 import {
   convertMatchToPlayerMatch,
   getUpdatedPlayerAfterMatch,
-  chunkSortedArrayByMatchPoints,
-  shuffleAndFlattenChunkedPlayersByMatchPoints,
-  sortPlayersByMatchPoints,
   applyMatchResultsToPlayers,
   getUpdatedPlayerPairAfterMatch,
 } from '../player';
-import { shuffle } from '../../../../../helpers/shuffle';
 import {
-  JARED,
-  RYAN,
-  KENNY,
-  NOAH,
   SAMPLE_PLAYER,
   SAMPLE_SORTED_PLAYER_LIST,
   SAMPLE_MATCH_RESULTS,
@@ -76,39 +68,7 @@ describe('player helpers', () => {
       expect(getUpdatedPlayerPairAfterMatch(SAMPLE_MATCH_RESULTS[0], SAMPLE_SORTED_PLAYER_LIST)).toMatchSnapshot();
     });
   });
-
-  describe('chunkSortedArrayByMatchPoints', () => {
-    it('should return empty array if no players', () => {
-      expect(chunkSortedArrayByMatchPoints([])).toEqual([]);
-    });
-
-    it('should chunk array by match points', () => {
-      expect(
-        chunkSortedArrayByMatchPoints(SAMPLE_SORTED_PLAYER_LIST)
-      ).toMatchSnapshot();
-    });
-  });
-
-  describe('shuffleAndFlattenChunkedPlayersByMatchPoints', () => {
-    it('should shuffle and flatten chunkedPlayerIdxs', () => {
-      const chunk = [[0], [1, 2], [3]];
-      expect([
-        [0, 1, 2, 3],
-        [0, 2, 1, 3],
-      ]).toContainEqual(shuffleAndFlattenChunkedPlayersByMatchPoints(chunk));
-    });
-  });
-
-  describe('sortPlayersByMatchPoints', () => {
-    it('should sort and shuffle players by their match points', () => {
-      const scrambledList = shuffle(SAMPLE_SORTED_PLAYER_LIST);
-      expect([
-        [JARED, NOAH, RYAN, KENNY],
-        [JARED, RYAN, NOAH, KENNY],
-      ]).toContainEqual(sortPlayersByMatchPoints(scrambledList));
-    });
-  });
-
+  
   describe('applyMatchResultsToPlayers', () => {
     it('should apply match results to players', () => {
       expect(

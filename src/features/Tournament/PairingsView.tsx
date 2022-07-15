@@ -36,7 +36,7 @@ export const PairingsView = () => {
             match.playerIds[0] === pairing[0] &&
             match.playerIds[1] === pairing[1]
         );
-        const disabled = !!existingMatch;
+        const matchCompleted = !!existingMatch;
 
         // TODO: error handing for find?
         const firstPlayer: Player = players.find(
@@ -48,8 +48,8 @@ export const PairingsView = () => {
 
         return (
           <PairingAccordion
-            disabled={disabled}
-            expanded={expandedPairing === idx && !disabled}
+            completedMatch={existingMatch}
+            expanded={expandedPairing === idx && !matchCompleted}
             handleChange={() =>
               (event: React.SyntheticEvent, isExpanded: boolean) => {
                 setExpandedPairing(isExpanded ? idx : false);
