@@ -11,6 +11,9 @@ export const PairingsView = () => {
     number | boolean
   >(false);
 
+  const round: number = useSelector(
+    (state: RootState) => state.tournament.round
+  );
   const pairings: string[][] = useSelector(
     (state: RootState) => state.tournament.pairings
   );
@@ -20,6 +23,11 @@ export const PairingsView = () => {
   const matchResults: Match[] = useSelector(
     (state: RootState) => state.tournament.matchResults
   );
+
+  React.useEffect(() => {
+    setExpandedPairing(false);
+  }, [round]);
+
   return (
     <div>
       {pairings.map((pairing: string[], idx: number) => {
