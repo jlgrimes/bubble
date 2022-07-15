@@ -1,6 +1,7 @@
 import type { Player } from '../../Player/types/Player';
 // import maximumMatching, { iter } from '@graph-algorithm/maximum-matching';
 import { MatchingGraph, maximumMatching } from 'maximum-matching';
+import { shuffle } from '../../../../helpers/shuffle';
 
 const reducePlayersToMatchPointTiers = (players: Player[]): Player[][] => {
   return Object.values(
@@ -50,9 +51,13 @@ export const buildEdgesForMatchPointTier = (
 ): string[][] => {
   let edges: string[][] = [];
 
-  const pairs = players.flatMap((v, i) =>
+  let pairs = players.flatMap((v, i) =>
     players.slice(i + 1).map(w => [v, w])
   );
+
+  if (randomize) {
+    pairs = shuffle(pairs);
+  }
 
   for (const [player, comparingPlayer] of pairs) {
     // Don't add an edge if the players have played against each other
