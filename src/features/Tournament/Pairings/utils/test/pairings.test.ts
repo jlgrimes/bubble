@@ -18,7 +18,7 @@ describe('pairings utils', () => {
     it('should down pair odd numbered pairings', () => {
       expect(
         getPairings(SAMPLE_ODD_MATCH_TIERED_PLAYERS, false)
-      ).toEqual([[0, 2], [1, 3]]);
+      ).toEqual([['0', '2'], ['1', '3']]);
     });
   });
 });
