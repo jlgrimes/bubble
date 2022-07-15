@@ -1,4 +1,4 @@
-import type { Match, Pairing } from '../features/Tournament/Pairings/types';
+import type { Match } from '../features/Tournament/Pairings/types';
 import type { Player } from '../features/Tournament/Player/types';
 
 export const SAMPLE_PLAYER: Player = {
@@ -192,7 +192,7 @@ export const SAMPLE_MATCH_RESULTS: Match[] = [
   { playerIds: [3, 7], result: 'loss' },
 ]
 
-export const SAMPLE_PAIRINGS: Pairing[] =  [
-  { playerIds: [0, 1] },
-  { playerIds: [2, 3] }
+export const SAMPLE_PAIRINGS: number[][] =  [
+  [0, 1],
+  [2, 3]
 ];

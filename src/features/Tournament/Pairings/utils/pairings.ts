@@ -1,6 +1,5 @@
 import type { Player } from '../../Player/types/Player';
 import maximumMatching, {iter} from '@graph-algorithm/maximum-matching';
-import { Pairing } from '../types';
 
 export const buildEdgesForMatchPointTier = (players: Player[], randomize: boolean): number[][] => {
   let edges: number[][] = [];
@@ -28,7 +27,7 @@ export const buildEdgesForMatchPointTier = (players: Player[], randomize: boolea
  * @param randomize Whether or not should be randomized.
  * @returns 
  */
-export const getPairings = (players: Player[], randomize: boolean = true): Pairing[] => {
+export const getPairings = (players: Player[], randomize: boolean = true): number[][] => {
   const matchPointTieredPlayers: {[key: number]: Player[]} = players.reduce((acc: {[key: number]: Player[]}, curr: Player) => {
     if (acc[curr.matchPoints]) {
       return {

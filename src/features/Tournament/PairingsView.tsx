@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import PairingAccordion from './Pairings/PairingAccordion';
-import type { Pairing, Match } from './Pairings/types';
+import type { Match } from './Pairings/types';
 import type { Player } from './Player/types';
 import { alterWithCompletedMatch } from './Player/utils/player';
 
@@ -11,7 +11,7 @@ export const PairingsView = () => {
     number | boolean
   >(false);
 
-  const pairings: Pairing[] = useSelector(
+  const pairings: number[][] = useSelector(
     (state: RootState) => state.tournament.pairings
   );
   const players: Player[] = useSelector(
@@ -22,20 +22,20 @@ export const PairingsView = () => {
   );
   return (
     <div>
-      {pairings.map((pairing: Pairing, idx: number) => {
+      {pairings.map((pairing: number[], idx: number) => {
         const existingMatch: Match | undefined = matchResults.find(
           (match: Match) =>
-            match.playerIds[0] === pairing.playerIds[0] &&
-            match.playerIds[1] === pairing.playerIds[1]
+            match.playerIds[0] === pairing[0] &&
+            match.playerIds[1] === pairing[1]
         );
         const disabled = !!existingMatch;
 
         // TODO: error handing for find?
         const firstPlayer: Player = players.find(
-          player => player.id === pairing.playerIds[0]
+          player => player.id === pairing[0]
         )!;
         const secondPlayer: Player = players.find(
-          player => player.id === pairing.playerIds[1]
+          player => player.id === pairing[1]
         )!;
 
         return (
