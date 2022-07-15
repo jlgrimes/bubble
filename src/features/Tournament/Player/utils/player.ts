@@ -19,7 +19,7 @@ export const convertMatchToPlayerMatch = (
   if (player.id === match.playerIds[0]) {
     return {
       opponentId: match.playerIds[1],
-      result: match.result,
+      result: match.result === 'double-loss' ? 'loss' : match.result,
     };
   }
 

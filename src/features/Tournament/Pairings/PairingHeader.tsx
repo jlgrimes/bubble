@@ -12,7 +12,7 @@ const PairingHeaderContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  background-color: ${(props: PairingHeaderProps) => props.completedMatch?.result === 'tie' ? '#ffeeba' : undefined};
+  background-color: ${(props: PairingHeaderProps) => props.completedMatch?.result === 'tie' ? '#ffeeba' : props.completedMatch?.result === 'double-loss' ? '#f5c6cb' : undefined};
 `;
 
 export interface PairingHeaderProps {

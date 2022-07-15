@@ -1,1 +1,1 @@
-export type MatchResult = 'win' | 'loss' | 'tie'
+export type MatchResult = 'win' | 'loss' | 'tie' | 'double-loss';

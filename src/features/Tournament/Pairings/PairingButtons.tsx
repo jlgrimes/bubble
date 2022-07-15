@@ -33,7 +33,7 @@ export const PairingButtons = (props: PairingButtonProps) => {
         <Button onClick={() => handleClick('loss')}>Win</Button>
       </ButtonGroup>
       <div>
-        <Button>Double game loss</Button>
+        <Button onClick={() => dispatch(submitMatchResult({ playerIds, result: 'double-loss' }))}>Double game loss</Button>
         {props.completedMatch && <Button onClick={() => setRepairModalOpen(true)}>Unsubmit match result</Button>}
       </div>
     </div>

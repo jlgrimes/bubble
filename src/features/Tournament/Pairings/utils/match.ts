@@ -12,5 +12,9 @@ import type { MatchResult } from '../types';
     return 'win';
   }
 
+  if (result === 'double-loss') {
+    return 'loss';
+  }
+
   return 'tie';
 };
