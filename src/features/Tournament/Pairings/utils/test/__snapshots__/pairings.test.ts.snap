@@ -41,3 +41,12 @@ Array [
   ],
 ]
 `;
+
+exports[`pairings utils getPairings should down pair odd numbered pairings 1`] = `
+Array [
+  Array [
+    1,
+    3,
+  ],
+]
+`;
