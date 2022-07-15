@@ -18,9 +18,7 @@ const Tournament = () => {
       <Paper>
         <TournamentStateView />
       </Paper>
-      <Paper>
-        <PairingsView />
-      </Paper>
+      <PairingsView />
     </Stack>
   );
 };

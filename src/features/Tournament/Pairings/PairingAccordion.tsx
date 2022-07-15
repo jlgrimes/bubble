@@ -25,6 +25,7 @@ interface PairingAccordionProps extends PairingHeaderProps {
 
 const AccordionSummary = styled(MuiAccordionSummary)`
   min-height: 0;
+  padding: 0;
   &.Mui-expanded {
     min-height: 0;
   }
