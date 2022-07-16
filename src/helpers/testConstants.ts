@@ -17,9 +17,21 @@ export const SAMPLE_PLAYER: Player = {
   matchPoints: 4
 };
 
+export const generateEmptyPlayers = (number: number) => Array.from(Array(number).keys()).map((id) => ({
+  id: `${id}`,
+  name: `Player ${id}`,
+  matches: [],
+  record: {
+    wins: 0,
+    ties: 0,
+    losses: 0
+  },
+  matchPoints: 0
+}));
+
 export const SAMPLE_EMPTY_PLAYERS = [1, 2, 3, 4, 5, 6, 7, 8].map((id) => ({
   id: `${id}`,
-  name: 'Player',
+  name: `Player ${id}`,
   matches: [],
   record: {
     wins: 0,
