@@ -21,21 +21,49 @@ export const PairingButtons = (props: PairingButtonProps) => {
   const playerIds: string[] = [props.firstPlayer.id, props.secondPlayer.id];
 
   const handleClick = (result: MatchResult) => {
-    dispatch(submitMatchResult({ playerIds, result }))
+    dispatch(submitMatchResult({ playerIds, result }));
   };
 
   return (
     <div>
-      <PairingRepairConfirmationModal open={repairModalOpen} setOpen={setRepairModalOpen} match={props.completedMatch!} />
-      <ButtonGroup variant="contained" size="large" disabled={!!props.completedMatch}>
-        <Button aria-label='Mark win' onClick={() => handleClick('win')}>Win</Button>
-        <Button aria-label='Mark tie' onClick={() => handleClick('tie')}>Tie</Button>
-        <Button aria-label='Mark loss' onClick={() => handleClick('loss')}>Win</Button>
+      <PairingRepairConfirmationModal
+        open={repairModalOpen}
+        setOpen={setRepairModalOpen}
+        match={props.completedMatch!}
+      />
+      <ButtonGroup
+        variant='contained'
+        size='large'
+        disabled={!!props.completedMatch}
+      >
+        <Button aria-label='Mark win' onClick={() => handleClick('win')}>
+          Win
+        </Button>
+        <Button aria-label='Mark tie' onClick={() => handleClick('tie')}>
+          Tie
+        </Button>
+        <Button aria-label='Mark loss' onClick={() => handleClick('loss')}>
+          Win
+        </Button>
       </ButtonGroup>
       <div>
-        <Button onClick={() => dispatch(submitMatchResult({ playerIds, result: 'double-loss' }))}>Double game loss</Button>
-        {props.completedMatch && <Button onClick={() => setRepairModalOpen(true)}>Unsubmit match result</Button>}
+        <Button
+          aria-label='Mark double game loss'
+          onClick={() =>
+            dispatch(submitMatchResult({ playerIds, result: 'double-loss' }))
+          }
+        >
+          Double game loss
+        </Button>
+        {props.completedMatch && (
+          <Button
+            aria-label='Unsubmit match result'
+            onClick={() => setRepairModalOpen(true)}
+          >
+            Unsubmit match result
+          </Button>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};

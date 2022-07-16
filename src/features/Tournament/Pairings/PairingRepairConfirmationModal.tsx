@@ -10,12 +10,14 @@ import { useDispatch } from 'react-redux';
 import { unsubmitMatchResult } from '../state/tournamentSlice';
 
 interface PairingRepairConfirmationModalProps {
-  open: boolean,
-  setOpen: (open: boolean) => void,
-  match: Match
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  match: Match;
 }
 
-export const PairingRepairConfirmationModal = (props: PairingRepairConfirmationModalProps) => {
+export const PairingRepairConfirmationModal = (
+  props: PairingRepairConfirmationModalProps
+) => {
   const dispatch = useDispatch();
 
   const handleDismiss = () => props.setOpen(false);
@@ -28,23 +30,26 @@ export const PairingRepairConfirmationModal = (props: PairingRepairConfirmationM
     <Dialog
       open={props.open}
       onClose={handleDismiss}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby='alert-dialog-title'
+      aria-describedby='alert-dialog-description'
     >
-      <DialogTitle id="alert-dialog-title">
+      <DialogTitle id='alert-dialog-title'>
         Are you sure you want to unsubmit?
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Repairing should only be done if match results are incorrectly submitted.
+        <DialogContentText id='alert-dialog-description'>
+          Repairing should only be done if match results are incorrectly
+          submitted.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleDismiss}>No</Button>
-        <Button onClick={handleConfirm} autoFocus>
+        <Button aria-label='No' onClick={handleDismiss}>
+          No
+        </Button>
+        <Button aria-label='Yes' onClick={handleConfirm} autoFocus>
           Yes
         </Button>
       </DialogActions>
     </Dialog>
   );
-}
+};
