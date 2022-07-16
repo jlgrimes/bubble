@@ -1,3 +1,4 @@
+import React from 'react';
 import Accordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -37,18 +38,35 @@ const AccordionSummary = styled(MuiAccordionSummary)`
 `;
 
 const PairingAccordion = (props: PairingAccordionProps) => {
+  const [renderAccordionDetails, setRenderAccordionDetails] = React.useState<boolean>(true);
+  const [accordionExpanded, setAccordionExpanded] = React.useState<boolean>(false);
+  
+
+  React.useEffect(() => {
+    if (props.expanded === false) {
+      setAccordionExpanded(false);
+      const timer = setTimeout(() => {
+        setRenderAccordionDetails(false);
+      }, 300);
+      return () => clearTimeout(timer)
+    } else {
+      setRenderAccordionDetails(true);
+      setAccordionExpanded(true);
+    }
+  }, [props.expanded]);
+
   const pairingIsBye: boolean = props.secondPlayer.id === 'bye';
 
   return (
     <Accordion
-      expanded={props.expanded}
+      expanded={accordionExpanded}
       onChange={!pairingIsBye && props.handleChange()}
       classes={{ root: 'pairing-accordion' }}
     >
       <AccordionSummary aria-controls='panel1a-content' id='panel1a-header'>
         <PairingHeader {...props} />
       </AccordionSummary>
-      {props.expanded && !pairingIsBye && (
+      {renderAccordionDetails && !pairingIsBye && (
         <AccordionDetails>
           <PairingButtons
             firstPlayer={props.firstPlayer}
