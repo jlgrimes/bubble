@@ -45,7 +45,8 @@ describe('tournament reducers', () => {
           { playerIds: ['0', '1'], result: 'win' } as Match,
           { playerIds: ['2', '3'], result: 'win' } as Match,
           { playerIds: ['4'], result: 'win' } as Match,
-        ]
+        ],
+        deterministicPairing: true
       };
       expect(reducer(previousState, nextRound())).toMatchSnapshot();
     });

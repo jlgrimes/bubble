@@ -142,7 +142,11 @@ export const getPairings = (
     throw Error('More than one unpaired node generated. Probably too many rounds.');
   }
 
-  const maxMatching = [...maxMatchingGraph.matching(), maxMatchingGraph.unpairedNodes()];
+  let maxMatching: string[][] = [...maxMatchingGraph.matching()];
+  if (maxMatchingGraph.unpairedNodes().length > 0) {
+    maxMatching.push(maxMatchingGraph.unpairedNodes());
+  }
+
   const sortedMatching = sortMatchingTables(maxMatching, players);
 
   return sortedMatching;

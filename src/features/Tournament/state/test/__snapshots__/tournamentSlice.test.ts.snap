@@ -2,18 +2,26 @@
 
 exports[`tournament reducers nextRound should generate next round pairings with bye 1`] = `
 Object {
-  "matchResults": Array [],
+  "deterministicPairing": true,
+  "matchResults": Array [
+    Object {
+      "playerIds": Array [
+        "3",
+      ],
+      "result": "win",
+    },
+  ],
   "pairings": Array [
-    Array [
-      "4",
-      "3",
-    ],
     Array [
       "0",
       "2",
     ],
     Array [
+      "4",
       "1",
+    ],
+    Array [
+      "3",
     ],
   ],
   "players": Array [

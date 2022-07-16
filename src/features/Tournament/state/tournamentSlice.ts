@@ -48,10 +48,11 @@ const tournamentSlice = createSlice({
     unsubmitMatchResult(state, action: PayloadAction<Match>) {
       state.matchResults = state.matchResults.filter((matchResult) => matchResult.playerIds[0] !== action.payload.playerIds[0]);
     },
+    // action payload: if we should pair deterministically for testing.
     nextRound(state) {
       const updatedPlayers = applyMatchResultsToPlayers(state.matchResults, state.players);
       state.players = updatedPlayers;
-      state.pairings = getPairings(updatedPlayers);
+      state.pairings = getPairings(updatedPlayers, !state.deterministicPairing);
       state.matchResults = [];
       state.round += 1;
 

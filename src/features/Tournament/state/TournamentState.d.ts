@@ -5,5 +5,6 @@ export interface TournamentState {
   round: number,
   pairings: Pairing[],
   players: Player[],
-  matchResults: Match[]
+  matchResults: Match[],
+  deterministicPairing?: boolean
 }
