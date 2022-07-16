@@ -9,9 +9,9 @@ import { TournamentStateView } from './TournamentStateView';
 const Tournament = () => {
   const dispatch = useAppDispatch();
 
-  // React.useEffect(() => {
-  //   dispatch(startTournament());
-  // }, []);
+  React.useEffect(() => {
+    dispatch(startTournament());
+  }, []);
 
   return (
     <Stack spacing={4}>

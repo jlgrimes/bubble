@@ -40,13 +40,13 @@ const PairingAccordion = (props: PairingAccordionProps) => {
   return (
     <Accordion
       expanded={props.expanded}
-      onChange={props.handleChange()}
+      onChange={props.secondPlayer && props.handleChange()}
       classes={{ root: 'pairing-accordion' }}
     >
       <AccordionSummary aria-controls='panel1a-content' id='panel1a-header'>
         <PairingHeader {...props} />
       </AccordionSummary>
-      {props.expanded && (
+      {props.expanded && props.secondPlayer && (
         <AccordionDetails>
           <PairingButtons
             firstPlayer={props.firstPlayer}

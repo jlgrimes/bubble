@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import PairingAccordion from './Pairings/PairingAccordion';
 import type { Match } from './Pairings/types';
 import type { Player } from './Player/types';
 import { alterWithCompletedMatch } from './Player/utils/player';
+import { submitMatchResult } from './state/tournamentSlice';
 
 const PairingsViewContainer = styled.div`
   display: flex;
@@ -17,6 +18,58 @@ const PairingsList = styled.div`
   width: fit-content;
 `;
 
+interface PairingProps {
+  pairing: string[];
+  idx: number;
+  expandedPairing: number | boolean,
+  setExpandedPairing: Function
+}
+
+export const Pairing = (props: PairingProps) => {
+  const dispatch = useDispatch();
+
+  const players: Player[] = useSelector(
+    (state: RootState) => state.tournament.players
+  );
+  const matchResults: Match[] = useSelector(
+    (state: RootState) => state.tournament.matchResults
+  );
+  
+  const existingMatch: Match | undefined = matchResults.find(
+    (match: Match) =>
+      match.playerIds[0] === props.pairing[0] &&
+      match.playerIds[1] === props.pairing[1]
+  );
+  // TODO: error handing for find?
+  const firstPlayer: Player = players.find(
+    player => player.id === props.pairing[0]
+  )!;
+  const secondPlayer: Player = players.find(
+    player => player.id === props.pairing[1]
+  )!;
+  
+  React.useEffect(() => {
+    if (!secondPlayer) {
+      dispatch((submitMatchResult({ playerIds: [props.pairing[0]], result: 'win'})))
+    }
+  }, []);
+
+  return (
+    <PairingAccordion
+      key={props.idx}
+      completedMatch={existingMatch}
+      expanded={props.expandedPairing === props.idx}
+      handleChange={() =>
+        (event: React.SyntheticEvent, isExpanded: boolean) => {
+          props.setExpandedPairing(isExpanded ? props.idx : false);
+        }}
+      firstPlayer={alterWithCompletedMatch(firstPlayer, existingMatch)}
+      secondPlayer={secondPlayer ? alterWithCompletedMatch(secondPlayer, existingMatch) : undefined}
+      table={props.idx + 1}
+    />
+  );
+}
+
 export const PairingsView = () => {
   const [expandedPairing, setExpandedPairing] = React.useState<
     number | boolean
@@ -27,9 +80,6 @@ export const PairingsView = () => {
   );
   const pairings: string[][] = useSelector(
     (state: RootState) => state.tournament.pairings
-  );
-  const players: Player[] = useSelector(
-    (state: RootState) => state.tournament.players
   );
   const matchResults: Match[] = useSelector(
     (state: RootState) => state.tournament.matchResults
@@ -48,35 +98,9 @@ export const PairingsView = () => {
   return (
     <PairingsViewContainer>
       <PairingsList>
-        {pairings.map((pairing: string[], idx: number) => {
-          const existingMatch: Match | undefined = matchResults.find(
-            (match: Match) =>
-              match.playerIds[0] === pairing[0] &&
-              match.playerIds[1] === pairing[1]
-          );
-          // TODO: error handing for find?
-          const firstPlayer: Player = players.find(
-            player => player.id === pairing[0]
-          )!;
-          const secondPlayer: Player = players.find(
-            player => player.id === pairing[1]
-          )!;
-
-          return (
-            <PairingAccordion
-              key={idx}
-              completedMatch={existingMatch}
-              expanded={expandedPairing === idx}
-              handleChange={() =>
-                (event: React.SyntheticEvent, isExpanded: boolean) => {
-                  setExpandedPairing(isExpanded ? idx : false);
-                }}
-              firstPlayer={alterWithCompletedMatch(firstPlayer, existingMatch)}
-              secondPlayer={alterWithCompletedMatch(secondPlayer, existingMatch)}
-              table={idx + 1}
-            />
-          );
-        })}
+        {pairings.map((pairing: string[], idx: number) => (
+          <Pairing pairing={pairing} idx={idx} expandedPairing={expandedPairing} setExpandedPairing={setExpandedPairing}/>
+        ))}
       </PairingsList>
     </PairingsViewContainer>
   );

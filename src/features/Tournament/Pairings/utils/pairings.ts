@@ -1,6 +1,6 @@
 import type { Player } from '../../Player/types/Player';
 // import maximumMatching, { iter } from '@graph-algorithm/maximum-matching';
-import { MatchingGraph, maximumMatching } from 'maximum-matching';
+import { MatchingGraph, maximumMatchingGraph } from 'maximum-matching';
 import { shuffle } from '../../../../helpers/shuffle';
 
 const reducePlayersToMatchPointTiers = (players: Player[]): Player[][] => {
@@ -18,7 +18,7 @@ const reducePlayersToMatchPointTiers = (players: Player[]): Player[][] => {
         [curr.matchPoints]: [curr],
       };
     }, {})
-  );
+  ).reverse();
 };
 
 const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean) => {
@@ -72,8 +72,14 @@ export const buildEdgesForMatchPointTier = (
 
 export const sortMatchingTables = (maxMatching: string[][], players: Player[]) => {
   let sortedMatching = maxMatching.sort(
-    (firstPair, secondPair) =>
-      Math.max(
+    (firstPair, secondPair) => {
+      if (firstPair.length === 1) {
+        return 1;
+      } else if (secondPair.length === 1) {
+        return -1;
+      }
+
+      return Math.max(
         players.find(player => player.id === secondPair[0])!.matchPoints,
         players.find(player => player.id === secondPair[1])!.matchPoints
       ) -
@@ -81,11 +87,13 @@ export const sortMatchingTables = (maxMatching: string[][], players: Player[]) =
         players.find(player => player.id === firstPair[0])!.matchPoints,
         players.find(player => player.id === firstPair[1])!.matchPoints
       )
+    }
   );
 
   // To fix the case where the down paired player need to be listed first.
   for (let pairIdx = 0; pairIdx < sortedMatching.length; pairIdx++) {
     if (
+      sortedMatching[pairIdx].length > 1 &&
       players.find(player => player.id === sortedMatching[pairIdx][0])!
         .matchPoints <
       players.find(player => player.id === sortedMatching[pairIdx][1])!
@@ -128,7 +136,13 @@ export const getPairings = (
     buildEdgesForMatchPointTier(graph, playerTier, randomize);
   }
 
-  const maxMatching = maximumMatching(graph);
+  const maxMatchingGraph = maximumMatchingGraph(graph);
+
+  if (maxMatchingGraph.unpairedNodes().length > 1) {
+    throw Error('More than one unpaired node generated. Probably too many rounds.');
+  }
+
+  const maxMatching = [...maxMatchingGraph.matching(), maxMatchingGraph.unpairedNodes()];
   const sortedMatching = sortMatchingTables(maxMatching, players);
 
   return sortedMatching;

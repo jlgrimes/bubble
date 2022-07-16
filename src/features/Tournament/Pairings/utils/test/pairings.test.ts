@@ -1,5 +1,6 @@
 import { getPairings, sortMatchingTables } from '../pairings';
 import {
+  generateEmptyPlayers,
   SAMPLE_EMPTY_PLAYERS,
   SAMPLE_MATCH_TIERED_PLAYERS,
   SAMPLE_ODD_MATCH_TIERED_PLAYERS,
@@ -40,5 +41,9 @@ describe('pairings utils', () => {
         getPairings(SAMPLE_ODD_MATCH_TIERED_PLAYERS, false)
       ).toEqual([['0', '2'], ['1', '3']]);
     });
+
+    it('should leave last vertex alone as the bye', () => {
+      expect(getPairings(generateEmptyPlayers(5), false)).toEqual([['0', '1'], ['3', '4'], ['2']])
+    })
   });
 });

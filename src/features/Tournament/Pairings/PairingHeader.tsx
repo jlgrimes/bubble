@@ -7,11 +7,12 @@ import { getStylizedRecord } from '../Player/utils/record';
 import { PlayerCard } from './PlayerCard';
 import { PairingHeaderCard } from './PairingHeaderCard';
 import type { Match } from './types';
+import { ByeCard } from './ByeCard';
 
 const PairingHeaderContainer = styled.div`
   display: flex;
   width: 100%;
-  justify-content: center;
+  justify-content: stretch;
   background-color: ${(props: PairingHeaderProps) =>
     props.completedMatch?.result === 'tie'
       ? '#ffeeba'
@@ -22,7 +23,7 @@ const PairingHeaderContainer = styled.div`
 
 export interface PairingHeaderProps {
   firstPlayer: Player;
-  secondPlayer: Player;
+  secondPlayer?: Player;
   table: number;
   completedMatch?: Match;
 }
@@ -45,18 +46,24 @@ export const PairingHeader = (props: PairingHeaderProps) => {
       <PairingHeaderCard>
         <Typography>{tableText}</Typography>
       </PairingHeaderCard>
-      <PlayerCard
-        name={props.secondPlayer.name}
-        record={getStylizedRecord(props.secondPlayer.record)}
-        matchResult={
-          props.completedMatch
-            ? convertMatchToPlayerMatch(
-                props.secondPlayer,
-                props.completedMatch
-              ).result
-            : undefined
-        }
-      />
+      {
+        props.secondPlayer ? (
+          <PlayerCard
+            name={props.secondPlayer.name}
+            record={getStylizedRecord(props.secondPlayer.record)}
+            matchResult={
+              props.completedMatch
+                ? convertMatchToPlayerMatch(
+                    props.secondPlayer,
+                    props.completedMatch
+                  ).result
+                : undefined
+            }
+          />
+        ) : (
+          <ByeCard />
+        )
+      }
     </PairingHeaderContainer>
   );
 };

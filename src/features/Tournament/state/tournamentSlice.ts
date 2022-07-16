@@ -4,12 +4,12 @@ import { Player } from '../Player/types';
 import { Match } from '../Pairings/types';
 import type { TournamentState } from './TournamentState';
 import { applyMatchResultsToPlayers } from '../Player/utils/player';
-import { SAMPLE_PAIRINGS, SAMPLE_SORTED_PLAYER_LIST } from '../../../helpers/testConstants';
+import { generateEmptyPlayers } from '../../../helpers/testConstants';
 
 export const initialState: TournamentState = {
   round: 0,
-  pairings: SAMPLE_PAIRINGS,
-  players: SAMPLE_SORTED_PLAYER_LIST,
+  pairings: [],
+  players: generateEmptyPlayers(5),
   matchResults: [],
 };
 
@@ -36,7 +36,10 @@ const tournamentSlice = createSlice({
       );
     },
     initializeTournament(state) {
-      state.pairings = getPairings(state.players);
+      // If we pass in pairings through tests, don't generate them
+      if (state.pairings.length === 0) {
+        state.pairings = getPairings(state.players);
+      }
       state.round = 1;
     },
     submitMatchResult(state, action: PayloadAction<Match>) {
@@ -51,6 +54,11 @@ const tournamentSlice = createSlice({
       state.pairings = getPairings(updatedPlayers);
       state.matchResults = [];
       state.round += 1;
+
+      const lastPairing = state.pairings[state.pairings.length - 1];
+      if (lastPairing.length === 1) {
+        state.matchResults.push({ playerIds: lastPairing, result: 'win' });
+      }
     },
   },
 });
