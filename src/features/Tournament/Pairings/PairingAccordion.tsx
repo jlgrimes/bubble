@@ -37,16 +37,18 @@ const AccordionSummary = styled(MuiAccordionSummary)`
 `;
 
 const PairingAccordion = (props: PairingAccordionProps) => {
+  const pairingIsBye: boolean = props.secondPlayer.id === 'bye';
+
   return (
     <Accordion
       expanded={props.expanded}
-      onChange={props.secondPlayer && props.handleChange()}
+      onChange={!pairingIsBye && props.handleChange()}
       classes={{ root: 'pairing-accordion' }}
     >
       <AccordionSummary aria-controls='panel1a-content' id='panel1a-header'>
         <PairingHeader {...props} />
       </AccordionSummary>
-      {props.expanded && props.secondPlayer && (
+      {props.expanded && !pairingIsBye && (
         <AccordionDetails>
           <PairingButtons
             firstPlayer={props.firstPlayer}

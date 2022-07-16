@@ -3,7 +3,7 @@ import { Record } from "./Record";
 
 export interface Player {
   /**
-   * Unique identifier of the player
+   * Unique identifier of the player. Bye player has ID 'bye'
    */
   id: string;
   /**

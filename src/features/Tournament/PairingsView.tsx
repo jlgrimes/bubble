@@ -28,6 +28,9 @@ interface PairingProps {
 export const Pairing = (props: PairingProps) => {
   const dispatch = useDispatch();
 
+  const round: number = useSelector(
+    (state: RootState) => state.tournament.round
+  );
   const players: Player[] = useSelector(
     (state: RootState) => state.tournament.players
   );
@@ -49,10 +52,10 @@ export const Pairing = (props: PairingProps) => {
   )!;
   
   React.useEffect(() => {
-    if (!secondPlayer) {
-      dispatch((submitMatchResult({ playerIds: [props.pairing[0]], result: 'win'})))
+    if (secondPlayer.id === 'bye') {
+      dispatch((submitMatchResult({ playerIds: [props.pairing[0], 'bye'], result: 'win'})))
     }
-  }, []);
+  }, [round]);
 
   return (
     <PairingAccordion
@@ -64,7 +67,7 @@ export const Pairing = (props: PairingProps) => {
           props.setExpandedPairing(isExpanded ? props.idx : false);
         }}
       firstPlayer={alterWithCompletedMatch(firstPlayer, existingMatch)}
-      secondPlayer={secondPlayer ? alterWithCompletedMatch(secondPlayer, existingMatch) : undefined}
+      secondPlayer={alterWithCompletedMatch(secondPlayer, existingMatch)}
       table={props.idx + 1}
     />
   );

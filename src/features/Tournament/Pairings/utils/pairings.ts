@@ -48,7 +48,7 @@ const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean) => {
 export const buildEdgesForMatchPointTier = (
   graph: MatchingGraph,
   players: Player[],
-  randomize: boolean
+  randomize: boolean | undefined
 ) => {
   let pairs = players.flatMap((v, i) => players.slice(i + 1).map(w => [v, w]));
 
@@ -71,11 +71,17 @@ export const buildEdgesForMatchPointTier = (
 };
 
 export const sortMatchingTables = (maxMatching: string[][], players: Player[]) => {
+  for (let pairIdx = 0; pairIdx < maxMatching.length; pairIdx++) {
+    if (maxMatching[pairIdx][0] === 'bye') {
+      maxMatching[pairIdx] = [maxMatching[pairIdx][1], 'bye']
+    }
+  }
+
   let sortedMatching = maxMatching.sort(
     (firstPair, secondPair) => {
-      if (firstPair.length === 1) {
+      if (firstPair[1] === 'bye') {
         return 1;
-      } else if (secondPair.length === 1) {
+      } else if (secondPair[1] === 'bye') {
         return -1;
       }
 
@@ -90,21 +96,22 @@ export const sortMatchingTables = (maxMatching: string[][], players: Player[]) =
     }
   );
 
+  // I think I fixed this? uncomment if still broken
   // To fix the case where the down paired player need to be listed first.
-  for (let pairIdx = 0; pairIdx < sortedMatching.length; pairIdx++) {
-    if (
-      sortedMatching[pairIdx].length > 1 &&
-      players.find(player => player.id === sortedMatching[pairIdx][0])!
-        .matchPoints <
-      players.find(player => player.id === sortedMatching[pairIdx][1])!
-        .matchPoints
-    ) {
-      sortedMatching[pairIdx] = [
-        sortedMatching[pairIdx][1],
-        sortedMatching[pairIdx][0],
-      ];
-    }
-  }
+  // for (let pairIdx = 0; pairIdx < sortedMatching.length; pairIdx++) {
+  //   if (
+  //     sortedMatching[pairIdx].length > 1 &&
+  //     players.find(player => player.id === sortedMatching[pairIdx][0])!
+  //       .matchPoints <
+  //     players.find(player => player.id === sortedMatching[pairIdx][1])!
+  //       .matchPoints
+  //   ) {
+  //     sortedMatching[pairIdx] = [
+  //       sortedMatching[pairIdx][1],
+  //       sortedMatching[pairIdx][0],
+  //     ];
+  //   }
+  // }
 
   return sortedMatching;
 };

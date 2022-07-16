@@ -38,7 +38,22 @@ const tournamentSlice = createSlice({
     initializeTournament(state) {
       // If we pass in pairings through tests, don't generate them
       if (state.pairings.length === 0) {
-        state.pairings = getPairings(state.players);
+        // If there's an odd number of players, add the bye player.
+        if (state.players.length % 2 !== 0) {
+          state.players.push({
+            id: 'bye',
+            name: 'Bye',
+            matches: [],
+            record: {
+              wins: 0,
+              ties: 0,
+              losses: 0
+            },
+            matchPoints: 0
+          })
+        }
+
+        state.pairings = getPairings(state.players, !state.deterministicPairing);
       }
       state.round = 1;
     },
