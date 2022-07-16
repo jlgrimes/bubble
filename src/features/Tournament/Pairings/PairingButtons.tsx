@@ -28,9 +28,9 @@ export const PairingButtons = (props: PairingButtonProps) => {
     <div>
       <PairingRepairConfirmationModal open={repairModalOpen} setOpen={setRepairModalOpen} match={props.completedMatch!} />
       <ButtonGroup variant="contained" size="large" disabled={!!props.completedMatch}>
-        <Button onClick={() => handleClick('win')}>Win</Button>
-        <Button onClick={() => handleClick('tie')}>Tie</Button>
-        <Button onClick={() => handleClick('loss')}>Win</Button>
+        <Button aria-label='Mark win' onClick={() => handleClick('win')}>Win</Button>
+        <Button aria-label='Mark tie' onClick={() => handleClick('tie')}>Tie</Button>
+        <Button aria-label='Mark loss' onClick={() => handleClick('loss')}>Win</Button>
       </ButtonGroup>
       <div>
         <Button onClick={() => dispatch(submitMatchResult({ playerIds, result: 'double-loss' }))}>Double game loss</Button>

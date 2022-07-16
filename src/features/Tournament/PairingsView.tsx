@@ -64,6 +64,7 @@ export const PairingsView = () => {
 
           return (
             <PairingAccordion
+              key={idx}
               completedMatch={existingMatch}
               expanded={expandedPairing === idx}
               handleChange={() =>

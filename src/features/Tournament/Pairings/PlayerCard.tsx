@@ -25,7 +25,7 @@ const PlayerCardContainer = styled(PairingHeaderCard)`
 
 export const PlayerCard = (props: PlayerCardProps) => {
   return (
-    <PlayerCardContainer {...props}>
+    <PlayerCardContainer {...props} aria-label={props.name}>
       <PlayerName>{props.name}</PlayerName>
       <PlayerRecord variant='caption'>{props.record}</PlayerRecord>
     </PlayerCardContainer>

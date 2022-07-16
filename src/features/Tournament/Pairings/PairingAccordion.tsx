@@ -29,26 +29,34 @@ const AccordionSummary = styled(MuiAccordionSummary)`
   &.Mui-expanded {
     min-height: 0;
   }
-  
-  .MuiAccordionSummary-content, .MuiAccordionSummary-content.Mui-expanded {
+
+  .MuiAccordionSummary-content,
+  .MuiAccordionSummary-content.Mui-expanded {
     margin: 0;
   }
 `;
 
 const PairingAccordion = (props: PairingAccordionProps) => {
   return (
-    <Accordion expanded={props.expanded} onChange={props.handleChange()}>
-        <AccordionSummary
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <PairingHeader {...props} />
-        </AccordionSummary>
+    <Accordion
+      expanded={props.expanded}
+      onChange={props.handleChange()}
+      classes={{ root: 'pairing-accordion' }}
+    >
+      <AccordionSummary aria-controls='panel1a-content' id='panel1a-header'>
+        <PairingHeader {...props} />
+      </AccordionSummary>
+      {props.expanded && (
         <AccordionDetails>
-          <PairingButtons firstPlayer={props.firstPlayer} secondPlayer={props.secondPlayer} completedMatch={props.completedMatch} />
+          <PairingButtons
+            firstPlayer={props.firstPlayer}
+            secondPlayer={props.secondPlayer}
+            completedMatch={props.completedMatch}
+          />
         </AccordionDetails>
-      </Accordion>
-  )
-}
+      )}
+    </Accordion>
+  );
+};
 
 export default PairingAccordion;
