@@ -48,13 +48,8 @@ const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean) => {
 export const buildEdgesForMatchPointTier = (
   graph: MatchingGraph,
   players: Player[],
-  randomize: boolean | undefined
 ) => {
   let pairs = players.flatMap((v, i) => players.slice(i + 1).map(w => [v, w]));
-
-  if (randomize) {
-    pairs = shuffle(pairs);
-  }
 
   for (const [player, comparingPlayer] of pairs) {
     // Don't add an edge if the players have played against each other
@@ -135,12 +130,13 @@ export const getPairings = (
 
   const graph = new MatchingGraph();
 
-  for (const player of players) {
+  const playerNodes = randomize ? shuffle(players) : players;
+  for (const player of playerNodes) {
     graph.addNode(player.id);
   }
 
   for (const playerTier of finalPlayers) {
-    buildEdgesForMatchPointTier(graph, playerTier, randomize);
+    buildEdgesForMatchPointTier(graph, playerTier);
   }
 
   const maxMatchingGraph = maximumMatchingGraph(graph);
@@ -153,6 +149,7 @@ export const getPairings = (
   if (maxMatchingGraph.unpairedNodes().length > 0) {
     maxMatching.push(maxMatchingGraph.unpairedNodes());
   }
+  console.log(maxMatching)
 
   const sortedMatching = sortMatchingTables(maxMatching, players);
 
