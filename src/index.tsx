@@ -1,17 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {
+  Routes,
+  Route,
+  BrowserRouter
+} from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './app/store';
+import { Tournament } from './features/Tournament/Tournament';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<div>home</div>} />
+          <Route path="tournament" element={<Tournament />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </Provider>
 );
 

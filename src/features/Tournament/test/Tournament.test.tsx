@@ -1,4 +1,4 @@
-import Tournament from '../Tournament';
+import { Tournament } from '../Tournament';
 import { fireEvent, screen } from '@testing-library/react';
 import { renderWithProviders } from '../../../helpers/test-utils';
 import {

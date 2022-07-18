@@ -9,7 +9,7 @@ import { generateEmptyPlayers } from '../../../helpers/testConstants';
 export const initialState: TournamentState = {
   round: 0,
   pairings: [],
-  players: generateEmptyPlayers(7),
+  players: generateEmptyPlayers(70),
   matchResults: [],
 };
 

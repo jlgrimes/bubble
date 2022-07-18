@@ -6,7 +6,7 @@ import { PairingsView } from './PairingsView';
 import { startTournament } from './state/tournamentThunks';
 import { TournamentStateView } from './TournamentStateView';
 
-const Tournament = () => {
+export const Tournament = () => {
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -22,5 +22,3 @@ const Tournament = () => {
     </Stack>
   );
 };
-
-export default Tournament;
