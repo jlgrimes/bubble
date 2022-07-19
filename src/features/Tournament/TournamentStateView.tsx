@@ -1,12 +1,12 @@
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from "react-router-dom";
 import { RootState } from '../../app/store';
 import { autoWins, enterCut, nextRound } from './state/tournamentSlice';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
-import { isLocal } from '../../helpers/local-dev';
 
 const ButtonRowContainer = styled.div`
   display: flex;
@@ -19,6 +19,7 @@ const ButtonRowContainer = styled.div`
 `;
 
 const NextRoundButton = () => {
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const allMatchesSubmitted = useSelector(
     (state: RootState) =>
@@ -39,7 +40,7 @@ const NextRoundButton = () => {
       >
         Next round
       </Button>
-      {isLocal() && (
+      {searchParams.get('dev') && (
         <Button onClick={() => dispatch(autoWins())}>Auto wins</Button>
       )}
       {!allMatchesSubmitted && (
