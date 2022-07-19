@@ -5,7 +5,7 @@ import {
 } from './resistance';
 
 export const getStandings = (players: Player[]): Player[] => {
-  return players.sort((playerA: Player, playerB: Player) => {
+  return [...players].sort((playerA: Player, playerB: Player) => {
     if (playerA.matchPoints === playerB.matchPoints) {
       const playerAResistance = calculateResistance(playerA, players);
       const playerBResistance = calculateResistance(playerB, players);

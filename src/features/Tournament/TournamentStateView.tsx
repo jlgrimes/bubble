@@ -5,6 +5,7 @@ import { RootState } from '../../app/store';
 import { nextRound } from './state/tournamentSlice';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import styled from '@emotion/styled';
+import { Typography } from '@mui/material';
 
 const NextRoundButtonContainer = styled.div`
   display: flex;
@@ -22,9 +23,11 @@ const NextRoundButton = () => {
     (state: RootState) =>
       state.tournament.matchResults.length === state.tournament.pairings.length
   );
+  const roundText = useSelector((state: RootState) => `Round ${state.tournament.round} of ${state.tournament.maxRounds}`);
 
   return (
     <NextRoundButtonContainer>
+      <Typography>{roundText}</Typography>
       <Button
         aria-label='Generate next round pairings'
         onClick={() => dispatch(nextRound())}

@@ -4,7 +4,15 @@ import { RootState } from '../../../app/store';
 import { TopCutType } from "../state/TournamentState";
 import type { Player } from '../Player/types';
 import { getStandings } from './utils/standings';
-import { calculateOpponentOpponentWinRate, calculateResistance } from './utils/resistance';
+import { calculateOpponentOpponentWinRate, calculateResistance, getStylizedPercentage } from './utils/resistance';
+import styled from '@emotion/styled';
+import { getStylizedRecord } from '../Player/utils/record';
+import confetti from 'canvas-confetti';
+
+export const StandingContainer = styled.div`
+  display: flex;
+  gap: 12px;
+`;
 
 export const Standings = () => {
   const [standings, setStandings] = React.useState<Player[]>([]);
@@ -16,17 +24,24 @@ export const Standings = () => {
 
   React.useEffect(() => {
     setStandings(getStandings(players));
+
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
   }, []);
 
   return (
     <div>
-      {standings.map((player: Player) => (
-        <div style={{display: 'flex'}}>
+      {standings.map((player: Player, idx: number) => (
+        <StandingContainer>
+          <div>{idx + 1}</div>
           <div>{player.name}</div>
-          <div>{player.matchPoints}</div>
-          <div>{calculateResistance(player, players)}</div>
-          <div>{calculateOpponentOpponentWinRate(player, players)}</div>
-        </div>
+          <div>{getStylizedRecord(player.record)}</div>
+          <div>{getStylizedPercentage(calculateResistance(player, players))}</div>
+          <div>{getStylizedPercentage(calculateOpponentOpponentWinRate(player, players))}</div>
+        </StandingContainer>
       ))}
     </div>
   )

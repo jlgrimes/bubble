@@ -7,10 +7,14 @@ import { useAppDispatch } from '../../app/hooks';
 import { PairingsView } from './PairingsView';
 import { startTournament } from './state/tournamentThunks';
 import { TournamentStateView } from './TournamentStateView';
+import { ViewState } from './state/ViewState';
+import { Standings } from './Standings/Standings';
 
 export const Tournament = () => {
   const dispatch = useAppDispatch();
-  // const topviewCut: TopCutType = useSelector((state: RootState) => state.tournament.viewState);
+  const viewState: ViewState = useSelector(
+    (state: RootState) => state.tournament.viewState
+  );
 
   React.useEffect(() => {
     dispatch(startTournament());
@@ -21,7 +25,11 @@ export const Tournament = () => {
       <Paper>
         <TournamentStateView />
       </Paper>
-      <PairingsView />
+      {viewState === 'tournament' ? (
+        <PairingsView />
+      ) : viewState === 'standings' ? (
+        <Standings />
+      ) : null}
     </Stack>
   );
 };

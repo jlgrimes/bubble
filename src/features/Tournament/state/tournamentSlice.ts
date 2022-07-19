@@ -11,9 +11,9 @@ import { byePlayer } from './constants';
 export const initialState: TournamentState = {
   round: 0,
   pairings: [],
-  players: generateEmptyPlayers(16),
+  players: generateEmptyPlayers(4),
   matchResults: [],
-  maxRounds: 4,
+  maxRounds: 2,
   topCut: undefined,
   viewState: 'tournament'
 };
@@ -63,6 +63,12 @@ const tournamentSlice = createSlice({
     nextRound(state) {
       const updatedPlayers = applyMatchResultsToPlayers(state.matchResults, state.players);
       state.players = updatedPlayers;
+
+      if (state.round === state.maxRounds) {
+        state.viewState = 'standings';
+        return;
+      }
+
       state.pairings = getPairings(updatedPlayers, !state.deterministicPairing);
       state.matchResults = [];
       state.round += 1;
