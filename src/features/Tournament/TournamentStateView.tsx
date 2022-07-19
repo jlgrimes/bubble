@@ -2,13 +2,13 @@ import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { autoWins, nextRound } from './state/tournamentSlice';
+import { autoWins, enterCut, nextRound } from './state/tournamentSlice';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
 import { isLocal } from '../../helpers/local-dev';
 
-const NextRoundButtonContainer = styled.div`
+const ButtonRowContainer = styled.div`
   display: flex;
   align-items: center;
 
@@ -30,7 +30,7 @@ const NextRoundButton = () => {
   );
 
   return (
-    <NextRoundButtonContainer>
+    <ButtonRowContainer>
       <Typography>{roundText}</Typography>
       <Button
         aria-label='Generate next round pairings'
@@ -50,14 +50,30 @@ const NextRoundButton = () => {
           <HelpOutlineOutlinedIcon />
         </Tooltip>
       )}
-    </NextRoundButtonContainer>
+    </ButtonRowContainer>
   );
 };
 
+const StandingsButtons = () => {
+  const dispatch = useDispatch();
+
+  return (
+    <ButtonRowContainer>
+      <Button onClick={() => dispatch(enterCut())}>
+        Enter top cut
+      </Button>
+    </ButtonRowContainer>
+  )
+}
+
 export const TournamentStateView = () => {
+  const shouldRenderTournamentButtons: boolean = useSelector((state: RootState) => state.tournament.viewState === 'tournament' || state.tournament.viewState === 'top-cut');
+  const shouldEnterCut: boolean = useSelector((state: RootState) => !!state.tournament.topCut && state.tournament.viewState === 'standings');
+
   return (
     <div>
-      <NextRoundButton />
+      {shouldRenderTournamentButtons && <NextRoundButton />}
+      {shouldEnterCut && <StandingsButtons />}
     </div>
   );
 };

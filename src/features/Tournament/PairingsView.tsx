@@ -52,7 +52,7 @@ export const Pairing = (props: PairingProps) => {
   )!;
   
   React.useEffect(() => {
-    if (secondPlayer.id === 'bye') {
+    if (secondPlayer?.id === 'bye') {
       dispatch((submitMatchResult({ playerIds: [props.pairing[0], 'bye'], result: 'win'})))
     }
   }, [round]);

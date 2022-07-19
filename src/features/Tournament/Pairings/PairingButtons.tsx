@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
@@ -7,6 +7,8 @@ import { submitMatchResult } from '../state/tournamentSlice';
 import type { MatchResult, Match } from './types';
 import type { Player } from '../Player/types';
 import { PairingRepairConfirmationModal } from './PairingRepairConfirmationModal';
+import { ViewState } from '../state/ViewState';
+import { RootState } from '../../../app/store';
 
 interface PairingButtonProps {
   firstPlayer: Player;
@@ -19,6 +21,10 @@ export const PairingButtons = (props: PairingButtonProps) => {
   const [repairModalOpen, setRepairModalOpen] = React.useState(false);
 
   const playerIds: string[] = [props.firstPlayer.id, props.secondPlayer.id];
+
+  const viewState: ViewState = useSelector(
+    (state: RootState) => state.tournament.viewState
+  );
 
   const handleClick = (result: MatchResult) => {
     dispatch(submitMatchResult({ playerIds, result }));
@@ -39,22 +45,28 @@ export const PairingButtons = (props: PairingButtonProps) => {
         <Button aria-label='Mark win' onClick={() => handleClick('win')}>
           Win
         </Button>
-        <Button aria-label='Mark tie' onClick={() => handleClick('tie')}>
-          Tie
-        </Button>
+        {viewState !== 'top-cut' && (
+          <Button aria-label='Mark tie' onClick={() => handleClick('tie')}>
+            Tie
+          </Button>
+        )}
         <Button aria-label='Mark loss' onClick={() => handleClick('loss')}>
           Win
         </Button>
       </ButtonGroup>
       <div>
-        <Button
-          aria-label='Mark double game loss'
-          onClick={() =>
-            dispatch(submitMatchResult({ playerIds, result: 'double-loss' }))
-          }
-        >
-          Double game loss
-        </Button>
+        {
+          viewState !== 'top-cut' && (
+            <Button
+              aria-label='Mark double game loss'
+              onClick={() =>
+                dispatch(submitMatchResult({ playerIds, result: 'double-loss' }))
+              }
+            >
+              Double game loss
+            </Button>
+          )
+        }
         {props.completedMatch && (
           <Button
             aria-label='Unsubmit match result'

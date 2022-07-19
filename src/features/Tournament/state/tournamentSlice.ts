@@ -8,6 +8,7 @@ import { generateEmptyPlayers } from '../../../helpers/testConstants';
 import { recommendedRounds } from '../Pairings/utils/rounds';
 import { byePlayer } from './constants';
 import { getStandings } from '../Standings/utils/standings';
+import { getNextRoundTopCutPairings, getTopCutPairings, getTopCutPlayers } from '../Pairings/utils/top-cut';
 
 export const initialState: TournamentState = {
   round: 0,
@@ -15,7 +16,7 @@ export const initialState: TournamentState = {
   players: generateEmptyPlayers(48),
   matchResults: [],
   maxRounds: 5,
-  topCut: undefined,
+  topCut: 'top-eight',
   viewState: 'tournament',
 };
 
@@ -72,23 +73,40 @@ const tournamentSlice = createSlice({
         state.players
       );
       state.players = updatedPlayers;
+      state.matchResults = [];
 
+      if (state.viewState === 'top-cut') {
+        // If we're on the last round, go to standings.
+        if (state.round === state.maxRounds) {
+          state.viewState = 'final-standings';
+          return;
+        }
+
+        state.pairings = getNextRoundTopCutPairings(state.players);
+
+        state.matchResults = [];
+        state.round += 1;
+  
+        return;
+      }
+
+      // If we're on the last round, go to standings.
       if (state.round === state.maxRounds) {
         state.viewState = 'standings';
         return;
       }
 
       state.pairings = getPairings(updatedPlayers, !state.deterministicPairing);
-      state.matchResults = [];
       state.round += 1;
 
+      // Pushes bye win
       const lastPairing = state.pairings[state.pairings.length - 1];
       if (lastPairing.length === 1) {
         state.matchResults.push({ playerIds: lastPairing, result: 'win' });
       }
     },
     generateStandings(state) {
-      state.standings = getStandings(state.players);
+      state.standings = getStandings(state.players, state.standings);
     },
     /**
      * For testing. Assigns wins to the first player.
@@ -99,6 +117,16 @@ const tournamentSlice = createSlice({
       }
     },
     enterCut(state) {
+      if (!state.standings) {
+        throw Error('Standings should be defined at this point.')
+      }
+
+      state.round = 1;
+      const newPlayers = getTopCutPlayers(state.standings, state.topCut);
+      state.players = newPlayers
+      state.pairings = getTopCutPairings(state.players);
+      // 3 rounds for top 8, 2 rounds for top 4
+      state.maxRounds = recommendedRounds(state.players.length);
       state.viewState = 'top-cut';
     }
   },
@@ -113,5 +141,6 @@ export const {
   nextRound,
   autoWins,
   generateStandings,
+  enterCut,
 } = tournamentSlice.actions;
 export default tournamentSlice.reducer;
