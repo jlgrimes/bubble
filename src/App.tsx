@@ -9,7 +9,6 @@ import {
 import styled from '@emotion/styled';
 
 const AppContainer = styled.div`
-  text-align: center;
 `;
 
 const OutletContainer = styled.div`

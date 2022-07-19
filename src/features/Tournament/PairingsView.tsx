@@ -11,6 +11,11 @@ import { submitMatchResult } from './state/tournamentSlice';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import FormLabel from '@mui/material/FormLabel';
+import { getExistingMatch } from './Pairings/utils/match';
 
 const PairingsViewContainer = styled.div`
   display: flex;
@@ -19,6 +24,7 @@ const PairingsViewContainer = styled.div`
 `;
 
 const PairingsList = styled.div`
+  text-align: center;
   width: fit-content;
 `;
 
@@ -42,11 +48,7 @@ export const Pairing = (props: PairingProps) => {
     (state: RootState) => state.tournament.matchResults
   );
 
-  const existingMatch: Match | undefined = matchResults.find(
-    (match: Match) =>
-      match.playerIds[0] === props.pairing[0] &&
-      match.playerIds[1] === props.pairing[1]
-  );
+  const existingMatch = getExistingMatch(props.pairing, matchResults);
   // TODO: error handing for find?
   const firstPlayer: Player = players.find(
     player => player.id === props.pairing[0]
@@ -81,11 +83,56 @@ export const Pairing = (props: PairingProps) => {
   );
 };
 
+type MatchFilter = 'completed' | 'incomplete' | undefined;
+
+interface PairingsFiltersProps {
+  completedMatchFilter: MatchFilter;
+  setCompletedMatchFilter: (matchFilter: MatchFilter) => void;
+}
+
+const PairingsFilters = (props: PairingsFiltersProps) => {
+  return (
+    <FormControl>
+      <FormLabel htmlFor='pairing-filters'>Pairing filters</FormLabel>
+      <FormGroup id='pairing-filters'>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={props.completedMatchFilter === 'completed'}
+              onChange={e => {
+                e.target.checked
+                  ? props.setCompletedMatchFilter('completed')
+                  : props.setCompletedMatchFilter(undefined);
+              }}
+            />
+          }
+          label='Completed matches'
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={props.completedMatchFilter === 'incomplete'}
+              onChange={e => {
+                e.target.checked
+                  ? props.setCompletedMatchFilter('incomplete')
+                  : props.setCompletedMatchFilter(undefined);
+              }}
+            />
+          }
+          label='Incomplete matches'
+        />
+      </FormGroup>
+    </FormControl>
+  );
+};
+
 export const PairingsView = () => {
   const [expandedPairing, setExpandedPairing] = React.useState<
     number | boolean
   >(false);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
+  const [completedMatchFilter, setCompletedMatchFilter] =
+    React.useState<MatchFilter>(undefined);
 
   const round: number = useSelector(
     (state: RootState) => state.tournament.round
@@ -110,21 +157,34 @@ export const PairingsView = () => {
     setExpandedPairing(false);
   }, [matchResults.length]);
 
-  const prunedPairings =
+  const searchPrunedPairings =
     searchQuery === ''
       ? pairings
       : pairings.filter(
           (pairing, idx) =>
             players
               .find(player => player.id === pairing[0])
-              ?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              ?.name.toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
             players
               .find(player => player.id === pairing[1])
-              ?.name.toLowerCase().includes(searchQuery.toLowerCase())
+              ?.name.toLowerCase()
+              .includes(searchQuery.toLowerCase())
         );
+  const prunedPairings = searchPrunedPairings.filter(pairing =>
+    completedMatchFilter === 'completed'
+      ? getExistingMatch(pairing, matchResults)
+      : completedMatchFilter === 'incomplete'
+      ? !getExistingMatch(pairing, matchResults)
+      : true
+  );
 
   return (
     <PairingsViewContainer>
+      <PairingsFilters
+        completedMatchFilter={completedMatchFilter}
+        setCompletedMatchFilter={setCompletedMatchFilter}
+      />
       <FormControl>
         <InputLabel htmlFor='component-outlined'>Search</InputLabel>
         <OutlinedInput
