@@ -13,6 +13,8 @@ describe('tournament reducers', () => {
     pairings: [],
     players: [],
     matchResults: [],
+    maxRounds: 5,
+    topCut: undefined
   }
 
   describe('addPlayer', () => {
@@ -46,7 +48,9 @@ describe('tournament reducers', () => {
           { playerIds: ['2', '3'], result: 'win' } as Match,
           { playerIds: ['4'], result: 'win' } as Match,
         ],
-        deterministicPairing: true
+        deterministicPairing: true,
+        maxRounds: 5,
+        topCut: undefined
       };
       expect(reducer(previousState, nextRound())).toMatchSnapshot();
     });

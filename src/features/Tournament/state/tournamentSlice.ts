@@ -5,12 +5,15 @@ import { Match } from '../Pairings/types';
 import type { TournamentState } from './TournamentState';
 import { applyMatchResultsToPlayers } from '../Player/utils/player';
 import { generateEmptyPlayers } from '../../../helpers/testConstants';
+import { recommendedRounds } from '../Pairings/utils/rounds';
 
 export const initialState: TournamentState = {
   round: 0,
   pairings: [],
-  players: generateEmptyPlayers(70),
+  players: generateEmptyPlayers(16),
   matchResults: [],
+  maxRounds: 4,
+  topCut: undefined
 };
 
 const tournamentSlice = createSlice({
@@ -53,6 +56,7 @@ const tournamentSlice = createSlice({
           })
         }
 
+        state.maxRounds = recommendedRounds(state.players.length);
         state.pairings = getPairings(state.players, !state.deterministicPairing);
       }
       state.round = 1;

@@ -24,6 +24,8 @@ export function renderWithProviders(
         pairings: [],
         players: [],
         matchResults: [],
+        maxRounds: 5,
+        topCut: undefined
       }
     },
     // Automatically create a store instance if no store was passed in

@@ -18,6 +18,8 @@ describe('Tournament', () => {
             pairings: SAMPLE_PAIRINGS,
             players: SAMPLE_SORTED_PLAYER_LIST,
             matchResults: [],
+            maxRounds: 5,
+            topCut: undefined
           },
         },
       });
@@ -40,6 +42,8 @@ describe('Tournament', () => {
             pairings: SAMPLE_PAIRINGS,
             players: SAMPLE_SORTED_PLAYER_LIST,
             matchResults: [],
+            maxRounds: 5,
+            topCut: undefined
           },
         },
       });
@@ -59,6 +63,8 @@ describe('Tournament', () => {
             pairings: SAMPLE_PAIRINGS,
             players: SAMPLE_SORTED_PLAYER_LIST,
             matchResults: [],
+            maxRounds: 5,
+            topCut: undefined
           },
         },
       });
@@ -78,6 +84,8 @@ describe('Tournament', () => {
             pairings: SAMPLE_PAIRINGS,
             players: SAMPLE_SORTED_PLAYER_LIST,
             matchResults: [],
+            maxRounds: 5,
+            topCut: undefined
           },
         },
       });
@@ -111,6 +119,8 @@ describe('Tournament', () => {
             pairings: getPairings(players, false),
             players: players,
             matchResults: [],
+            maxRounds: 5,
+            topCut: undefined
           },
         },
       });
