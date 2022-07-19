@@ -22,7 +22,7 @@ export const calculateResistance = (player: Player | undefined, players: Player[
   return resistance / player.matches.length;
 };
 
-export const getStylizedPercentage = (num: number): string => `${num * 100}%`;
+export const getStylizedPercentage = (num: number): string => `${(num * 100).toFixed(2)}%`;
 
 export const calculateOpponentOpponentWinRate = (player: Player, players: Player[]): number => {
   let opponentOpponentWinRate: number = 0;

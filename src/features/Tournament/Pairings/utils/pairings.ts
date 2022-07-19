@@ -21,7 +21,7 @@ const reducePlayersToMatchPointTiers = (players: Player[]): Player[][] => {
   ).reverse();
 };
 
-const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean) => {
+export const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean) => {
   let fixedTiers: Player[][] = [];
 
   for (let tierIdx = 0; tierIdx < tiers.length; tierIdx++) {
@@ -37,7 +37,7 @@ const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean) => {
       fixedTiers.push([...tier, tiers[tierIdx + 1][stolenTierIdx]]);
       tiers[tierIdx + 1] = [
         ...tiers[tierIdx + 1].slice(0, stolenTierIdx),
-        ...tiers[tierIdx + 1].slice(stolenTierIdx + 1, tiers.length),
+        ...tiers[tierIdx + 1].slice(stolenTierIdx + 1, tiers[tierIdx + 1].length),
       ];
     }
   }
@@ -142,7 +142,7 @@ export const getPairings = (
   const maxMatchingGraph = maximumMatchingGraph(graph);
 
   if (maxMatchingGraph.unpairedNodes().length > 1) {
-    throw Error('More than one unpaired node generated. Probably too many rounds.');
+    throw Error(`More than one unpaired node generated (${maxMatchingGraph.unpairedNodes()}). Probably too many rounds.`);
   }
 
   let maxMatching: string[][] = [...maxMatchingGraph.matching()];
