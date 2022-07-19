@@ -121,6 +121,10 @@ export const getPairings = (
   players: Player[],
   randomize: boolean = true
 ): string[][] => {
+  if (randomize) {
+    players = shuffle(players);
+  }
+
   const matchPointTieredPlayers: Player[][] =
     reducePlayersToMatchPointTiers(players);
   const finalPlayers = trickleDownMatchPointTiers(
@@ -129,9 +133,7 @@ export const getPairings = (
   );
 
   const graph = new MatchingGraph();
-
-  const playerNodes = randomize ? shuffle(players) : players;
-  for (const player of playerNodes) {
+  for (const player of players) {
     graph.addNode(player.id);
   }
 
