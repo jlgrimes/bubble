@@ -6,6 +6,7 @@ import type { TournamentState } from './TournamentState';
 import { applyMatchResultsToPlayers } from '../Player/utils/player';
 import { generateEmptyPlayers } from '../../../helpers/testConstants';
 import { recommendedRounds } from '../Pairings/utils/rounds';
+import { byePlayer } from './constants';
 
 export const initialState: TournamentState = {
   round: 0,
@@ -44,17 +45,7 @@ const tournamentSlice = createSlice({
       if (state.pairings.length === 0) {
         // If there's an odd number of players, add the bye player.
         if (state.players.length % 2 !== 0) {
-          state.players.push({
-            id: 'bye',
-            name: 'Bye',
-            matches: [],
-            record: {
-              wins: 0,
-              ties: 0,
-              losses: 0
-            },
-            matchPoints: 0
-          })
+          state.players.push(byePlayer)
         }
 
         state.maxRounds = recommendedRounds(state.players.length);

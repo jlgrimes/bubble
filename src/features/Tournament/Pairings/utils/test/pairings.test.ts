@@ -33,9 +33,5 @@ describe('pairings utils', () => {
         getPairings(SAMPLE_ODD_MATCH_TIERED_PLAYERS, false)
       ).toEqual([['0', '1'], ['2', '3']]);
     });
-
-    it('should leave last vertex alone as the bye', () => {
-      expect(getPairings(generateEmptyPlayers(5), false)).toEqual([['0', '1'], ['3', '4'], ['2']])
-    })
   });
 });
