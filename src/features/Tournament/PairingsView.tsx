@@ -8,6 +8,10 @@ import type { Player } from './Player/types';
 import { alterWithCompletedMatch } from './Player/utils/player';
 import { submitMatchResult } from './state/tournamentSlice';
 
+import OutlinedInput from '@mui/material/OutlinedInput';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+
 const PairingsViewContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -21,8 +25,8 @@ const PairingsList = styled.div`
 interface PairingProps {
   pairing: string[];
   idx: number;
-  expandedPairing: number | boolean,
-  setExpandedPairing: Function
+  expandedPairing: number | boolean;
+  setExpandedPairing: Function;
 }
 
 export const Pairing = (props: PairingProps) => {
@@ -37,7 +41,7 @@ export const Pairing = (props: PairingProps) => {
   const matchResults: Match[] = useSelector(
     (state: RootState) => state.tournament.matchResults
   );
-  
+
   const existingMatch: Match | undefined = matchResults.find(
     (match: Match) =>
       match.playerIds[0] === props.pairing[0] &&
@@ -50,10 +54,15 @@ export const Pairing = (props: PairingProps) => {
   const secondPlayer: Player = players.find(
     player => player.id === props.pairing[1]
   )!;
-  
+
   React.useEffect(() => {
     if (secondPlayer?.id === 'bye') {
-      dispatch((submitMatchResult({ playerIds: [props.pairing[0], 'bye'], result: 'win'})))
+      dispatch(
+        submitMatchResult({
+          playerIds: [props.pairing[0], 'bye'],
+          result: 'win',
+        })
+      );
     }
   }, [round]);
 
@@ -62,24 +71,27 @@ export const Pairing = (props: PairingProps) => {
       key={props.idx}
       completedMatch={existingMatch}
       expanded={props.expandedPairing === props.idx}
-      handleChange={() =>
-        (event: React.SyntheticEvent, isExpanded: boolean) => {
-          props.setExpandedPairing(isExpanded ? props.idx : false);
-        }}
+      handleChange={() => (event: React.SyntheticEvent, isExpanded: boolean) => {
+        props.setExpandedPairing(isExpanded ? props.idx : false);
+      }}
       firstPlayer={alterWithCompletedMatch(firstPlayer, existingMatch)}
       secondPlayer={alterWithCompletedMatch(secondPlayer, existingMatch)}
       table={props.idx + 1}
     />
   );
-}
+};
 
 export const PairingsView = () => {
   const [expandedPairing, setExpandedPairing] = React.useState<
     number | boolean
   >(false);
+  const [searchQuery, setSearchQuery] = React.useState<string>('');
 
   const round: number = useSelector(
     (state: RootState) => state.tournament.round
+  );
+  const players: Player[] = useSelector(
+    (state: RootState) => state.tournament.players
   );
   const pairings: string[][] = useSelector(
     (state: RootState) => state.tournament.pairings
@@ -98,11 +110,38 @@ export const PairingsView = () => {
     setExpandedPairing(false);
   }, [matchResults.length]);
 
+  const prunedPairings =
+    searchQuery === ''
+      ? pairings
+      : pairings.filter(
+          (pairing, idx) =>
+            players
+              .find(player => player.id === pairing[0])
+              ?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            players
+              .find(player => player.id === pairing[1])
+              ?.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
   return (
     <PairingsViewContainer>
+      <FormControl>
+        <InputLabel htmlFor='component-outlined'>Search</InputLabel>
+        <OutlinedInput
+          id='component-outlined'
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          label='Search'
+        />
+      </FormControl>
       <PairingsList>
-        {pairings.map((pairing: string[], idx: number) => (
-          <Pairing pairing={pairing} idx={idx} expandedPairing={expandedPairing} setExpandedPairing={setExpandedPairing}/>
+        {prunedPairings.map((pairing: string[], idx: number) => (
+          <Pairing
+            pairing={pairing}
+            idx={idx}
+            expandedPairing={expandedPairing}
+            setExpandedPairing={setExpandedPairing}
+          />
         ))}
       </PairingsList>
     </PairingsViewContainer>
