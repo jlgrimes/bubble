@@ -18,6 +18,7 @@ describe('Tournament', () => {
       maxRounds: 5,
       topCut: undefined,
       viewState: 'tournament' as ViewState,
+      deterministicPairing: true
     },
   };
   describe('match result actions', () => {
