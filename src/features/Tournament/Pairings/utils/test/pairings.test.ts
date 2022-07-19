@@ -17,14 +17,6 @@ describe('pairings utils', () => {
     it('should sort pairings out of order', () => {
       expect(sortMatchingTables([['5', '6'], ['1', '2']], players)).toEqual([['1', '2'], ['5', '6']]);
     });
-
-    it('should sort players out of order', () => {
-      expect(sortMatchingTables([['2', '1'], ['6', '5']], players)).toEqual([['1', '2'], ['5', '6']]);
-    });
-
-    it('should sort pairings and players out of order', () => {
-      expect(sortMatchingTables([['6', '5'], ['2', '1']], players)).toEqual([['1', '2'], ['5', '6']]);
-    });
   });
 
   describe('getPairings', () => {

@@ -1,0 +1,1 @@
+export type ViewState = 'tournament' | 'standings' | 'top-cut' | 'final-standings';

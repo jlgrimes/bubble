@@ -8,7 +8,11 @@ export const getWinPercentage = (player: Player | undefined): number => {
   return player.matches.filter((match: PlayerMatch) => match.result === 'win').length / player.matches.length
 }
 
-export const calculateResistance = (player: Player, players: Player[]): number => {
+export const calculateResistance = (player: Player | undefined, players: Player[]): number => {
+  if (!player) {
+    return 0;
+  }
+
   let resistance: number = 0;
 
   for (const { opponentId } of player.matches) {
@@ -17,3 +21,13 @@ export const calculateResistance = (player: Player, players: Player[]): number =
 
   return resistance / player.matches.length;
 };
+
+export const calculateOpponentOpponentWinRate = (player: Player, players: Player[]): number => {
+  let opponentOpponentWinRate: number = 0;
+
+  for (const { opponentId } of player.matches) {
+    opponentOpponentWinRate += calculateResistance(players.find((player) => player.id === opponentId), players)
+  }
+
+  return opponentOpponentWinRate / player.matches.length;
+}

@@ -149,7 +149,6 @@ export const getPairings = (
   if (maxMatchingGraph.unpairedNodes().length > 0) {
     maxMatching.push(maxMatchingGraph.unpairedNodes());
   }
-  console.log(maxMatching)
 
   const sortedMatching = sortMatchingTables(maxMatching, players);
 

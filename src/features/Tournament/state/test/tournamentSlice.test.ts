@@ -6,6 +6,7 @@ import reducer, {
   removePlayer,
 } from '../tournamentSlice';
 import { TournamentState } from '../TournamentState';
+import { ViewState } from '../ViewState';
 
 describe('tournament reducers', () => {
   const initialState: TournamentState = {
@@ -14,7 +15,8 @@ describe('tournament reducers', () => {
     players: [],
     matchResults: [],
     maxRounds: 5,
-    topCut: undefined
+    topCut: undefined,
+    viewState: 'tournament'
   }
 
   describe('addPlayer', () => {
@@ -50,7 +52,8 @@ describe('tournament reducers', () => {
         ],
         deterministicPairing: true,
         maxRounds: 5,
-        topCut: undefined
+        topCut: undefined,
+        viewState: 'tournament' as ViewState
       };
       expect(reducer(previousState, nextRound())).toMatchSnapshot();
     });

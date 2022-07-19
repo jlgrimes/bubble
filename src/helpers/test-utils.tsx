@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 
 import { setupStore } from '../app/store'
 import type { AppStore, RootState } from '../app/store'
+import { initialState } from '../features/Tournament/state/tournamentSlice'
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -25,7 +26,8 @@ export function renderWithProviders(
         players: [],
         matchResults: [],
         maxRounds: 5,
-        topCut: undefined
+        topCut: undefined,
+        viewState: 'tournament'
       }
     },
     // Automatically create a store instance if no store was passed in

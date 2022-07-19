@@ -6,22 +6,24 @@ import {
   SAMPLE_PAIRINGS,
   SAMPLE_SORTED_PLAYER_LIST,
 } from '../../../helpers/testConstants';
-import { getPairings } from '../Pairings/utils/pairings';
+import { ViewState } from '../state/ViewState';
 
 describe('Tournament', () => {
+  const preloadedState = {
+    tournament: {
+      round: 0,
+      pairings: SAMPLE_PAIRINGS,
+      players: SAMPLE_SORTED_PLAYER_LIST,
+      matchResults: [],
+      maxRounds: 5,
+      topCut: undefined,
+      viewState: 'tournament' as ViewState,
+    },
+  };
   describe('match result actions', () => {
     it('should reflect on UI when win is assigned', () => {
       renderWithProviders(<Tournament />, {
-        preloadedState: {
-          tournament: {
-            round: 0,
-            pairings: SAMPLE_PAIRINGS,
-            players: SAMPLE_SORTED_PLAYER_LIST,
-            matchResults: [],
-            maxRounds: 5,
-            topCut: undefined
-          },
-        },
+        preloadedState,
       });
 
       expect(screen.getByLabelText('Jared').textContent).toBe('Jared2-0 (6)');
@@ -36,16 +38,7 @@ describe('Tournament', () => {
 
     it('should reflect on UI when tie is assigned', () => {
       renderWithProviders(<Tournament />, {
-        preloadedState: {
-          tournament: {
-            round: 0,
-            pairings: SAMPLE_PAIRINGS,
-            players: SAMPLE_SORTED_PLAYER_LIST,
-            matchResults: [],
-            maxRounds: 5,
-            topCut: undefined
-          },
-        },
+        preloadedState,
       });
 
       fireEvent.click(screen.getByLabelText('Jared'));
@@ -57,16 +50,7 @@ describe('Tournament', () => {
 
     it('should reflect on UI when double game loss is assigned', () => {
       renderWithProviders(<Tournament />, {
-        preloadedState: {
-          tournament: {
-            round: 0,
-            pairings: SAMPLE_PAIRINGS,
-            players: SAMPLE_SORTED_PLAYER_LIST,
-            matchResults: [],
-            maxRounds: 5,
-            topCut: undefined
-          },
-        },
+        preloadedState,
       });
 
       fireEvent.click(screen.getByLabelText('Jared'));
@@ -78,16 +62,7 @@ describe('Tournament', () => {
 
     it('should reset pairing when pairing is unsubmitted', () => {
       renderWithProviders(<Tournament />, {
-        preloadedState: {
-          tournament: {
-            round: 0,
-            pairings: SAMPLE_PAIRINGS,
-            players: SAMPLE_SORTED_PLAYER_LIST,
-            matchResults: [],
-            maxRounds: 5,
-            topCut: undefined
-          },
-        },
+        preloadedState,
       });
 
       expect(screen.getByLabelText('Jared').textContent).toBe('Jared2-0 (6)');
@@ -113,16 +88,7 @@ describe('Tournament', () => {
       const players = generateEmptyPlayers(4);
 
       renderWithProviders(<Tournament />, {
-        preloadedState: {
-          tournament: {
-            round: 0,
-            pairings: getPairings(players, false),
-            players: players,
-            matchResults: [],
-            maxRounds: 5,
-            topCut: undefined
-          },
-        },
+        preloadedState,
       });
 
       fireEvent.click(screen.getByLabelText('Player 0'));
@@ -133,8 +99,12 @@ describe('Tournament', () => {
 
       fireEvent.click(screen.getByLabelText('Generate next round pairings'));
 
-      expect(screen.getByLabelText('Table 1 pairings').textContent).toBe('Player 01-0 (3)Table 1Player 21-0 (3)');
-      expect(screen.getByLabelText('Table 2 pairings').textContent).toBe('Player 10-1 (0)Table 2Player 30-1 (0)');
+      expect(screen.getByLabelText('Table 1 pairings').textContent).toBe(
+        'Player 01-0 (3)Table 1Player 21-0 (3)'
+      );
+      expect(screen.getByLabelText('Table 2 pairings').textContent).toBe(
+        'Player 10-1 (0)Table 2Player 30-1 (0)'
+      );
     });
   });
 });

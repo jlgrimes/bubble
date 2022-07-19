@@ -13,7 +13,8 @@ export const initialState: TournamentState = {
   players: generateEmptyPlayers(16),
   matchResults: [],
   maxRounds: 4,
-  topCut: undefined
+  topCut: undefined,
+  viewState: 'tournament'
 };
 
 const tournamentSlice = createSlice({

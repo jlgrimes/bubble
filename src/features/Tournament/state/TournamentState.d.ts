@@ -1,5 +1,6 @@
 import type { Pairing, Match } from "../Pairings/types";
 import type { Player } from "../Player/types";
+import { ViewState } from "./ViewState";
 
 export type TopCutType = 'top-eight' | 'top-four' | undefined;
 
@@ -10,5 +11,6 @@ export interface TournamentState {
   matchResults: Match[],
   maxRounds: number,
   topCut: TopCutType, 
-  deterministicPairing?: boolean
+  deterministicPairing?: boolean,
+  viewState: ViewState
 }
