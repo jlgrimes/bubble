@@ -84,15 +84,24 @@ describe('Tournament', () => {
   });
 
   describe('round pairings', () => {
-    it('should pair players who won together, lost together', () => {
+    it('should pair players who won together, lost together', async () => {
       const players = generateEmptyPlayers(4);
 
       renderWithProviders(<Tournament />, {
-        preloadedState,
+        preloadedState: {
+          ...preloadedState,
+          tournament: {
+            ...preloadedState.tournament,
+            players
+          }
+        }
       });
 
       fireEvent.click(screen.getByLabelText('Player 0'));
       fireEvent.click(screen.getByLabelText('Mark win'));
+
+      // Give accordion time to collapse and unmount.
+      await new Promise((r) => setTimeout(r, 300));
 
       fireEvent.click(screen.getByLabelText('Player 2'));
       fireEvent.click(screen.getByLabelText('Mark win'));

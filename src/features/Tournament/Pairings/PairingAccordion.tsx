@@ -38,7 +38,7 @@ const AccordionSummary = styled(MuiAccordionSummary)`
 `;
 
 const PairingAccordion = (props: PairingAccordionProps) => {
-  const [renderAccordionDetails, setRenderAccordionDetails] = React.useState<boolean>(true);
+  const [renderAccordionDetails, setRenderAccordionDetails] = React.useState<boolean>(false);
   const [accordionExpanded, setAccordionExpanded] = React.useState<boolean>(false);
   
 
