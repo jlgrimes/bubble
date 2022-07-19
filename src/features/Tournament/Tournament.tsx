@@ -22,11 +22,13 @@ export const Tournament = () => {
 
   return (
     <Stack spacing={4}>
-      <Paper>
-        <TournamentStateView />
-      </Paper>
       {viewState === 'tournament' ? (
-        <PairingsView />
+        <>
+          <Paper>
+            <TournamentStateView />
+          </Paper>
+          <PairingsView />
+        </>
       ) : viewState === 'standings' ? (
         <Standings />
       ) : null}
