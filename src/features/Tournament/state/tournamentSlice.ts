@@ -7,6 +7,7 @@ import { applyMatchResultsToPlayers } from '../Player/utils/player';
 import { generateEmptyPlayers } from '../../../helpers/testConstants';
 import { recommendedRounds } from '../Pairings/utils/rounds';
 import { byePlayer } from './constants';
+import { getStandings } from '../Standings/utils/standings';
 
 export const initialState: TournamentState = {
   round: 0,
@@ -86,6 +87,9 @@ const tournamentSlice = createSlice({
         state.matchResults.push({ playerIds: lastPairing, result: 'win' });
       }
     },
+    generateStandings(state) {
+      state.standings = getStandings(state.players);
+    },
     /**
      * For testing. Assigns wins to the first player.
      */
@@ -94,6 +98,9 @@ const tournamentSlice = createSlice({
         state.matchResults.push({ playerIds: pairing, result: 'win' });
       }
     },
+    enterCut(state) {
+      state.viewState = 'top-cut';
+    }
   },
 });
 
@@ -105,5 +112,6 @@ export const {
   unsubmitMatchResult,
   nextRound,
   autoWins,
+  generateStandings,
 } = tournamentSlice.actions;
 export default tournamentSlice.reducer;

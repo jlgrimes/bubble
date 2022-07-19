@@ -12,5 +12,6 @@ export interface TournamentState {
   maxRounds: number,
   topCut: TopCutType, 
   deterministicPairing?: boolean,
-  viewState: ViewState
+  viewState: ViewState,
+  standings?: Player[]
 }
