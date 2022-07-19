@@ -11,6 +11,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './app/store';
 import { Tournament } from './features/Tournament/Tournament';
+import { PageRenderer } from './pages/PageRenderer';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,6 +22,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<div>home</div>} />
+          <Route path="about" element={<PageRenderer path='./About.md' />} />
           <Route path="tournament" element={<Tournament />} />
         </Route>
       </Routes>
