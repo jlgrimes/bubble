@@ -9,7 +9,7 @@ import type { MatchFilter } from './Pairings/types';
 
 import Grid from '@mui/material/Grid';
 import { prunePairings } from './Pairings/utils/ui';
-import { TournamentOptionsCard } from './TournamentOptionsCard';
+import { TournamentOptionsCard } from './Options/TournamentOptionsCard';
 
 const PairingsList = styled.div`
   text-align: center;

@@ -3,7 +3,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import FormLabel from '@mui/material/FormLabel';
-import type { MatchFilter } from '../types';
+import type { MatchFilter } from '../Pairings/types';
 
 interface PairingsFiltersProps {
   completedMatchFilter: MatchFilter;
