@@ -42,7 +42,7 @@ export const PairingButtons = (props: PairingButtonProps) => {
         size='large'
         disabled={!!props.completedMatch}
       >
-        <Button aria-label='Mark win' onClick={() => handleClick('win')}>
+        <Button aria-label={`Mark win ${props.firstPlayer.name}`} onClick={() => handleClick('win')}>
           Win
         </Button>
         {viewState !== 'top-cut' && (
@@ -50,7 +50,7 @@ export const PairingButtons = (props: PairingButtonProps) => {
             Tie
           </Button>
         )}
-        <Button aria-label='Mark loss' onClick={() => handleClick('loss')}>
+        <Button aria-label={`Mark win ${props.secondPlayer.name}`} onClick={() => handleClick('loss')}>
           Win
         </Button>
       </ButtonGroup>

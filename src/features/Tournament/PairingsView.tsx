@@ -77,6 +77,7 @@ export const PairingsView = () => {
               idx={idx}
               expandedPairing={expandedPairing}
               setExpandedPairing={setExpandedPairing}
+              key={idx}
             />
           ))}
         </PairingsList>

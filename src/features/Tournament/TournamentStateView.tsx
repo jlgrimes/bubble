@@ -1,7 +1,7 @@
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../../app/store';
 import { autoWins, enterCut, nextRound } from './state/tournamentSlice';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
@@ -60,16 +60,23 @@ const StandingsButtons = () => {
 
   return (
     <ButtonRowContainer>
-      <Button onClick={() => dispatch(enterCut())}>
+      <Button aria-label='Enter top cut' onClick={() => dispatch(enterCut())}>
         Enter top cut
       </Button>
     </ButtonRowContainer>
-  )
-}
+  );
+};
 
 export const TournamentStateView = () => {
-  const shouldRenderTournamentButtons: boolean = useSelector((state: RootState) => state.tournament.viewState === 'tournament' || state.tournament.viewState === 'top-cut');
-  const shouldEnterCut: boolean = useSelector((state: RootState) => !!state.tournament.topCut && state.tournament.viewState === 'standings');
+  const shouldRenderTournamentButtons: boolean = useSelector(
+    (state: RootState) =>
+      state.tournament.viewState === 'tournament' ||
+      state.tournament.viewState === 'top-cut'
+  );
+  const shouldEnterCut: boolean = useSelector(
+    (state: RootState) =>
+      !!state.tournament.topCut && state.tournament.viewState === 'standings'
+  );
 
   return (
     <div>

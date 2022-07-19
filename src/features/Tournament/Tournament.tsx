@@ -17,7 +17,10 @@ export const Tournament = () => {
   );
 
   React.useEffect(() => {
-    dispatch(startTournament());
+    // Sometimes, view state will not be initially set to tournament, in the event of a test.
+    if (viewState === 'tournament') {
+      dispatch(startTournament());
+    }
   }, []);
 
   return (
