@@ -5,10 +5,11 @@ import type { Player } from '../Player/types';
 import { calculateOpponentOpponentWinRate, calculateResistance, getStylizedPercentage } from './utils/resistance';
 import styled from '@emotion/styled';
 import { getStylizedRecord } from '../Player/utils/record';
-import confetti from 'canvas-confetti';
 import { generateStandings } from '../state/tournamentSlice';
 import Grid from '@mui/material/Grid';
 import { TournamentOptionsCard } from '../Options/TournamentOptionsCard';
+import { lotsOfConfetti, smallConfetti } from '../../../helpers/confetti-blast';
+import { ViewState } from '../state/ViewState';
 
 export const StandingContainer = styled.div`
   display: flex;
@@ -24,15 +25,21 @@ export const Standings = () => {
   const standings: Player[] | undefined = useSelector(
     (state: RootState) => state.tournament.standings
   );
+  const viewState: ViewState = useSelector(
+    (state: RootState) => state.tournament.viewState
+  );
+
 
   React.useEffect(() => {
     dispatch(generateStandings());
 
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
+    if (viewState === 'standings') {
+      smallConfetti();
+    }
+
+    if (viewState === 'final-standings') {
+      lotsOfConfetti();
+    }
   }, []);
 
   return (

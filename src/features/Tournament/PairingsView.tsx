@@ -11,7 +11,7 @@ import { PairingFilter } from './Options/PairingFilter';
 import Grid from '@mui/material/Grid';
 import { prunePairings } from './Pairings/utils/ui';
 import { TournamentOptionsCard } from './Options/TournamentOptionsCard';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 const PairingsList = styled.div`
   text-align: center;
@@ -63,7 +63,7 @@ export const PairingsView = () => {
 
   return (
     <Grid container spacing={{ xs: 2, md: 3 }}>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={3}>
         <TournamentOptionsCard
           completedMatchFilter={completedMatchFilter}
           setCompletedMatchFilter={setCompletedMatchFilter}
@@ -87,6 +87,9 @@ export const PairingsView = () => {
                 key={idx}
               />
             ))}
+            {prunedPairings.length === 0 && (
+              <Typography>No pairings with selected filters :(</Typography>
+            )}
           </PairingsList>
         </Stack>
       </Grid>
