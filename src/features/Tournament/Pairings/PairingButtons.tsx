@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { submitMatchResult } from '../state/tournamentSlice';
+import { dropPlayer, submitMatchResult } from '../state/tournamentSlice';
 import type { MatchResult, Match } from './types';
 import type { Player } from '../Player/types';
 import { PairingRepairConfirmationModal } from './PairingRepairConfirmationModal';
@@ -32,6 +32,8 @@ export const PairingButtons = (props: PairingButtonProps) => {
     dispatch(submitMatchResult({ playerIds, result }));
   };
 
+  const eitherPlayerDropped: boolean = !!props.firstPlayer.dropped || !!props.secondPlayer.dropped;
+
   return (
     <div>
       <PairingRepairConfirmationModal
@@ -51,8 +53,9 @@ export const PairingButtons = (props: PairingButtonProps) => {
             </Button>
             <Button
               aria-label={`Drop ${props.firstPlayer.name}`}
-              onClick={() => {}}
+              onClick={() => dispatch(dropPlayer(props.firstPlayer.id))}
               color='error'
+              disabled={props.firstPlayer.dropped}
             >
               Drop
             </Button>
@@ -94,8 +97,9 @@ export const PairingButtons = (props: PairingButtonProps) => {
             </Button>
             <Button
               aria-label={`Drop ${props.secondPlayer.name}`}
-              onClick={() => {}}
+              onClick={() => dispatch(dropPlayer(props.secondPlayer.id))}
               color='error'
+              disabled={props.secondPlayer.dropped}
             >
               Drop
             </Button>
@@ -103,7 +107,7 @@ export const PairingButtons = (props: PairingButtonProps) => {
         </Grid>
       </Grid>
       <div>
-        {props.completedMatch && (
+        {props.completedMatch && !eitherPlayerDropped && (
           <Button
             aria-label='Unsubmit match result'
             onClick={() => setRepairModalOpen(true)}

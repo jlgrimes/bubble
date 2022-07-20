@@ -15,6 +15,7 @@ interface PlayerCardProps {
   name: string;
   record: string;
   matchResult?: MatchResult;
+  dropped?: boolean;
 }
 
 export const PlayerCardContainer = styled(PairingHeaderCard)`
@@ -28,7 +29,7 @@ export const PlayerCardContainer = styled(PairingHeaderCard)`
 export const PlayerCard = (props: PlayerCardProps) => {
   return (
     <PlayerCardContainer {...props} aria-label={props.name}>
-      <PlayerName>{props.name}</PlayerName>
+      <PlayerName>{props.name + (props.dropped ? ' (dropped)' : '')}</PlayerName>
       <PlayerRecord variant='caption'>{props.record}</PlayerRecord>
     </PlayerCardContainer>
   );

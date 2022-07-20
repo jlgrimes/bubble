@@ -121,3 +121,16 @@ export const alterWithCompletedMatch = (
 
   return getUpdatedPlayerAfterMatch(player, existingMatch);
 };
+
+export const dropPlayerFromPlayers = (playerId: string, players: Player[]): Player[] => {
+  return players.map(player => {
+    if (player.id === playerId) {
+      return {
+        ...player,
+        dropped: true,
+      };
+    }
+
+    return player;
+  });
+};

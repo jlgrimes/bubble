@@ -2,6 +2,8 @@ import type { Player } from '../../Player/types/Player';
 // import maximumMatching, { iter } from '@graph-algorithm/maximum-matching';
 import { MatchingGraph, maximumMatchingGraph } from 'maximum-matching';
 import { shuffle } from '../../../../helpers/shuffle';
+import { getActivePlayers } from '../../Player/utils/player';
+import { byePlayer } from '../../state/constants';
 
 const reducePlayersToMatchPointTiers = (players: Player[]): Player[][] => {
   return Object.values(

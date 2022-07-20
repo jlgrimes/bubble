@@ -45,6 +45,7 @@ export const PairingHeader = (props: PairingHeaderProps) => {
                   .result
               : undefined
           }
+          dropped={props.firstPlayer.dropped}
         />
       </Grid>
       <Grid xs={4}>
@@ -65,6 +66,7 @@ export const PairingHeader = (props: PairingHeaderProps) => {
                   ).result
                 : undefined
             }
+            dropped={props.secondPlayer.dropped}
           />
         ) : (
           <ByeCard />

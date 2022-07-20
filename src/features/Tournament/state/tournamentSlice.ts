@@ -3,19 +3,27 @@ import { getPairings } from '../Pairings/utils/pairings';
 import { Player } from '../Player/types';
 import { Match } from '../Pairings/types';
 import type { TournamentState } from './TournamentState';
-import { applyMatchResultsToPlayers } from '../Player/utils/player';
+import {
+  applyMatchResultsToPlayers,
+  dropPlayerFromPlayers,
+  getActivePlayers,
+} from '../Player/utils/player';
 import { generateEmptyPlayers } from '../../../helpers/testConstants';
 import { recommendedRounds } from '../Pairings/utils/rounds';
 import { byePlayer } from './constants';
 import { getStandings } from '../Standings/utils/standings';
-import { getNextRoundTopCutPairings, getTopCutPairings, getTopCutPlayers } from '../Pairings/utils/top-cut';
+import {
+  getNextRoundTopCutPairings,
+  getTopCutPairings,
+  getTopCutPlayers,
+} from '../Pairings/utils/top-cut';
 
 export const initialState: TournamentState = {
   round: 0,
   pairings: [],
-  players: generateEmptyPlayers(48),
+  players: generateEmptyPlayers(10),
   matchResults: [],
-  maxRounds: 5,
+  maxRounds: 3,
   topCut: 'top-eight',
   viewState: 'tournament',
 };
@@ -86,7 +94,7 @@ const tournamentSlice = createSlice({
 
         state.matchResults = [];
         state.round += 1;
-  
+
         return;
       }
 
@@ -96,7 +104,17 @@ const tournamentSlice = createSlice({
         return;
       }
 
-      state.pairings = getPairings(updatedPlayers, !state.deterministicPairing);
+      // If there's an odd number of players, add the bye player if it doesn't already exist.
+      // If the bye player already exists and it's an odd number, remove it before pairing.
+      if (getActivePlayers(state.players).length % 2 !== 0) {
+        if (state.players.some(player => player.id === 'bye')) {
+          state.players = state.players.filter(player => player.id !== 'bye')
+        } else {
+          state.players.push(byePlayer);
+        }
+      }
+      
+      state.pairings = getPairings(getActivePlayers(state.players), !state.deterministicPairing);
       state.round += 1;
 
       // Pushes bye win
@@ -118,17 +136,70 @@ const tournamentSlice = createSlice({
     },
     enterCut(state) {
       if (!state.standings) {
-        throw Error('Standings should be defined at this point.')
+        throw Error('Standings should be defined at this point.');
       }
 
       state.round = 1;
       const newPlayers = getTopCutPlayers(state.standings, state.topCut);
-      state.players = newPlayers
+      state.players = newPlayers;
       state.pairings = getTopCutPairings(state.players);
       // 3 rounds for top 8, 2 rounds for top 4
       state.maxRounds = recommendedRounds(state.players.length);
       state.viewState = 'top-cut';
-    }
+    },
+    /**
+     * Drop player from the tournament.
+     *
+     * @param state
+     * @param action Payload is ID of the player being dropped
+     */
+    dropPlayer(state, action: PayloadAction<string>) {
+      const droppedPlayerId = action.payload;
+      const existingPairing = state.pairings.find(pairing =>
+        pairing.includes(droppedPlayerId)
+      );
+
+      // If their match hasn't completed yet, give the other player a win
+      if (
+        !state.matchResults.some(matchResult =>
+          matchResult.playerIds.includes(droppedPlayerId)
+        )
+      ) {
+        state.matchResults = state.matchResults.filter(
+          matchResult => matchResult.playerIds[0] !== existingPairing[0]
+        );
+        if (existingPairing[0] === droppedPlayerId) {
+          state.matchResults.push({
+            playerIds: existingPairing,
+            result: 'loss',
+          });
+        } else {
+          state.matchResults.push({
+            playerIds: existingPairing,
+            result: 'win',
+          });
+        }
+      } else {
+        // In the unusual scenario where a player drops immediately after the player they're paired against..
+        // Otherwise in this case, don't do anything.
+        if (
+          (existingPairing[0] === droppedPlayerId &&
+            state.players.find(player => player.id === existingPairing[1])?.dropped) ||
+          (existingPairing[1] === droppedPlayerId &&
+            state.players.find(player => player.id === existingPairing[0])?.dropped)
+        ) {
+          state.matchResults = state.matchResults.filter(
+            matchResult => matchResult.playerIds[0] !== existingPairing[0]
+          );
+          state.matchResults.push({
+            playerIds: existingPairing,
+            result: 'double-loss',
+          });
+        }
+      }
+
+      state.players = dropPlayerFromPlayers(action.payload, state.players);
+    },
   },
 });
 
@@ -142,5 +213,6 @@ export const {
   autoWins,
   generateStandings,
   enterCut,
+  dropPlayer,
 } = tournamentSlice.actions;
 export default tournamentSlice.reducer;
