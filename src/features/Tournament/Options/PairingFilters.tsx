@@ -22,7 +22,7 @@ export const PairingFilters = (props: PairingsFiltersProps) => {
               onChange={e => {
                 e.target.checked
                   ? props.setCompletedMatchFilter('completed')
-                  : props.setCompletedMatchFilter(undefined);
+                  : props.setCompletedMatchFilter(null);
               }}
             />
           }
@@ -35,7 +35,7 @@ export const PairingFilters = (props: PairingsFiltersProps) => {
               onChange={e => {
                 e.target.checked
                   ? props.setCompletedMatchFilter('incomplete')
-                  : props.setCompletedMatchFilter(undefined);
+                  : props.setCompletedMatchFilter(null);
               }}
             />
           }

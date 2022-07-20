@@ -7,6 +7,8 @@ import styled from '@emotion/styled';
 import { getStylizedRecord } from '../Player/utils/record';
 import confetti from 'canvas-confetti';
 import { generateStandings } from '../state/tournamentSlice';
+import Grid from '@mui/material/Grid';
+import { TournamentOptionsCard } from '../Options/TournamentOptionsCard';
 
 export const StandingContainer = styled.div`
   display: flex;
@@ -34,16 +36,23 @@ export const Standings = () => {
   }, []);
 
   return (
-    <div>
-      {standings && standings.map((player: Player, idx: number) => (
-        <StandingContainer>
-          <div>{idx + 1}</div>
-          <div>{player.name}</div>
-          <div>{getStylizedRecord(player.record)}</div>
-          <div>{getStylizedPercentage(calculateResistance(player, players))}</div>
-          <div>{getStylizedPercentage(calculateOpponentOpponentWinRate(player, players))}</div>
-        </StandingContainer>
-      ))}
-    </div>
+    <Grid container spacing={{ xs: 2, md: 3 }}>
+      <Grid item xs={12} md={4}>
+        <TournamentOptionsCard />
+      </Grid>
+      <Grid item xs={12} md={8}>
+        <div>
+          {standings && standings.map((player: Player, idx: number) => (
+            <StandingContainer>
+              <div>{idx + 1}</div>
+              <div>{player.name}</div>
+              <div>{getStylizedRecord(player.record)}</div>
+              <div>{getStylizedPercentage(calculateResistance(player, players))}</div>
+              <div>{getStylizedPercentage(calculateOpponentOpponentWinRate(player, players))}</div>
+            </StandingContainer>
+          ))}
+        </div>
+      </Grid>
+    </Grid>
   )
 }

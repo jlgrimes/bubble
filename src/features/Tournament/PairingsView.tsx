@@ -6,10 +6,12 @@ import type { Match } from './Pairings/types';
 import type { Player } from './Player/types';
 import { Pairing } from './Pairings/Pairing';
 import type { MatchFilter } from './Pairings/types';
+import { PairingSearch } from './Options/PairingSearch';
 
 import Grid from '@mui/material/Grid';
 import { prunePairings } from './Pairings/utils/ui';
 import { TournamentOptionsCard } from './Options/TournamentOptionsCard';
+import { Stack } from '@mui/material';
 
 const PairingsList = styled.div`
   text-align: center;
@@ -22,7 +24,7 @@ export const PairingsView = () => {
   >(false);
   const [searchQuery, setSearchQuery] = React.useState<string>('');
   const [completedMatchFilter, setCompletedMatchFilter] =
-    React.useState<MatchFilter>(undefined);
+    React.useState<MatchFilter>(null);
 
   const round: number = useSelector(
     (state: RootState) => state.tournament.round
@@ -65,22 +67,26 @@ export const PairingsView = () => {
         <TournamentOptionsCard
           completedMatchFilter={completedMatchFilter}
           setCompletedMatchFilter={setCompletedMatchFilter}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
         />
       </Grid>
       <Grid item xs={12} md={8}>
-        <PairingsList>
-          {prunedPairings.map((pairing: string[], idx: number) => (
-            <Pairing
-              pairing={pairing}
-              idx={idx}
-              expandedPairing={expandedPairing}
-              setExpandedPairing={setExpandedPairing}
-              key={idx}
-            />
-          ))}
-        </PairingsList>
+        <Stack spacing={2}>
+          <PairingSearch
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <PairingsList>
+            {prunedPairings.map((pairing: string[], idx: number) => (
+              <Pairing
+                pairing={pairing}
+                idx={idx}
+                expandedPairing={expandedPairing}
+                setExpandedPairing={setExpandedPairing}
+                key={idx}
+              />
+            ))}
+          </PairingsList>
+        </Stack>
       </Grid>
     </Grid>
   );

@@ -25,9 +25,6 @@ export const Tournament = () => {
 
   return (
     <Stack spacing={4}>
-      <Paper>
-        <TournamentStateView />
-      </Paper>
       {viewState === 'tournament' || viewState === 'top-cut' ? (
         <PairingsView />
       ) : viewState === 'standings' || viewState === 'final-standings' ? (

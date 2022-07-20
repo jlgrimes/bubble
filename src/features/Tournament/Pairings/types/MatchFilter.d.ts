@@ -1,1 +1,1 @@
-export type MatchFilter = 'completed' | 'incomplete' | undefined;
+export type MatchFilter = 'completed' | 'incomplete' | null;

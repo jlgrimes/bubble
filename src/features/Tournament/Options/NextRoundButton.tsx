@@ -28,6 +28,10 @@ export const NextRoundButton = () => {
     (state: RootState) =>
       !!state.tournament.topCut && state.tournament.viewState === 'standings'
   );
+  const tournamentIsOver: boolean = useSelector(
+    (state: RootState) =>
+      state.tournament.viewState === 'final-standings' || (state.tournament.viewState === 'standings' && !state.tournament.topCut)
+  );
   const buttonText: string = useSelector(
     (state: RootState) => {
       if (state.tournament.round === state.tournament.maxRounds) {
