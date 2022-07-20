@@ -11,6 +11,10 @@ const NextRoundButtonContainer = styled.div`
   display: flex;
   align-items: center;
 
+  .MuiButton-root.Mui-disabled {
+    pointer-events: inherit;
+  }
+
   .MuiSvgIcon-root {
     height: 0.75em;
     padding-bottom: 2px;
@@ -30,23 +34,29 @@ export const NextRoundButton = () => {
   );
   const tournamentIsOver: boolean = useSelector(
     (state: RootState) =>
-      state.tournament.viewState === 'final-standings' || (state.tournament.viewState === 'standings' && !state.tournament.topCut)
+      state.tournament.viewState === 'final-standings' ||
+      (state.tournament.viewState === 'standings' && !state.tournament.topCut)
   );
-  const buttonText: string = useSelector(
-    (state: RootState) => {
-      if (state.tournament.round === state.tournament.maxRounds) {
-        if (state.tournament.viewState === 'tournament' && state.tournament.topCut) {
-          return 'Finish swiss';
-        }
-
-        if (state.tournament.viewState === 'top-cut' || (state.tournament.viewState === 'tournament' && !state.tournament.topCut)) {
-          return 'Complete tournament';
-        }
+  const buttonText: string = useSelector((state: RootState) => {
+    if (state.tournament.round === state.tournament.maxRounds) {
+      if (
+        state.tournament.viewState === 'tournament' &&
+        state.tournament.topCut
+      ) {
+        return 'Finish swiss';
       }
 
-      return 'Next round';
+      if (
+        state.tournament.viewState === 'top-cut' ||
+        (state.tournament.viewState === 'tournament' &&
+          !state.tournament.topCut)
+      ) {
+        return 'Complete tournament';
+      }
     }
-  );
+
+    return 'Next round';
+  });
 
   if (shouldEnterCut) {
     return (
@@ -64,17 +74,19 @@ export const NextRoundButton = () => {
         aria-label='Generate next round pairings'
         onClick={() => dispatch(nextRound())}
         disabled={!allMatchesSubmitted}
+        endIcon={
+          !allMatchesSubmitted && (
+            <Tooltip
+              arrow
+              title='All match results must be submitted before proceeding to the next round.'
+            >
+              <HelpOutlineOutlinedIcon />
+            </Tooltip>
+          )
+        }
       >
         {buttonText}
       </Button>
-      {!allMatchesSubmitted && (
-        <Tooltip
-          arrow
-          title='All match results must be submitted before proceeding to the next round.'
-        >
-          <HelpOutlineOutlinedIcon />
-        </Tooltip>
-      )}
     </NextRoundButtonContainer>
   );
 };
