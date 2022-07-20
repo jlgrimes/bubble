@@ -9,6 +9,8 @@ import type { Player } from '../Player/types';
 import { PairingRepairConfirmationModal } from './PairingRepairConfirmationModal';
 import { ViewState } from '../state/ViewState';
 import { RootState } from '../../../app/store';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
 
 interface PairingButtonProps {
   firstPlayer: Player;
@@ -37,39 +39,70 @@ export const PairingButtons = (props: PairingButtonProps) => {
         setOpen={setRepairModalOpen}
         match={props.completedMatch!}
       />
-      <ButtonGroup
-        variant='contained'
-        size='large'
-        disabled={!!props.completedMatch}
-      >
-        <Button aria-label={`Mark win ${props.firstPlayer.name}`} onClick={() => handleClick('win')}>
-          Win
-        </Button>
-        {viewState !== 'top-cut' && (
-          <Button aria-label='Mark tie' onClick={() => handleClick('tie')}>
-            Tie
-          </Button>
-        )}
-        <Button aria-label={`Mark win ${props.secondPlayer.name}`} onClick={() => handleClick('loss')}>
-          Win
-        </Button>
-      </ButtonGroup>
-      <div>
-        {
-          viewState !== 'top-cut' && (
+      <Grid container>
+        <Grid item xs={4}>
+          <Stack>
             <Button
-              variant='outlined'
-              color='error'
-              aria-label='Mark double game loss'
+              aria-label={`Mark win ${props.firstPlayer.name}`}
               disabled={!!props.completedMatch}
-              onClick={() =>
-                dispatch(submitMatchResult({ playerIds, result: 'double-loss' }))
-              }
+              onClick={() => handleClick('win')}
             >
-              Double game loss
+              Win
             </Button>
-          )
-        }
+            <Button
+              aria-label={`Drop ${props.firstPlayer.name}`}
+              onClick={() => {}}
+              color='error'
+            >
+              Drop
+            </Button>
+          </Stack>
+        </Grid>
+        <Grid item xs={4}>
+          {viewState !== 'top-cut' && (
+            <Stack>
+              <Button
+                aria-label='Mark tie'
+                disabled={!!props.completedMatch}
+                onClick={() => handleClick('tie')}
+              >
+                Tie
+              </Button>
+              <Button
+                color='error'
+                aria-label='Mark double game loss'
+                disabled={!!props.completedMatch}
+                onClick={() =>
+                  dispatch(
+                    submitMatchResult({ playerIds, result: 'double-loss' })
+                  )
+                }
+              >
+                Double loss
+              </Button>
+            </Stack>
+          )}
+        </Grid>
+        <Grid item xs={4}>
+          <Stack>
+            <Button
+              aria-label={`Mark win ${props.secondPlayer.name}`}
+              disabled={!!props.completedMatch}
+              onClick={() => handleClick('loss')}
+            >
+              Win
+            </Button>
+            <Button
+              aria-label={`Drop ${props.secondPlayer.name}`}
+              onClick={() => {}}
+              color='error'
+            >
+              Drop
+            </Button>
+          </Stack>
+        </Grid>
+      </Grid>
+      <div>
         {props.completedMatch && (
           <Button
             aria-label='Unsubmit match result'

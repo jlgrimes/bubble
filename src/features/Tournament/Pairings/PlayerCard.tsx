@@ -21,6 +21,8 @@ export const PlayerCardContainer = styled(PairingHeaderCard)`
   background-color: ${(props: PlayerCardProps) => props.matchResult === 'win' ? '#c3e6cb' : null};
   opacity: ${(props: PlayerCardProps) => props.matchResult === 'loss' ? 0.5 : 1};
   width: 100%;
+  text-align: center;
+  align-items: center;
 `;
 
 export const PlayerCard = (props: PlayerCardProps) => {

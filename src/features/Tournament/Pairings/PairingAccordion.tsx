@@ -1,7 +1,7 @@
 import React from 'react';
 import Accordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import styled from '@emotion/styled';
 
@@ -35,6 +35,10 @@ const AccordionSummary = styled(MuiAccordionSummary)`
   .MuiAccordionSummary-content.Mui-expanded {
     margin: 0;
   }
+`;
+
+const AccordionDetails = styled(MuiAccordionDetails)`
+  padding: 0;
 `;
 
 const PairingAccordion = (props: PairingAccordionProps) => {
