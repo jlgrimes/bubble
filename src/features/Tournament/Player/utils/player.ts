@@ -34,8 +34,13 @@ export const convertMatchToPlayerMatch = (
 
 export const getUpdatedPlayerAfterMatch = (
   player: Player,
-  match: Match
+  match: Match | undefined
 ): Player => {
+  // If no match associated with the player, the player must have dropped, so don't modify.
+  if (!match) {
+    return player;
+  }
+
   const matchResult = convertMatchToPlayerMatch(player, match);
   const newRecord = getUpdatedRecordAfterMatch(
     player.record,
@@ -95,13 +100,7 @@ export const applyMatchResultsToPlayers = (
   matches: Match[],
   players: Player[]
 ): Player[] => {
-  return matches.reduce(
-    (acc: Player[], match: Match) => [
-      ...acc,
-      ...getUpdatedPlayerPairAfterMatch(match, players),
-    ],
-    []
-  );
+  return players.map((player: Player) => getUpdatedPlayerAfterMatch(player, matches.find((match) => match.playerIds.includes(player.id))))
 };
 
 /**

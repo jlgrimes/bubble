@@ -38,7 +38,7 @@ export const PairingHeader = (props: PairingHeaderProps) => {
       <Grid item xs={4}>
         <PlayerCard
           name={props.firstPlayer.name}
-          record={getStylizedRecord(props.firstPlayer.record)}
+          record={getStylizedRecord(props.firstPlayer.record, props.firstPlayer.dropped)}
           matchResult={
             props.completedMatch
               ? convertMatchToPlayerMatch(props.firstPlayer, props.completedMatch)
@@ -57,7 +57,7 @@ export const PairingHeader = (props: PairingHeaderProps) => {
         {props.secondPlayer.id !== 'bye' ? (
           <PlayerCard
             name={props.secondPlayer.name}
-            record={getStylizedRecord(props.secondPlayer.record)}
+            record={getStylizedRecord(props.secondPlayer.record, props.secondPlayer.dropped)}
             matchResult={
               props.completedMatch
                 ? convertMatchToPlayerMatch(

@@ -29,7 +29,7 @@ export const PlayerCardContainer = styled(PairingHeaderCard)`
 export const PlayerCard = (props: PlayerCardProps) => {
   return (
     <PlayerCardContainer {...props} aria-label={props.name}>
-      <PlayerName>{props.name + (props.dropped ? ' (dropped)' : '')}</PlayerName>
+      <PlayerName>{props.name}</PlayerName>
       <PlayerRecord variant='caption'>{props.record}</PlayerRecord>
     </PlayerCardContainer>
   );

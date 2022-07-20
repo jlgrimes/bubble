@@ -28,10 +28,17 @@ export const getMatchPoints = (record: Record): number =>
  * @param record
  * @returns Record as a string.
  */
-export const getStylizedRecord = (record: Record): string => {
+export const getStylizedRecord = (record: Record, dropped?: boolean): string => {
+  let str = ''
   if (record.ties === 0) {
-    return `${record.wins}-${record.losses} (${getMatchPoints(record)})`;
+    str = `${record.wins}-${record.losses} (${getMatchPoints(record)})`;
+  } else {
+    str = `${record.wins}-${record.losses}-${record.ties} (${getMatchPoints(record)})`;
   }
 
-  return `${record.wins}-${record.losses}-${record.ties} (${getMatchPoints(record)})`;
+  if (dropped) {
+    str += ' dropped';
+  }
+
+  return str;
 };

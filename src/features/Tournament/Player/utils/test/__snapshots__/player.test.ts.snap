@@ -27,6 +27,26 @@ Array [
     },
   },
   Object {
+    "id": "1",
+    "matchPoints": 3,
+    "matches": Array [
+      Object {
+        "opponentId": "2",
+        "result": "win",
+      },
+      Object {
+        "opponentId": "1",
+        "result": "loss",
+      },
+    ],
+    "name": "Noah",
+    "record": Object {
+      "losses": 1,
+      "ties": 0,
+      "wins": 1,
+    },
+  },
+  Object {
     "id": "2",
     "matchPoints": 6,
     "matches": Array [
@@ -48,30 +68,6 @@ Array [
       "losses": 1,
       "ties": 0,
       "wins": 2,
-    },
-  },
-  Object {
-    "id": "2",
-    "matchPoints": 3,
-    "matches": Array [
-      Object {
-        "opponentId": "1",
-        "result": "loss",
-      },
-      Object {
-        "opponentId": "3",
-        "result": "win",
-      },
-      Object {
-        "opponentId": "6",
-        "result": "loss",
-      },
-    ],
-    "name": "Ryan",
-    "record": Object {
-      "losses": 2,
-      "ties": 0,
-      "wins": 1,
     },
   },
   Object {

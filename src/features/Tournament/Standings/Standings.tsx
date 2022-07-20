@@ -53,7 +53,7 @@ export const Standings = () => {
             <StandingContainer>
               <div>{idx + 1}</div>
               <div>{player.name}</div>
-              <div>{getStylizedRecord(player.record)}</div>
+              <div>{getStylizedRecord(player.record, player.dropped)}</div>
               <div>{getStylizedPercentage(calculateResistance(player, players))}</div>
               <div>{getStylizedPercentage(calculateOpponentOpponentWinRate(player, players))}</div>
             </StandingContainer>
