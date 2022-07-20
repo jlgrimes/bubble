@@ -8,11 +8,9 @@ import { PlayerCard } from './PlayerCard';
 import { PairingHeaderCard } from './PairingHeaderCard';
 import type { Match } from './types';
 import { ByeCard } from './ByeCard';
+import Grid from '@mui/material/Grid';
 
-const PairingHeaderContainer = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: stretch;
+const PairingHeaderContainer = styled(Grid)`
   background-color: ${(props: PairingHeaderProps) =>
     props.completedMatch?.result === 'tie'
       ? '#ffeeba'
@@ -32,22 +30,30 @@ export const PairingHeader = (props: PairingHeaderProps) => {
   const tableText = `Table ${props.table}`;
 
   return (
-    <PairingHeaderContainer aria-label={`${tableText} pairings`} {...props}>
-      <PlayerCard
-        name={props.firstPlayer.name}
-        record={getStylizedRecord(props.firstPlayer.record)}
-        matchResult={
-          props.completedMatch
-            ? convertMatchToPlayerMatch(props.firstPlayer, props.completedMatch)
-                .result
-            : undefined
-        }
-      />
-      <PairingHeaderCard>
-        <Typography>{tableText}</Typography>
-      </PairingHeaderCard>
-      {
-        props.secondPlayer.id !== 'bye' ? (
+    <PairingHeaderContainer
+      container
+      aria-label={`${tableText} pairings`}
+      {...props}
+    >
+      <Grid item xs={4}>
+        <PlayerCard
+          name={props.firstPlayer.name}
+          record={getStylizedRecord(props.firstPlayer.record)}
+          matchResult={
+            props.completedMatch
+              ? convertMatchToPlayerMatch(props.firstPlayer, props.completedMatch)
+                  .result
+              : undefined
+          }
+        />
+      </Grid>
+      <Grid xs={4}>
+        <PairingHeaderCard>
+          <Typography>{tableText}</Typography>
+        </PairingHeaderCard>
+      </Grid>
+      <Grid xs={4}>
+        {props.secondPlayer.id !== 'bye' ? (
           <PlayerCard
             name={props.secondPlayer.name}
             record={getStylizedRecord(props.secondPlayer.record)}
@@ -62,8 +68,8 @@ export const PairingHeader = (props: PairingHeaderProps) => {
           />
         ) : (
           <ByeCard />
-        )
-      }
+        )}
+      </Grid>
     </PairingHeaderContainer>
   );
 };

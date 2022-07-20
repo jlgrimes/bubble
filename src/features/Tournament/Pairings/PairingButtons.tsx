@@ -58,7 +58,10 @@ export const PairingButtons = (props: PairingButtonProps) => {
         {
           viewState !== 'top-cut' && (
             <Button
+              variant='outlined'
+              color='error'
               aria-label='Mark double game loss'
+              disabled={!!props.completedMatch}
               onClick={() =>
                 dispatch(submitMatchResult({ playerIds, result: 'double-loss' }))
               }

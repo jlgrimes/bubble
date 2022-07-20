@@ -15,7 +15,7 @@ import { Stack } from '@mui/material';
 
 const PairingsList = styled.div`
   text-align: center;
-  width: fit-content;
+  width: 100%;
 `;
 
 export const PairingsView = () => {
@@ -69,7 +69,7 @@ export const PairingsView = () => {
           setCompletedMatchFilter={setCompletedMatchFilter}
         />
       </Grid>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={6}>
         <Stack spacing={2}>
           <PairingFilter
             searchQuery={searchQuery}
