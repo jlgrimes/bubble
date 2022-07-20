@@ -1,13 +1,10 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import type { MatchFilter } from '../Pairings/types';
-import { PairingFilters } from './PairingFilters';
-import { PairingSearch } from './PairingSearch';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../../../app/store';
 import { Grid, Typography } from '@mui/material';
-import Button from '@mui/material/Button';
 import { NextRoundButton } from './NextRoundButton';
 import { AutoWins } from './AutoWins';
 
@@ -51,7 +48,7 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
   const [searchParams] = useSearchParams();
 
   return (
-    <Card>
+    <Card sx={{ p: 3 }}>
       <CardContent>
         <Grid container>
           <Grid item xs={12}>
@@ -65,15 +62,6 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
               <AutoWins />
             </Grid>
           )}
-          {props.completedMatchFilter !== undefined &&
-            props.setCompletedMatchFilter !== undefined && (
-              <Grid item xs={12}>
-                <PairingFilters
-                  completedMatchFilter={props.completedMatchFilter}
-                  setCompletedMatchFilter={props.setCompletedMatchFilter}
-                />
-              </Grid>
-            )}
         </Grid>
       </CardContent>
     </Card>

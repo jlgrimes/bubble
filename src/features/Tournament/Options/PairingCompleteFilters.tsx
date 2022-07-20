@@ -10,10 +10,10 @@ interface PairingsFiltersProps {
   setCompletedMatchFilter: (matchFilter: MatchFilter) => void;
 }
 
-export const PairingFilters = (props: PairingsFiltersProps) => {
+export const PairingCompleteFilters = (props: PairingsFiltersProps) => {
   return (
     <FormControl>
-      <FormLabel htmlFor='pairing-filters'>Filters</FormLabel>
+      <FormLabel htmlFor='pairing-filters'>Only show matches</FormLabel>
       <FormGroup id='pairing-filters'>
         <FormControlLabel
           control={
@@ -26,7 +26,7 @@ export const PairingFilters = (props: PairingsFiltersProps) => {
               }}
             />
           }
-          label='Completed matches'
+          label='Completed'
         />
         <FormControlLabel
           control={
@@ -39,7 +39,7 @@ export const PairingFilters = (props: PairingsFiltersProps) => {
               }}
             />
           }
-          label='Incomplete matches'
+          label='Incomplete'
         />
       </FormGroup>
     </FormControl>

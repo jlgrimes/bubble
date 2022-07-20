@@ -6,7 +6,7 @@ import type { Match } from './Pairings/types';
 import type { Player } from './Player/types';
 import { Pairing } from './Pairings/Pairing';
 import type { MatchFilter } from './Pairings/types';
-import { PairingSearch } from './Options/PairingSearch';
+import { PairingFilter } from './Options/PairingFilter';
 
 import Grid from '@mui/material/Grid';
 import { prunePairings } from './Pairings/utils/ui';
@@ -71,9 +71,11 @@ export const PairingsView = () => {
       </Grid>
       <Grid item xs={12} md={8}>
         <Stack spacing={2}>
-          <PairingSearch
+          <PairingFilter
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
+            completedMatchFilter={completedMatchFilter}
+            setCompletedMatchFilter={setCompletedMatchFilter}
           />
           <PairingsList>
             {prunedPairings.map((pairing: string[], idx: number) => (

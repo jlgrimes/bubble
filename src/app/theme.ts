@@ -1,7 +1,8 @@
-// TODO: implement
-export const theme = {
-  colors: {
-    winBackground: '#c3e6cb',
-    tieBackground: '#ffeeba'
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
   },
-};
+});
+
+export default theme;
