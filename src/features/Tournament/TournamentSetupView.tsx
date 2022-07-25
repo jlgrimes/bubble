@@ -5,6 +5,7 @@ import { Player } from './Player/types';
 import { createPlayer } from './Player/utils/player';
 import { useDispatch } from 'react-redux';
 import { initializeTournament, loadPlayers } from './state/tournamentSlice';
+import { ButtonWithDisabledTooltip } from '../../common/ButtonWithDisabledTooltip';
 
 export const TournamentSetupView = () => {
   const [currentPlayerField, setCurrentPlayerField] =
@@ -14,9 +15,15 @@ export const TournamentSetupView = () => {
 
   return (
     <div>
-      <Button onClick={() => {
-        dispatch(loadPlayers(players));
-      }}>Start tournament</Button>
+      <ButtonWithDisabledTooltip
+        onClick={() => {
+          dispatch(loadPlayers(players));
+        }}
+        disabled={players.length <= 2}
+        disabledTooltipText='Must have more than 2 players to start a tournament.'
+      >
+        Start tournament
+      </ButtonWithDisabledTooltip>
       <TextField
         label='Player name'
         value={currentPlayerField}
@@ -30,9 +37,7 @@ export const TournamentSetupView = () => {
       />
       <div>
         {players.map((player: Player) => (
-          <div>
-            {player.name}
-          </div>
+          <div>{player.name}</div>
         ))}
       </div>
     </div>

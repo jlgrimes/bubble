@@ -1,25 +1,9 @@
-import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../../../app/store';
 import { enterCut, nextRound } from '../state/tournamentSlice';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import styled from '@emotion/styled';
-
-const NextRoundButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-
-  .MuiButton-root.Mui-disabled {
-    pointer-events: inherit;
-  }
-
-  .MuiSvgIcon-root {
-    height: 0.75em;
-    padding-bottom: 2px;
-  }
-`;
+import { ButtonWithDisabledTooltip } from '../../../common/ButtonWithDisabledTooltip';
 
 export const NextRoundButton = () => {
   const [searchParams] = useSearchParams();
@@ -60,33 +44,20 @@ export const NextRoundButton = () => {
 
   if (shouldEnterCut) {
     return (
-      <NextRoundButtonContainer>
-        <Button aria-label='Enter top cut' onClick={() => dispatch(enterCut())}>
-          Enter top cut
-        </Button>
-      </NextRoundButtonContainer>
+      <Button aria-label='Enter top cut' onClick={() => dispatch(enterCut())}>
+        Enter top cut
+      </Button>
     );
   }
 
   return (
-    <NextRoundButtonContainer>
-      <Button
-        aria-label='Generate next round pairings'
-        onClick={() => dispatch(nextRound())}
-        disabled={!allMatchesSubmitted}
-        endIcon={
-          !allMatchesSubmitted && (
-            <Tooltip
-              arrow
-              title='All match results must be submitted before proceeding to the next round.'
-            >
-              <HelpOutlineOutlinedIcon />
-            </Tooltip>
-          )
-        }
-      >
-        {buttonText}
-      </Button>
-    </NextRoundButtonContainer>
-  );
+    <ButtonWithDisabledTooltip
+      aria-label='Generate next round pairings'
+      onClick={() => dispatch(nextRound())}
+      disabled={!allMatchesSubmitted}
+      disabledTooltipText='All match results must be submitted before proceeding to the next round.'
+    >
+      {buttonText}
+    </ButtonWithDisabledTooltip>
+  )
 };
