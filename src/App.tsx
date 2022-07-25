@@ -19,6 +19,7 @@ const SiteLogo = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-grow: 1;
 `;
 
 function App() {
@@ -27,11 +28,12 @@ function App() {
       <AppBar>
         <Toolbar>
           <SiteLogo>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6">
               bubble
             </Typography>
             <BubbleChartIcon />
           </SiteLogo>
+          <Typography>Made by Jared :)</Typography>
         </Toolbar>
       </AppBar>
       <OutletContainer>
