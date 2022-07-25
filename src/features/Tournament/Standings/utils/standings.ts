@@ -5,6 +5,8 @@ import {
 } from './resistance';
 
 export const getStandings = (players: Player[], standings?: Player[]): Player[] => {
+  // Remove the bye player from standings
+  players = players.filter((player) => player.id !== 'bye');
   // If we're generating standings for top cut, players is going to contain top cut players.
   if (standings) {
     const topCutStandings: Player[] = getStandings(players);
