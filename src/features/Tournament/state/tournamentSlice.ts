@@ -71,6 +71,7 @@ const tournamentSlice = createSlice({
         );
       }
       state.round = 1;
+      state.matchResults = addByeWin(state.pairings, state.matchResults);
     },
     submitMatchResult(state, action: PayloadAction<Match>) {
       state.matchResults.push(action.payload);
@@ -115,7 +116,7 @@ const tournamentSlice = createSlice({
       state.pairings = getPairings(
         getActivePlayers(state.players),
         !state.deterministicPairing
-      );
+      );;
       state.round += 1;
 
       state.matchResults = addByeWin(state.pairings, state.matchResults);
@@ -127,7 +128,7 @@ const tournamentSlice = createSlice({
       state.pairings = getPairings(
         getActivePlayers(state.players),
         !state.deterministicPairing
-      );
+      );;
       state.matchResults = addByeWin(state.pairings, state.matchResults);
     },
     generateStandings(state) {

@@ -37,17 +37,6 @@ export const Pairing = (props: PairingProps) => {
     player => player.id === props.pairing[1]
   )!;
 
-  React.useEffect(() => {
-    if (secondPlayer?.id === 'bye') {
-      dispatch(
-        submitMatchResult({
-          playerIds: [props.pairing[0], 'bye'],
-          result: 'win',
-        })
-      );
-    }
-  }, [round]);
-
   return (
     <PairingAccordion
       key={props.idx}
