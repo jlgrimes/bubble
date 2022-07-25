@@ -168,7 +168,7 @@ export const adjustByePlayer = (players: Player[]): Player[] => {
 export const addByeWin = (pairings: string[][], matchResults: Match[]): Match[] => {
   // Pushes bye win
   const lastPairing = pairings[pairings.length - 1];
-  if (lastPairing.length === 1) {
+  if (lastPairing.length === 1 || lastPairing.includes('bye')) {
     return [...matchResults, { playerIds: lastPairing, result: 'win' }]
   }
 
