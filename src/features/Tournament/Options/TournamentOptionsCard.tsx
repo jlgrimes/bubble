@@ -40,11 +40,8 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
       }
     }
 
-    return `Round ${state.tournament.round}`;
+    return `Round ${state.tournament.round} of ${state.tournament.maxRounds}`;
   });
-  const maxRounds = useSelector(
-    (state: RootState) => state.tournament.maxRounds
-  );
   const [searchParams] = useSearchParams();
 
   return (
