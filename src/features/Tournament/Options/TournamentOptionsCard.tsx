@@ -7,6 +7,7 @@ import { RootState } from '../../../app/store';
 import { Grid, Typography } from '@mui/material';
 import { NextRoundButton } from './NextRoundButton';
 import { AutoWins } from './AutoWins';
+import { RepairButton } from './RepairButton';
 
 interface TournamentOptionsCardProps {
   completedMatchFilter?: MatchFilter;
@@ -53,6 +54,9 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
           </Grid>
           <Grid item xs={12}>
             <NextRoundButton />
+          </Grid>
+          <Grid item xs={12}>
+            <RepairButton />
           </Grid>
           {searchParams.get('dev') && (
             <Grid item xs={12}>

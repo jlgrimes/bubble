@@ -58,6 +58,20 @@ export const buildEdgesForMatchPointTier = (
     if (
       player.matches.some(
         playerMatch => playerMatch.opponentId === comparingPlayer.id
+      ) 
+      /**
+       * If a player has dropped, then another player dropped, then another player dropped,
+       * the bye player will be removed then readded. However this will be fine on pairings
+       * since the “pairs” that the program iterates through are first to last, so the bye player
+       * is always the second player. This means that the “pair” for the bye match once the bye
+       * gets introduced in will be [player, bye], so the bye will not be introduced as an edge since the logic checks.
+       * 
+       * This is a safeguard for this to say, if either of the pairings have been “already played”,
+       * don’t add the edge. Complexity wise, it adds overhead for when the first of the || is false,
+       * then it will look for the second one.
+       */
+      || comparingPlayer.matches.some(
+        playerMatch => playerMatch.opponentId === player.id
       )
     ) {
       continue;

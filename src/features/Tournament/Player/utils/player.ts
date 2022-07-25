@@ -4,6 +4,7 @@ import type { Match } from '../../Pairings/types/Match';
 import type { Player, PlayerMatch } from '../types';
 import { getMatchPoints, getUpdatedRecordAfterMatch } from './record';
 import { inverseResult } from '../../Pairings/utils/match';
+import { byePlayer } from '../../state/constants';
 
 export const createPlayer = (name: string): Player => {
   return {
@@ -149,3 +150,27 @@ export const dropPlayerFromPlayers = (playerId: string, players: Player[]): Play
     return player;
   });
 };
+
+export const adjustByePlayer = (players: Player[]): Player[] => {
+  // If there's an odd number of players, add the bye player if it doesn't already exist.
+  // If the bye player already exists and it's an odd number, remove it before pairing.
+  if (getActivePlayers(players).length % 2 !== 0) {
+    if (players.some(player => player.id === 'bye')) {
+      return players.filter(player => player.id !== 'bye');
+    }
+
+    return [...players, byePlayer];
+  }
+
+  return players;
+}
+
+export const addByeWin = (pairings: string[][], matchResults: Match[]): Match[] => {
+  // Pushes bye win
+  const lastPairing = pairings[pairings.length - 1];
+  if (lastPairing.length === 1) {
+    return [...matchResults, { playerIds: lastPairing, result: 'win' }]
+  }
+
+  return matchResults;
+}

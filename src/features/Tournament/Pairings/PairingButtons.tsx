@@ -1,16 +1,15 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { dropPlayer, submitMatchResult } from '../state/tournamentSlice';
+import { dropPlayer, submitMatchResult, unsubmitMatchResult } from '../state/tournamentSlice';
 import type { MatchResult, Match } from './types';
 import type { Player } from '../Player/types';
-import { PairingRepairConfirmationModal } from './PairingRepairConfirmationModal';
 import { ViewState } from '../state/ViewState';
 import { RootState } from '../../../app/store';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
+import { ButtonWithConfirmationModal } from '../../../common/ButtonWithConfirmationModal';
 
 interface PairingButtonProps {
   firstPlayer: Player;
@@ -20,7 +19,6 @@ interface PairingButtonProps {
 
 export const PairingButtons = (props: PairingButtonProps) => {
   const dispatch = useDispatch();
-  const [repairModalOpen, setRepairModalOpen] = React.useState(false);
 
   const playerIds: string[] = [props.firstPlayer.id, props.secondPlayer.id];
 
@@ -36,11 +34,6 @@ export const PairingButtons = (props: PairingButtonProps) => {
 
   return (
     <div>
-      <PairingRepairConfirmationModal
-        open={repairModalOpen}
-        setOpen={setRepairModalOpen}
-        match={props.completedMatch!}
-      />
       <Grid container>
         <Grid item xs={4}>
           <Stack>
@@ -108,12 +101,15 @@ export const PairingButtons = (props: PairingButtonProps) => {
       </Grid>
       <div>
         {props.completedMatch && !eitherPlayerDropped && (
-          <Button
+          <ButtonWithConfirmationModal
             aria-label='Unsubmit match result'
-            onClick={() => setRepairModalOpen(true)}
+            modalTitle='Are you sure you want to unsubmit?'
+            modalContent='Repairing should only be done if match results are incorrectly
+            submitted.'
+            onClick={() => dispatch((unsubmitMatchResult(props.completedMatch!)))}
           >
             Unsubmit match result
-          </Button>
+          </ButtonWithConfirmationModal>
         )}
       </div>
     </div>
