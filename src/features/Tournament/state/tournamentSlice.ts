@@ -11,7 +11,7 @@ import {
   getActivePlayers,
 } from '../Player/utils/player';
 import { generateEmptyPlayers } from '../../../helpers/testConstants';
-import { recommendedRounds } from '../Pairings/utils/rounds';
+import { recommendedRounds, recommendedTopCut } from '../Pairings/utils/rounds';
 import { byePlayer } from './constants';
 import { getStandings } from '../Standings/utils/standings';
 import {
@@ -70,6 +70,7 @@ const tournamentSlice = createSlice({
           !state.deterministicPairing
         );
       }
+      state.topCut = recommendedTopCut(state.players.length);
       state.round = 1;
       state.matchResults = addByeWin(state.pairings, state.matchResults);
     },

@@ -6,7 +6,7 @@ import { repair } from "../state/tournamentSlice";
 
 export const RepairButton = () => {
   const dispatch = useDispatch();
-  const shouldBeDisabled = useSelector((state: RootState) => state.tournament.viewState !== 'tournament');
+  const shouldBeDisabled: boolean = useSelector((state: RootState) => state.tournament.viewState !== 'tournament');
 
   const buttonProps = {
     ariaText: 'Repair'
@@ -16,6 +16,7 @@ export const RepairButton = () => {
     return (
       <ButtonWithDisabledTooltip
         {...buttonProps}
+        disabled
         disabledTooltipText="Cannot repair outside of swiss rounds."
       >
         Repair
