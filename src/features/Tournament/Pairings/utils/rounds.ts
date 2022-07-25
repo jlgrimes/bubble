@@ -2,7 +2,8 @@ import { TopCutType } from "../../state/TournamentState";
 
 // 4.6.3.2 - Single Day Tournament Structures
 export const recommendedRounds = (numPlayers: number) => {
-  if (numPlayers < 4) throw Error('Must have 4 players to run a tournament.');
+  if (numPlayers <= 2) return 1;
+  if (numPlayers <= 4) return 2;
   if (numPlayers <= 8) return 3;
   if (numPlayers <= 12) return 4;
   if (numPlayers <= 20) return 5;

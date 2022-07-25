@@ -25,13 +25,17 @@ export const initialState: TournamentState = {
   matchResults: [],
   maxRounds: 3,
   topCut: 'top-eight',
-  viewState: 'tournament',
+  viewState: 'setup',
 };
 
 const tournamentSlice = createSlice({
   name: 'tournament',
   initialState,
   reducers: {
+    loadPlayers(state, action: PayloadAction<Player[]>) {
+      state.players = action.payload;
+      state.viewState = 'tournament';
+    },
     /**
      * Add player to the tournament before the tournament has started.
      * @param state
@@ -214,5 +218,6 @@ export const {
   generateStandings,
   enterCut,
   dropPlayer,
+  loadPlayers,
 } = tournamentSlice.actions;
 export default tournamentSlice.reducer;

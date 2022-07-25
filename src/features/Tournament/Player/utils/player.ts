@@ -1,7 +1,23 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import type { Match } from '../../Pairings/types/Match';
 import type { Player, PlayerMatch } from '../types';
 import { getMatchPoints, getUpdatedRecordAfterMatch } from './record';
 import { inverseResult } from '../../Pairings/utils/match';
+
+export const createPlayer = (name: string): Player => {
+  return {
+    id: uuidv4(),
+    name,
+    matches: [],
+    record: {
+      wins: 0,
+      ties: 0,
+      losses: 0
+    },
+    matchPoints: 0
+  }
+}
 
 export const getActivePlayers = (players: Player[]): Player[] =>
   players.filter(player => !player.dropped);

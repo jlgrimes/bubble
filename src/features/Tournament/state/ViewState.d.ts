@@ -1,1 +1,1 @@
-export type ViewState = 'tournament' | 'standings' | 'top-cut' | 'final-standings';
+export type ViewState = 'setup' | 'tournament' | 'standings' | 'top-cut' | 'final-standings';

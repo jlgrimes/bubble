@@ -6,9 +6,9 @@ import { RootState } from '../../app/store';
 import { useAppDispatch } from '../../app/hooks';
 import { PairingsView } from './PairingsView';
 import { startTournament } from './state/tournamentThunks';
-import { TournamentStateView } from './TournamentStateView';
 import { ViewState } from './state/ViewState';
 import { Standings } from './Standings/Standings';
+import { TournamentSetupView } from './TournamentSetupView';
 
 export const Tournament = () => {
   const dispatch = useAppDispatch();
@@ -21,11 +21,13 @@ export const Tournament = () => {
     if (viewState === 'tournament') {
       dispatch(startTournament());
     }
-  }, []);
+  }, [viewState]);
 
   return (
     <Stack spacing={4}>
-      {viewState === 'tournament' || viewState === 'top-cut' ? (
+      {viewState === 'setup' ? (
+        <TournamentSetupView />
+      ) : viewState === 'tournament' || viewState === 'top-cut' ? (
         <PairingsView />
       ) : viewState === 'standings' || viewState === 'final-standings' ? (
         <Standings />
