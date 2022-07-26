@@ -30,6 +30,7 @@ export const PairingFilter = (props: PairingSearchProps) => {
 
   return (
     <Input
+      fullWidth
       placeholder='Search Player'
       inputProps={{ 'aria-label': 'search pairings' }}
       value={props.searchQuery}

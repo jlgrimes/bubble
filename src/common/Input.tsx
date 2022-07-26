@@ -7,13 +7,18 @@ import { ReactElement } from 'react';
 import styled from '@emotion/styled';
 
 interface InputProps extends InputBaseProps {
-  startIcon: ReactElement;
-  endIcons: ReactElement;
+  startIcon?: ReactElement;
+  /**
+   * If there's a divider between input and end icons
+   */
+  divider?: boolean;
+  endIcons?: ReactElement;
   setValue: (value: string) => void;
   value: string;
+  fullWidth?: boolean;
 }
 
-const StartIcon = styled.div`
+const PrettyIcon = styled.div`
   padding: 10px;
   opacity: 0.54;
 `;
@@ -21,15 +26,14 @@ const StartIcon = styled.div`
 export const Input = (props: InputProps) => {
   return (
     <Paper
-      component='form'
       sx={{
         p: '2px 4px',
         display: 'flex',
         alignItems: 'center',
-        width: '100%',
+        width: props.fullWidth ? '100%' : 300,
       }}
     >
-      <StartIcon>{props.startIcon}</StartIcon>
+      {props.startIcon && <PrettyIcon>{props.startIcon}</PrettyIcon>}
       <InputBase
         {...props}
         onChange={e => props.setValue(e.target.value)}
@@ -47,12 +51,10 @@ export const Input = (props: InputProps) => {
         }
         fullWidth
       />
-      {props.endIcons && (
-        <>
-          <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
-          {props.endIcons}
-        </>
+      {props.divider && (
+        <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
       )}
+      {props.endIcons}
     </Paper>
   );
 };
