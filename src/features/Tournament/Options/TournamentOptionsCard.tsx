@@ -8,6 +8,7 @@ import { Grid, Typography } from '@mui/material';
 import { NextRoundButton } from './NextRoundButton';
 import { AutoWins } from './AutoWins';
 import { RepairButton } from './RepairButton';
+import { devMode } from '../../../helpers/url';
 
 interface TournamentOptionsCardProps {
   completedMatchFilter?: MatchFilter;
@@ -43,8 +44,6 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
 
     return `Round ${state.tournament.round} of ${state.tournament.maxRounds}`;
   });
-  const [searchParams] = useSearchParams();
-
   return (
     <Card sx={{ p: 3 }}>
       <CardContent>
@@ -58,7 +57,7 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
           <Grid item xs={12}>
             <RepairButton />
           </Grid>
-          {searchParams.get('dev') && (
+          {devMode && (
             <Grid item xs={12}>
               <AutoWins />
             </Grid>

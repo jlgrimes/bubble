@@ -19,16 +19,29 @@ import {
   getTopCutPairings,
   getTopCutPlayers,
 } from '../Pairings/utils/top-cut';
+import { devMode } from '../../../helpers/url';
 
-export const initialState: TournamentState = {
+const initialDevState: TournamentState = {
   round: 0,
   pairings: [],
-  players: generateEmptyPlayers(10),
+  players: generateEmptyPlayers(100),
+  matchResults: [],
+  maxRounds: 3,
+  topCut: 'top-eight',
+  viewState: 'tournament',
+}
+
+const initialProdState: TournamentState = {
+  round: 0,
+  pairings: [],
+  players:[],
   matchResults: [],
   maxRounds: 3,
   topCut: 'top-eight',
   viewState: 'setup',
 };
+
+const initialState = devMode ? initialDevState : initialProdState
 
 const tournamentSlice = createSlice({
   name: 'tournament',

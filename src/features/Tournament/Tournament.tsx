@@ -23,15 +23,11 @@ export const Tournament = () => {
     }
   }, [viewState]);
 
-  return (
-    <Stack spacing={4}>
-      {viewState === 'setup' ? (
-        <TournamentSetupView />
-      ) : viewState === 'tournament' || viewState === 'top-cut' ? (
-        <PairingsView />
-      ) : viewState === 'standings' || viewState === 'final-standings' ? (
-        <Standings />
-      ) : null}
-    </Stack>
-  );
+  return viewState === 'setup' ? (
+    <TournamentSetupView />
+  ) : viewState === 'tournament' || viewState === 'top-cut' ? (
+    <PairingsView />
+  ) : viewState === 'standings' || viewState === 'final-standings' ? (
+    <Standings />
+  ) : null;
 };

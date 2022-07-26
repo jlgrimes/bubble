@@ -28,7 +28,7 @@ export const RepairButton = () => {
     <ButtonWithConfirmationModal
       {...buttonProps}
       modalTitle="Are you sure you want to repair the round?"
-      modalContent="Repairing loses all match data and reverts to the beginning of the round."
+      modalContent="Repairing loses all match data and reverts to the beginning of the round. Dropped players will be applied to new pairings."
       onClick={() => dispatch(repair())}
     >
       Repair

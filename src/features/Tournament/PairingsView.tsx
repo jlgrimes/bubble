@@ -16,6 +16,8 @@ import { Stack, Typography } from '@mui/material';
 const PairingsList = styled.div`
   text-align: center;
   width: 100%;
+  height: 85vh;
+  overflow-x: visible;
 `;
 
 export const PairingsView = () => {
