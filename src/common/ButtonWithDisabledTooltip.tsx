@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import Tooltip from '@mui/material/Tooltip';
+import { Tooltip } from './Tooltip';
 import Button, { ButtonProps } from '@mui/material/Button';
 
 const ButtonWithDisabledTooltipContainer = styled.div`
@@ -30,9 +30,7 @@ export const ButtonWithDisabledTooltip = (props: ButtonWithDisabledTooltipProps)
         endIcon={
           props.disabled && (
             <Tooltip
-              arrow
               title={props.disabledTooltipText}
-              style={{fontSize: '16px'}}
             >
               <HelpOutlineOutlinedIcon />
             </Tooltip>
