@@ -1,19 +1,15 @@
 import { configureStore, Action, PreloadedState } from '@reduxjs/toolkit';
-import tournamentReducer from '../features/Tournament/state/tournamentSlice';
 import { ThunkAction } from 'redux-thunk';
+import rootReducer from './rootReducer';
 
 const store = configureStore({
-  reducer: {
-    tournament: tournamentReducer,
-  },
+  reducer: rootReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
   return configureStore({
-    reducer: {
-      tournament: tournamentReducer,
-    },
-    preloadedState
+    reducer: rootReducer,
+    preloadedState,
   })
 }
 

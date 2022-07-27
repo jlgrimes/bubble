@@ -9,6 +9,7 @@ import { startTournament } from './state/tournamentThunks';
 import { ViewState } from './state/ViewState';
 import { Standings } from './Standings/Standings';
 import { TournamentSetupView } from './TournamentSetupView';
+import { initializeTournament } from './state/tournamentSlice';
 
 export const Tournament = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ export const Tournament = () => {
   React.useEffect(() => {
     // Sometimes, view state will not be initially set to tournament, in the event of a test.
     if (viewState === 'tournament') {
-      dispatch(startTournament());
+      dispatch(initializeTournament());
     }
   }, [viewState]);
 
