@@ -29,19 +29,19 @@ const initialDevState: TournamentState = {
   maxRounds: 3,
   topCut: 'top-eight',
   viewState: 'tournament',
-}
+};
 
 const initialProdState: TournamentState = {
   round: 0,
   pairings: [],
-  players:[],
+  players: [],
   matchResults: [],
   maxRounds: 3,
   topCut: 'top-eight',
   viewState: 'setup',
 };
 
-const initialState = devMode ? initialDevState : initialProdState
+const initialState = devMode ? initialDevState : initialProdState;
 
 const tournamentSlice = createSlice({
   name: 'tournament',
@@ -130,7 +130,7 @@ const tournamentSlice = createSlice({
       state.pairings = getPairings(
         getActivePlayers(state.players),
         !state.deterministicPairing
-      );;
+      );
       state.round += 1;
 
       state.matchResults = addByeWin(state.pairings, state.matchResults);
@@ -142,18 +142,24 @@ const tournamentSlice = createSlice({
       state.pairings = getPairings(
         getActivePlayers(state.players),
         !state.deterministicPairing
-      );;
+      );
       state.matchResults = addByeWin(state.pairings, state.matchResults);
     },
     generateStandings(state) {
       state.standings = getStandings(state.players, state.standings);
     },
     /**
-     * For testing. Assigns wins to the first player.
+     * For testing. Assigns wins to the first player.'
      */
     autoWins(state) {
       for (const pairing of state.pairings) {
-        state.matchResults.push({ playerIds: pairing, result: 'win' });
+        if (
+          !state.matchResults.some(
+            matchResult => matchResult.playerIds[0] === pairing[0]
+          )
+        ) {
+          state.matchResults.push({ playerIds: pairing, result: 'win' });
+        }
       }
     },
     enterCut(state) {
