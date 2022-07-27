@@ -14,6 +14,7 @@ import theme from './app/theme'
 import { Tournament } from './features/Tournament/Tournament';
 import { PageRenderer } from './pages/PageRenderer';
 import { ThemeProvider } from '@mui/material/styles';
+import { PrintablePairings } from './features/Tournament/Printables/PrintablePairings';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -28,6 +29,10 @@ root.render(
             <Route path="about" element={<PageRenderer path='./About.md' />} />
             <Route path="tournament" element={<Tournament />} />
           </Route>
+          <Route
+            path="pairings/:pairings-id"
+            element={<PrintablePairings />}
+          />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
