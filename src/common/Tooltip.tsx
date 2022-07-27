@@ -4,8 +4,8 @@ import MuiTooltip, {
   tooltipClasses,
 } from '@mui/material/Tooltip';
 
-export const Tooltip = styled(({ ...props }: TooltipProps) => (
-  <MuiTooltip arrow {...props} />
+export const Tooltip = styled(({ className, ...props }: TooltipProps) => (
+  <MuiTooltip arrow {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     fontSize: 12.5,
