@@ -77,7 +77,6 @@ export const NextRoundButton = () => {
       aria-label='Generate next round pairings'
       onClick={() => {
         setLoading('tournament');
-        dispatch(nextRound());
       }}
       disabled={!allMatchesSubmitted}
       disabledTooltipText='All match results must be submitted before proceeding to the next round.'
