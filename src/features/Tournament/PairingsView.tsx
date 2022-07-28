@@ -34,8 +34,9 @@ export const PairingsView = () => {
   const players: Player[] = useSelector(
     (state: RootState) => state.tournament.players
   );
-  const pairings: string[][] = useSelector(
-    (state: RootState) => state.tournament.pairings
+  // We store the original index of the table in the pairings array so we can use it for table number
+  const pairings: string[][] = useSelector((state: RootState) =>
+    state.tournament.pairings.map((pairing: string[], idx: number) => [...pairing, `${idx}`])
   );
   const matchResults: Match[] = useSelector(
     (state: RootState) => state.tournament.matchResults
@@ -80,15 +81,18 @@ export const PairingsView = () => {
             setCompletedMatchFilter={setCompletedMatchFilter}
           />
           <PairingsList>
-            {prunedPairings.map((pairing: string[], idx: number) => (
-              <Pairing
-                pairing={pairing}
-                idx={idx}
-                expandedPairing={expandedPairing}
-                setExpandedPairing={setExpandedPairing}
-                key={idx}
-              />
-            ))}
+            {prunedPairings.map((pairing: string[], idx: number) => {
+              const pairingIdx: number = pairing[2] ? parseInt(pairing[2]) : idx;
+              return (
+                <Pairing
+                  pairing={pairing}
+                  idx={pairingIdx}
+                  expandedPairing={expandedPairing}
+                  setExpandedPairing={setExpandedPairing}
+                  key={idx}
+                />
+              );
+            })}
             {prunedPairings.length === 0 && (
               <Typography>No pairings with selected filters :(</Typography>
             )}

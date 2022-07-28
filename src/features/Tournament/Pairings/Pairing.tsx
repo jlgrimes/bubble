@@ -39,7 +39,6 @@ export const Pairing = (props: PairingProps) => {
 
   return (
     <PairingAccordion
-      key={props.idx}
       completedMatch={existingMatch}
       expanded={props.expandedPairing === props.idx}
       handleChange={() => (event: React.SyntheticEvent, isExpanded: boolean) => {
