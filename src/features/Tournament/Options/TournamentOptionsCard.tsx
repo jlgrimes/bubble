@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../../../app/store';
 import { Grid, Typography } from '@mui/material';
 import { NextRoundButton } from './NextRoundButton';
+import { PrintButton } from './PrintButton';
 import { AutoWins } from './AutoWins';
 import { RepairButton } from './RepairButton';
 import { devMode } from '../../../helpers/url';
@@ -44,6 +45,7 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
 
     return `Round ${state.tournament.round} of ${state.tournament.maxRounds}`;
   });
+  
   return (
     <Card sx={{ p: 3 }}>
       <CardContent>
@@ -56,6 +58,9 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
           </Grid>
           <Grid item xs={12}>
             <RepairButton />
+          </Grid>
+          <Grid item xs={12}>
+            <PrintButton />
           </Grid>
           {devMode && (
             <Grid item xs={12}>

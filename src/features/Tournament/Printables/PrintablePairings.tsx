@@ -1,3 +1,4 @@
+import React from 'react';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
@@ -8,6 +9,10 @@ export const PrintablePairings = () => {
   const { pairings, players, round } = useSelector(
     (state: RootState) => state.tournament
   );
+
+  React.useEffect(() => {
+    window.print();
+  }, []);
 
   return (
     <>
@@ -22,15 +27,15 @@ export const PrintablePairings = () => {
         );
 
         return (
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>Table {idx}</div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div>Table {idx + 1}</div>
             <div>{`${firstPlayer?.name} ${getStylizedRecord(
               firstPlayer!.record
             )}`}</div>
             <div>vs</div>
-            <div>{`${secondPlayer?.name} ${getStylizedRecord(
+            <div>{`${secondPlayer?.name} ${secondPlayer?.id !== 'bye' ? getStylizedRecord(
               secondPlayer!.record
-            )}`}</div>
+            ) : ''}`}</div>
           </div>
         );
       })}

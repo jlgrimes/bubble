@@ -29,9 +29,9 @@ export const App = () => (
               <Route path='tournament' element={<Tournament />} />
             </Route>
             <Route
-              path='pairings/:pairings-id'
-              element={<PrintablePairings />}
-            />
+                path='pairings'
+                element={<PrintablePairings />}
+              />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
