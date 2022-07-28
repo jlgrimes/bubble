@@ -5,8 +5,11 @@ import { RootState } from '../../../app/store';
 import { enterCut, nextRound } from '../state/tournamentSlice';
 import { ButtonWithDisabledTooltip } from '../../../common/ButtonWithDisabledTooltip';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import React from 'react';
+import { ViewState } from '../state/ViewState';
 
 export const NextRoundButton = () => {
+  const [loading, setLoading] = React.useState<ViewState | boolean>(false);
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const allMatchesSubmitted = useSelector(
@@ -42,10 +45,28 @@ export const NextRoundButton = () => {
 
     return 'Next round';
   });
+  const round = useSelector((state: RootState) => state.tournament.round);
+
+  React.useEffect(() => {
+    setLoading(false);
+  }, [round]);
+
+  React.useEffect(() => {
+    if (loading === 'top-cut') {
+      dispatch(enterCut());
+    } else if (loading === 'tournament') {
+      dispatch(nextRound());
+    }
+  }, [loading]);
 
   if (shouldEnterCut) {
     return (
-      <Button aria-label='Enter top cut' onClick={() => dispatch(enterCut())}>
+      <Button
+        aria-label='Enter top cut'
+        onClick={() => {
+          setLoading('top-cut');
+        }}
+      >
         Enter top cut
       </Button>
     );
@@ -54,12 +75,16 @@ export const NextRoundButton = () => {
   return (
     <ButtonWithDisabledTooltip
       aria-label='Generate next round pairings'
-      onClick={() => dispatch(nextRound())}
+      onClick={() => {
+        setLoading('tournament');
+        dispatch(nextRound());
+      }}
       disabled={!allMatchesSubmitted}
       disabledTooltipText='All match results must be submitted before proceeding to the next round.'
       startIcon={<ArrowForwardIosIcon />}
+      loading={!!loading}
     >
       {buttonText}
     </ButtonWithDisabledTooltip>
-  )
+  );
 };

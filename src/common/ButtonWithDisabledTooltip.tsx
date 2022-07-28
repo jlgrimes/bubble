@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { Tooltip } from './Tooltip';
 import Button, { ButtonProps } from '@mui/material/Button';
+import LoadingButton, { LoadingButtonProps} from '@mui/lab/LoadingButton';
 
 const ButtonWithDisabledTooltipContainer = styled.div`
   display: flex;
@@ -17,7 +18,7 @@ const ButtonWithDisabledTooltipContainer = styled.div`
   }
 `;
 
-interface ButtonWithDisabledTooltipProps extends ButtonProps {
+interface ButtonWithDisabledTooltipProps extends LoadingButtonProps {
   disabledTooltipText: string;
 }
 
@@ -25,8 +26,9 @@ interface ButtonWithDisabledTooltipProps extends ButtonProps {
 export const ButtonWithDisabledTooltip = (props: ButtonWithDisabledTooltipProps) => {
   return (
     <ButtonWithDisabledTooltipContainer>
-      <Button
+      <LoadingButton
         {...props}
+        loadingPosition='start'
         endIcon={
           props.disabled && (
             <Tooltip
@@ -38,7 +40,7 @@ export const ButtonWithDisabledTooltip = (props: ButtonWithDisabledTooltipProps)
         }
       >
         {props.children}
-      </Button>
+      </LoadingButton>
     </ButtonWithDisabledTooltipContainer>
   )
 }
