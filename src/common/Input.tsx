@@ -5,8 +5,13 @@ import IconButton from '@mui/material/IconButton';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { ReactElement } from 'react';
 import styled from '@emotion/styled';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput';
 
-interface InputProps extends InputBaseProps {
+interface InputProps extends OutlinedInputProps {
+  id: string;
+  label: string;
   startIcon?: ReactElement;
   /**
    * If there's a divider between input and end icons
@@ -25,36 +30,46 @@ const PrettyIcon = styled.div`
 
 export const Input = (props: InputProps) => {
   return (
-    <Paper
-      sx={{
-        p: '2px 4px',
-        display: 'flex',
-        alignItems: 'center',
-        width: props.fullWidth ? '100%' : 300,
-      }}
-    >
-      {props.startIcon && <PrettyIcon>{props.startIcon}</PrettyIcon>}
-      <InputBase
+    <FormControl fullWidth={props.fullWidth} sx={{ width: props.fullWidth ? '100%' : '25ch' }} variant="outlined">
+      <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
+      <OutlinedInput
         {...props}
         onChange={e => props.setValue(e.target.value)}
-        sx={{ ml: 1, flex: 1 }}
-        endAdornment={
-          props.value.length > 0 && (
-            <IconButton
-              sx={{ p: '10px' }}
-              onClick={() => props.setValue('')}
-              disableRipple
-            >
-              <CancelIcon fontSize='small' />
-            </IconButton>
-          )
-        }
-        fullWidth
       />
-      {props.divider && (
-        <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
-      )}
-      {props.endIcons}
-    </Paper>
+    </FormControl>
   );
+
+  // return (
+  //   <Paper
+  //     sx={{
+  //       p: '2px 4px',
+  //       display: 'flex',
+  //       alignItems: 'center',
+  //       width: props.fullWidth ? '100%' : 300,
+  //     }}
+  //   >
+  //     {props.startIcon && <PrettyIcon>{props.startIcon}</PrettyIcon>}
+  //     <InputBase
+  //       {...props}
+  //       onChange={e => props.setValue(e.target.value)}
+  //       sx={{ ml: 1, flex: 1 }}
+  //       endAdornment={
+  //         props.value.length > 0 && (
+  //           <IconButton
+  //             sx={{ p: '10px' }}
+  //             onClick={() => props.setValue('')}
+  //             disableRipple
+  //           >
+  //             <CancelIcon fontSize='small' />
+  //           </IconButton>
+  //         )
+  //       }
+  //       fullWidth
+  //     />
+  //     {props.divider && (
+  //       <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
+  //     )}
+  //     {props.endIcons}
+  //   </Paper>
+  // );
 };

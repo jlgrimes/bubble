@@ -32,7 +32,8 @@ export const TournamentSetupView = () => {
         Start tournament
       </ButtonWithDisabledTooltip>
       <Input
-        endIcons={
+        id='add-player-input'
+        endAdornment={
           <IconButton
             disabled={currentPlayerField === ''}
             onClick={() => submitInput()}
@@ -40,7 +41,8 @@ export const TournamentSetupView = () => {
             <AddIcon />
           </IconButton>
         }
-        placeholder='Add player'
+        label='Add player'
+        placeholder='Player name'
         value={currentPlayerField}
         setValue={setCurrentPlayerField}
         onKeyDown={e => {

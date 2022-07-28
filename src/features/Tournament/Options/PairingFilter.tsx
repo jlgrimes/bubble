@@ -30,14 +30,15 @@ export const PairingFilter = (props: PairingSearchProps) => {
 
   return (
     <Input
+      id='search-player-input'
       fullWidth
-      placeholder='Search Player'
+      label='Search Player'
       inputProps={{ 'aria-label': 'search pairings' }}
       value={props.searchQuery}
       setValue={props.setSearchQuery}
       startIcon={<SearchIcon />}
       divider
-      endIcons={
+      endAdornment={
         <>
           <IconButton
             id='filter-button'
