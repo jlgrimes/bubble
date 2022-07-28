@@ -36,6 +36,7 @@ export const PairingFilter = (props: PairingSearchProps) => {
       value={props.searchQuery}
       setValue={props.setSearchQuery}
       startIcon={<SearchIcon />}
+      divider
       endIcons={
         <>
           <IconButton
