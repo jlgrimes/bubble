@@ -4,11 +4,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
 import { Player } from '../Player/types';
 import { getStylizedRecord } from '../Player/utils/record';
+import { getRoundText } from '../Options/utils/round';
 
 export const PrintablePairings = () => {
   const { pairings, players, round } = useSelector(
     (state: RootState) => state.tournament
   );
+  const roundText = useSelector(getRoundText);
 
   React.useEffect(() => {
     window.print();
@@ -16,7 +18,7 @@ export const PrintablePairings = () => {
 
   return (
     <>
-      <Typography variant="h4">Round {round}</Typography>
+      <Typography variant="h4">{roundText}</Typography>
 
       {pairings.map((pairing: string[], idx: number) => {
         const firstPlayer = players.find(

@@ -10,7 +10,8 @@ export const RepairButton = () => {
   const shouldBeDisabled: boolean = useSelector((state: RootState) => state.tournament.viewState !== 'tournament');
 
   const buttonProps = {
-    ariaText: 'Repair'
+    ariaText: 'Repair',
+    startIcon: <RefreshIcon />
   }
 
   if (shouldBeDisabled) {
@@ -31,7 +32,6 @@ export const RepairButton = () => {
       modalTitle="Are you sure you want to repair the round?"
       modalContent="Repairing loses all match data and reverts to the beginning of the round. Dropped players will be applied to new pairings."
       onClick={() => dispatch(repair())}
-      startIcon={<RefreshIcon />}
     >
       Repair
     </ButtonWithConfirmationModal>
