@@ -11,6 +11,7 @@ import { AutoWins } from './AutoWins';
 import { RepairButton } from './RepairButton';
 import { devMode } from '../../../helpers/url';
 import { getRoundText } from './utils/round';
+import { KillTournamentButton } from './KillTournamentButton';
 
 interface TournamentOptionsCardProps {
   completedMatchFilter?: MatchFilter;
@@ -21,7 +22,7 @@ interface TournamentOptionsCardProps {
 
 export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
   const roundText = useSelector(getRoundText);
-  
+
   return (
     <Card sx={{ p: 3 }}>
       <CardContent>
@@ -39,9 +40,14 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
             <PrintButton />
           </Grid>
           {devMode && (
-            <Grid item xs={12}>
-              <AutoWins />
-            </Grid>
+            <>
+              <Grid item xs={12}>
+                <AutoWins />
+              </Grid>
+              <Grid item xs={12}>
+                <KillTournamentButton />
+              </Grid>
+            </>
           )}
         </Grid>
       </CardContent>
