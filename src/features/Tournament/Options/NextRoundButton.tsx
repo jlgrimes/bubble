@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../../../app/store';
 import { enterCut, nextRound } from '../state/tournamentSlice';
 import { ButtonWithDisabledTooltip } from '../../../common/ButtonWithDisabledTooltip';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export const NextRoundButton = () => {
   const [searchParams] = useSearchParams();
@@ -56,6 +57,7 @@ export const NextRoundButton = () => {
       onClick={() => dispatch(nextRound())}
       disabled={!allMatchesSubmitted}
       disabledTooltipText='All match results must be submitted before proceeding to the next round.'
+      startIcon={<ArrowForwardIosIcon />}
     >
       {buttonText}
     </ButtonWithDisabledTooltip>
