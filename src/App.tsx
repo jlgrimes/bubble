@@ -1,4 +1,3 @@
-
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import './index.css';
 import AppContainer from './AppContainer';
@@ -11,6 +10,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { PrintablePairings } from './features/Tournament/Printables/PrintablePairings';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import { PrintableStandings } from './features/Tournament/Printables/PrintableStandings';
 
 const persistor = persistStore(store);
 
@@ -28,10 +28,8 @@ export const App = () => (
               />
               <Route path='tournament' element={<Tournament />} />
             </Route>
-            <Route
-                path='pairings'
-                element={<PrintablePairings />}
-              />
+            <Route path='print-pairings' element={<PrintablePairings />} />
+            <Route path='print-standings' element={<PrintableStandings />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
