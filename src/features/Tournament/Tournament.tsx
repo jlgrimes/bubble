@@ -16,10 +16,13 @@ export const Tournament = () => {
   const viewState: ViewState = useSelector(
     (state: RootState) => state.tournament.viewState
   );
+  const stateHasNotPersisted: boolean = useSelector(
+    (state: RootState) => state.tournament.round === 0
+  );
 
   React.useEffect(() => {
     // Sometimes, view state will not be initially set to tournament, in the event of a test.
-    if (viewState === 'tournament') {
+    if (viewState === 'tournament' && stateHasNotPersisted) {
       dispatch(initializeTournament());
     }
   }, [viewState]);

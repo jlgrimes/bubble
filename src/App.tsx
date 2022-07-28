@@ -1,52 +1,40 @@
-import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import BubbleChartIcon from '@mui/icons-material/BubbleChart';
-import Stack from '@mui/material/Stack';
 
-import {
-  Outlet
-} from "react-router-dom";
-import styled from '@emotion/styled';
-import { BetaBanner } from './features/App/BetaBanner';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import './index.css';
+import AppContainer from './AppContainer';
+import { Provider } from 'react-redux';
+import store from './app/store';
+import theme from './app/theme';
+import { Tournament } from './features/Tournament/Tournament';
+import { PageRenderer } from './pages/PageRenderer';
+import { ThemeProvider } from '@mui/material/styles';
+import { PrintablePairings } from './features/Tournament/Printables/PrintablePairings';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
-const AppContainer = styled.div`
-`;
+const persistor = persistStore(store);
 
-const OutletContainer = styled.div`
-  padding: 72px 32px;
-`;
-
-const SiteLogo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-grow: 1;
-`;
-
-function App() {
-  return (
-    <AppContainer>
-      <AppBar>
-        <Toolbar>
-          <SiteLogo>
-            <Typography variant="h6">
-              bubble
-            </Typography>
-            <BubbleChartIcon />
-          </SiteLogo>
-          <Typography>Made by Jared :)</Typography>
-        </Toolbar>
-      </AppBar>
-      <OutletContainer>
-        <Stack spacing={2}>
-          <BetaBanner />
-          <Outlet />
-        </Stack>
-      </OutletContainer>
-    </AppContainer>
-  );
-}
-
-export default App;
+export const App = () => (
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<AppContainer />}>
+              <Route index element={<div>home</div>} />
+              <Route
+                path='about'
+                element={<PageRenderer path='./About.md' />}
+              />
+              <Route path='tournament' element={<Tournament />} />
+            </Route>
+            <Route
+              path='pairings/:pairings-id'
+              element={<PrintablePairings />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </PersistGate>
+  </Provider>
+);
