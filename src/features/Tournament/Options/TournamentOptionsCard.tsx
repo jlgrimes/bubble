@@ -12,6 +12,7 @@ import { RepairButton } from './RepairButton';
 import { devMode } from '../../../helpers/url';
 import { getRoundText } from './utils/round';
 import { KillTournamentButton } from './KillTournamentButton';
+import { AbandonTournamentButton } from './AbandonTournamentButton';
 
 interface TournamentOptionsCardProps {
   completedMatchFilter?: MatchFilter;
@@ -38,6 +39,9 @@ export const TournamentOptionsCard = (props: TournamentOptionsCardProps) => {
           </Grid>
           <Grid item xs={12}>
             <PrintButton />
+          </Grid>
+          <Grid item xs={12}>
+            <AbandonTournamentButton />
           </Grid>
           {devMode && (
             <>

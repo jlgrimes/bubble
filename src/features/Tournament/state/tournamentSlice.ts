@@ -231,8 +231,16 @@ const tournamentSlice = createSlice({
       state.players = dropPlayerFromPlayers(action.payload, state.players);
     },
     killTournament(state) {
-      return {...initialState}
-    }
+      return { ...initialState };
+    },
+    abandonTournament(state) {
+      state.matchResults = [];
+      state.round = 0;
+      state.standings = [];
+      state.players = [];
+      state.pairings = [];
+      state.viewState = 'setup';
+    },
   },
 });
 
@@ -249,6 +257,7 @@ export const {
   dropPlayer,
   loadPlayers,
   repair,
-  killTournament
+  killTournament,
+  abandonTournament,
 } = tournamentSlice.actions;
 export default tournamentSlice.reducer;
