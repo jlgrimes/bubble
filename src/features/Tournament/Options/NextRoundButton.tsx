@@ -41,7 +41,7 @@ export const NextRoundButton = () => {
         (state.tournament.viewState === 'tournament' &&
           !state.tournament.topCut)
       ) {
-        return 'Complete tournament';
+        return 'Complete';
       }
     }
 

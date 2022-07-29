@@ -11,7 +11,7 @@ export const KillTournamentButton = () => {
       startIcon={<HighlightOffIcon />}
       onClick={() => dispatch(killTournament())}
     >
-      Kill Tournament
+      Kill
     </Button>
   );
 };
