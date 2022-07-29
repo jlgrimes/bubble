@@ -3,7 +3,7 @@ import { RootState } from "../../../app/store";
 import { ButtonWithConfirmationModal } from "../../../common/ButtonWithConfirmationModal";
 import { ButtonWithDisabledTooltip } from "../../../common/ButtonWithDisabledTooltip";
 import { repair } from "../state/tournamentSlice";
-import RefreshIcon from '@mui/icons-material/Refresh';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
 export const RepairButton = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const RepairButton = () => {
 
   const buttonProps = {
     ariaText: 'Repair',
-    startIcon: <RefreshIcon />
+    startIcon: <AutoFixHighIcon />
   }
 
   if (shouldBeDisabled) {

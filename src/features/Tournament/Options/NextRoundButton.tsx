@@ -2,11 +2,13 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { RootState } from '../../../app/store';
-import { enterCut, nextRound } from '../state/tournamentSlice';
+import { abandonTournament, enterCut, nextRound } from '../state/tournamentSlice';
 import { ButtonWithDisabledTooltip } from '../../../common/ButtonWithDisabledTooltip';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import React from 'react';
 import { ViewState } from '../state/ViewState';
+import { ButtonWithConfirmationModal } from '../../../common/ButtonWithConfirmationModal';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 export const NextRoundButton = () => {
   const [loading, setLoading] = React.useState<ViewState | boolean>(false);
@@ -58,6 +60,19 @@ export const NextRoundButton = () => {
       dispatch(nextRound());
     }
   }, [loading]);
+
+  if (tournamentIsOver) {
+    return (
+      <ButtonWithConfirmationModal
+        onClick={() => dispatch(abandonTournament())}
+        modalTitle='Are you sure you want to start a new tournament?'
+        modalContent='You will not be able to return to this tournament. Make sure to print standings to have record of the tournament!'
+        startIcon={<ReplayIcon />}
+      >
+        New tournament
+      </ButtonWithConfirmationModal>
+    )
+  }
 
   if (shouldEnterCut) {
     return (
