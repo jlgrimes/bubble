@@ -6,7 +6,7 @@ import { RootState } from '../../../app/store';
 
 export const PrintButton = () => {
   const printType = useSelector((state: RootState) =>
-    state.tournament.viewState === 'standings'
+    state.tournament.viewState === 'standings' || state.tournament.viewState === 'final-standings'
       ? 'standings'
       : 'pairings'
   );
