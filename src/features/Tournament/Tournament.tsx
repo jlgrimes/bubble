@@ -10,6 +10,8 @@ import { ViewState } from './state/ViewState';
 import { Standings } from './Standings/Standings';
 import { TournamentSetupView } from './TournamentSetupView';
 import { initializeTournament } from './state/tournamentSlice';
+import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorPage } from './ErrorPage';
 
 export const Tournament = () => {
   const dispatch = useAppDispatch();
@@ -27,11 +29,15 @@ export const Tournament = () => {
     }
   }, [viewState]);
 
-  return viewState === 'setup' ? (
-    <TournamentSetupView />
-  ) : viewState === 'tournament' || viewState === 'top-cut' ? (
-    <PairingsView />
-  ) : viewState === 'standings' || viewState === 'final-standings' ? (
-    <Standings />
-  ) : null;
+  return (
+    <ErrorBoundary FallbackComponent={ErrorPage}>
+      {viewState === 'setup' ? (
+        <TournamentSetupView />
+      ) : viewState === 'tournament' || viewState === 'top-cut' ? (
+        <PairingsView />
+      ) : viewState === 'standings' || viewState === 'final-standings' ? (
+        <Standings />
+      ) : null}
+    </ErrorBoundary>
+  );
 };
