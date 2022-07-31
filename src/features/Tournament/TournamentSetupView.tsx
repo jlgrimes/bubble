@@ -6,8 +6,9 @@ import { useDispatch } from 'react-redux';
 import { initializeTournament, loadPlayers } from './state/tournamentSlice';
 import { ButtonWithDisabledTooltip } from '../../common/ButtonWithDisabledTooltip';
 import { Input } from '../../common/Input';
-import { PersonAdd } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { prettyCut, prettyRecommendedRounds } from './Pairings/utils/rounds';
 
 export const TournamentSetupView = () => {
   const [currentPlayerField, setCurrentPlayerField] =
@@ -22,6 +23,7 @@ export const TournamentSetupView = () => {
 
   return (
     <div>
+      <Typography variant="h5">{`${prettyRecommendedRounds(players.length)}, ${prettyCut(players.length)}`}</Typography>
       <ButtonWithDisabledTooltip
         onClick={() => {
           dispatch(loadPlayers(players));
