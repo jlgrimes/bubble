@@ -10,7 +10,7 @@ export const RepairButton = () => {
   const shouldBeDisabled: boolean = useSelector((state: RootState) => state.tournament.viewState !== 'tournament');
 
   const buttonProps = {
-    ariaText: 'Repair',
+    'aria-label': 'Repair',
     startIcon: <AutoFixHighIcon />
   }
 

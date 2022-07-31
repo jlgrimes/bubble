@@ -29,12 +29,13 @@ const PrettyIcon = styled.div`
 `;
 
 export const Input = (props: InputProps) => {
+  const { startIcon, setValue, divider, ...rest } = props;
   return (
     <FormControl fullWidth={props.fullWidth} sx={{ width: props.fullWidth ? '100%' : '25ch' }} variant="outlined">
       <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
       <OutlinedInput
-        {...props}
-        onChange={e => props.setValue(e.target.value)}
+        {...rest}
+        onChange={e => setValue(e.target.value)}
       />
     </FormControl>
   );

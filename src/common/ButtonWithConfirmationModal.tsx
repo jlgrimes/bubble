@@ -13,18 +13,19 @@ interface ButtonWithConfirmationModalProps extends ButtonProps {
 }
 
 export const ButtonWithConfirmationModal = (props: ButtonWithConfirmationModalProps) => {
+  const { onClick, modalTitle, modalContent, ...rest } = props;
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleDismiss = () => setModalOpen(false);
   const handleConfirm = () => {
-    props.onClick();
+    onClick();
     setModalOpen(false);
   };
 
   return (
     <>
       <Button
-        {...props}
+        {...rest}
         onClick={() => setModalOpen(true)}
       >
         {props.children}
@@ -36,11 +37,11 @@ export const ButtonWithConfirmationModal = (props: ButtonWithConfirmationModalPr
         aria-describedby='alert-dialog-description'
       >
         <DialogTitle id='alert-dialog-title'>
-          {props.modalTitle}
+          {modalTitle}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            {props.modalContent}
+            {modalContent}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -24,15 +24,16 @@ interface ButtonWithDisabledTooltipProps extends LoadingButtonProps {
 
 
 export const ButtonWithDisabledTooltip = (props: ButtonWithDisabledTooltipProps) => {
+  const { disabledTooltipText, ...rest } = props;
+
   return (
     <ButtonWithDisabledTooltipContainer>
       <LoadingButton
-        {...props}
-        loadingPosition='start'
+        {...rest}
         endIcon={
           props.disabled && (
             <Tooltip
-              title={props.disabledTooltipText}
+              title={disabledTooltipText}
             >
               <HelpOutlineOutlinedIcon />
             </Tooltip>

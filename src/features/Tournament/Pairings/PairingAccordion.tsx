@@ -42,12 +42,12 @@ const AccordionDetails = styled(MuiAccordionDetails)`
 `;
 
 const PairingAccordion = (props: PairingAccordionProps) => {
+  const { expanded, handleChange, ...rest } = props;
   const [renderAccordionDetails, setRenderAccordionDetails] = React.useState<boolean>(false);
   const [accordionExpanded, setAccordionExpanded] = React.useState<boolean>(false);
-  
 
   React.useEffect(() => {
-    if (props.expanded === false) {
+    if (expanded === false) {
       setAccordionExpanded(false);
       const timer = setTimeout(() => {
         setRenderAccordionDetails(false);
@@ -57,18 +57,18 @@ const PairingAccordion = (props: PairingAccordionProps) => {
       setRenderAccordionDetails(true);
       setAccordionExpanded(true);
     }
-  }, [props.expanded]);
+  }, [expanded]);
 
   const pairingIsBye: boolean = props.secondPlayer.id === 'bye';
 
   return (
     <Accordion
       expanded={accordionExpanded}
-      onChange={!pairingIsBye && props.handleChange()}
+      onChange={!pairingIsBye && handleChange()}
       classes={{ root: 'pairing-accordion' }}
     >
       <AccordionSummary aria-controls='panel1a-content' id='panel1a-header'>
-        <PairingHeader {...props} />
+        <PairingHeader {...rest} />
       </AccordionSummary>
       {renderAccordionDetails && !pairingIsBye && (
         <AccordionDetails>
