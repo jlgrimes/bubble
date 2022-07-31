@@ -54,8 +54,8 @@ export const TournamentSetupView = () => {
         }}
       />
       <div>
-        {players.map((player: Player) => (
-          <div>{player.name}</div>
+        {players.map((player: Player, idx: number) => (
+          <div key={idx}>{player.name}</div>
         ))}
       </div>
     </div>

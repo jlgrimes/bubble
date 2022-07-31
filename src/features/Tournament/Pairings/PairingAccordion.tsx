@@ -61,11 +61,15 @@ const PairingAccordion = (props: PairingAccordionProps) => {
 
   const pairingIsBye: boolean = props.secondPlayer.id === 'bye';
 
+  const accordionProps = !pairingIsBye ? {
+    onChange: handleChange()
+  } : {};
+
   return (
     <Accordion
       expanded={accordionExpanded}
-      onChange={!pairingIsBye && handleChange()}
       classes={{ root: 'pairing-accordion' }}
+      {...accordionProps}
     >
       <AccordionSummary aria-controls='panel1a-content' id='panel1a-header'>
         <PairingHeader {...rest} />
