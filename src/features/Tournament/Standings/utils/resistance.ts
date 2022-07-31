@@ -5,7 +5,10 @@ export const getWinPercentage = (player: Player | undefined): number => {
     return 0;
   }
 
-  return player.matches.filter((match: PlayerMatch) => match.result === 'win').length / player.matches.length
+  const wins: number = player.matches.filter((match: PlayerMatch) => match.result === 'win').length;
+  const ties: number = player.matches.filter((match: PlayerMatch) => match.result === 'tie').length
+
+  return (wins + ties * 0.5) / player.matches.length
 }
 
 export const calculateResistance = (player: Player | undefined, players: Player[]): number => {

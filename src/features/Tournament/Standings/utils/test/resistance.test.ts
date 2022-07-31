@@ -29,5 +29,24 @@ describe('resistance helpers', () => {
 
       expect(calculateResistance(playerWithBye, SAMPLE_SORTED_PLAYER_LIST)).toBe(0.5);
     });
+
+    it('should account ties into resistance calculation as 0.5', () => {
+      const player: Player = {
+        id: 'Player',
+        name: 'Player',
+        matches: [
+          { opponentId: '0', result: 'tie' },
+          { opponentId: '1', result: 'win' },
+        ],
+        matchPoints: 6,
+        record: {
+          wins: 1,
+          ties: 1,
+          losses: 0
+        }
+      };
+
+      expect(calculateResistance(player, SAMPLE_SORTED_PLAYER_LIST)).toBe(0.75);
+    });
   });
 });
