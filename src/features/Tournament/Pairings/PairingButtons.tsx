@@ -2,7 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
-import { dropPlayer, submitMatchResult, unsubmitMatchResult } from '../state/tournamentSlice';
+import {
+  dropPlayer,
+  submitMatchResult,
+  unsubmitMatchResult,
+} from '../state/tournamentSlice';
 import type { MatchResult, Match } from './types';
 import type { Player } from '../Player/types';
 import { ViewState } from '../state/ViewState';
@@ -10,6 +14,24 @@ import { RootState } from '../../../app/store';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import { ButtonWithConfirmationModal } from '../../../common/ButtonWithConfirmationModal';
+
+interface DropPlayerButtonProps {
+  player: Player;
+  dispatchDropPlayer: () => void;
+}
+
+const DropPlayerButton = (props: DropPlayerButtonProps) => (
+  <ButtonWithConfirmationModal
+    aria-label={`Drop ${props.player.name}`}
+    onClick={props.dispatchDropPlayer}
+    color='error'
+    disabled={props.player.dropped}
+    modalTitle={`Are you sure you want to drop ${props.player.name}?`}
+    modalContent={`Once ${props.player.name} is dropped, they will not be able to be readded to the tournament.`}
+  >
+    Drop
+  </ButtonWithConfirmationModal>
+);
 
 interface PairingButtonProps {
   firstPlayer: Player;
@@ -30,7 +52,8 @@ export const PairingButtons = (props: PairingButtonProps) => {
     dispatch(submitMatchResult({ playerIds, result }));
   };
 
-  const eitherPlayerDropped: boolean = !!props.firstPlayer.dropped || !!props.secondPlayer.dropped;
+  const eitherPlayerDropped: boolean =
+    !!props.firstPlayer.dropped || !!props.secondPlayer.dropped;
 
   return (
     <div>
@@ -44,14 +67,12 @@ export const PairingButtons = (props: PairingButtonProps) => {
             >
               Win
             </Button>
-            <Button
-              aria-label={`Drop ${props.firstPlayer.name}`}
-              onClick={() => dispatch(dropPlayer(props.firstPlayer.id))}
-              color='error'
-              disabled={props.firstPlayer.dropped}
-            >
-              Drop
-            </Button>
+            <DropPlayerButton
+              player={props.firstPlayer}
+              dispatchDropPlayer={() =>
+                dispatch(dropPlayer(props.firstPlayer.id))
+              }
+            />
           </Stack>
         </Grid>
         <Grid item xs={4}>
@@ -88,14 +109,12 @@ export const PairingButtons = (props: PairingButtonProps) => {
             >
               Win
             </Button>
-            <Button
-              aria-label={`Drop ${props.secondPlayer.name}`}
-              onClick={() => dispatch(dropPlayer(props.secondPlayer.id))}
-              color='error'
-              disabled={props.secondPlayer.dropped}
-            >
-              Drop
-            </Button>
+            <DropPlayerButton
+              player={props.secondPlayer}
+              dispatchDropPlayer={() =>
+                dispatch(dropPlayer(props.secondPlayer.id))
+              }
+            />
           </Stack>
         </Grid>
       </Grid>
@@ -106,7 +125,7 @@ export const PairingButtons = (props: PairingButtonProps) => {
             modalTitle='Are you sure you want to unsubmit?'
             modalContent='Repairing should only be done if match results are incorrectly
             submitted.'
-            onClick={() => dispatch((unsubmitMatchResult(props.completedMatch!)))}
+            onClick={() => dispatch(unsubmitMatchResult(props.completedMatch!))}
           >
             Unsubmit match result
           </ButtonWithConfirmationModal>
