@@ -9,6 +9,11 @@ import { Input } from '../../common/Input';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { prettyCut, prettyRecommendedRounds } from './Pairings/utils/rounds';
+import { PlayerList } from './Setup/PlayerList';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Stack from '@mui/material/Stack';
 
 export const TournamentSetupView = () => {
   const [currentPlayerField, setCurrentPlayerField] =
@@ -23,41 +28,54 @@ export const TournamentSetupView = () => {
 
   return (
     <div>
-      <Typography variant="h5">{`${prettyRecommendedRounds(players.length)}, ${prettyCut(players.length)}`}</Typography>
-      <ButtonWithDisabledTooltip
-        onClick={() => {
-          dispatch(loadPlayers(players));
-        }}
-        disabled={players.length <= 2}
-        disabledTooltipText='Must have more than 2 players to start a tournament.'
-      >
-        Start tournament
-      </ButtonWithDisabledTooltip>
-      <Input
-        id='add-player-input'
-        endAdornment={
-          <IconButton
-            disabled={currentPlayerField === ''}
-            onClick={() => submitInput()}
-          >
-            <AddIcon />
-          </IconButton>
-        }
-        label='Add player'
-        placeholder='Player name'
-        value={currentPlayerField}
-        setValue={setCurrentPlayerField}
-        onKeyDown={e => {
-          if (e.key === 'Enter' && currentPlayerField !== '') {
-            submitInput();
-          }
-        }}
-      />
-      <div>
-        {players.map((player: Player, idx: number) => (
-          <div key={idx}>{player.name}</div>
-        ))}
-      </div>
+      <Grid container spacing={{ xs: 2, md: 3 }}>
+        <Grid item xs={12} md={4} lg={3}>
+          <Card sx={{ p: 3 }}>
+            <CardContent>
+              <Stack>
+                <Typography variant='h5'>{`${prettyRecommendedRounds(
+                  players.length
+                )}, ${prettyCut(players.length)}`}</Typography>
+                <ButtonWithDisabledTooltip
+                  onClick={() => {
+                    dispatch(loadPlayers(players));
+                  }}
+                  disabled={players.length <= 2}
+                  disabledTooltipText='Must have more than 2 players to start a tournament.'
+                >
+                  Start tournament
+                </ButtonWithDisabledTooltip>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <Stack spacing={2}>
+            <Input
+              id='add-player-input'
+              fullWidth
+              endAdornment={
+                <IconButton
+                  disabled={currentPlayerField === ''}
+                  onClick={() => submitInput()}
+                >
+                  <AddIcon />
+                </IconButton>
+              }
+              label='Add player'
+              placeholder='Player name'
+              value={currentPlayerField}
+              setValue={setCurrentPlayerField}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && currentPlayerField !== '') {
+                  submitInput();
+                }
+              }}
+            />
+            <PlayerList players={players} />
+          </Stack>
+        </Grid>
+      </Grid>
     </div>
   );
 };
