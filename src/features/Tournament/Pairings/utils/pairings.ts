@@ -5,6 +5,12 @@ import { shuffle } from '../../../../helpers/shuffle';
 import { getActivePlayers } from '../../Player/utils/player';
 import { byePlayer } from '../../state/constants';
 
+/**
+ * Converts a flat list of players to a map from match points to players that have that number of match points.
+ * 
+ * @param players - Player array.
+ * @returns - Reduced map from match points to players.
+ */
 const reducePlayersToMatchPointTiers = (players: Player[]): Player[][] => {
   return Object.values(
     players.reduce((acc: { [key: number]: Player[] }, curr: Player) => {
@@ -47,6 +53,13 @@ export const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean
   return fixedTiers;
 };
 
+/**
+ * Builds edges for the max match problem. Excludes cases where
+ * we shouldn't have the possibility of pairing together players.
+ * 
+ * @param graph - The graph of players.
+ * @param players - Flat list of players.
+ */
 export const buildEdgesForMatchPointTier = (
   graph: MatchingGraph,
   players: Player[],
@@ -81,6 +94,13 @@ export const buildEdgesForMatchPointTier = (
   }
 };
 
+/**
+ * Post-pairing, sorts the tables to be sat at from the max matching.
+ * 
+ * @param maxMatching - The max matching.
+ * @param players - Flat list of players.
+ * @returns - Max matching sorted by how it should be rendered.
+ */
 export const sortMatchingTables = (maxMatching: string[][], players: Player[]) => {
   for (let pairIdx = 0; pairIdx < maxMatching.length; pairIdx++) {
     if (maxMatching[pairIdx][0] === 'bye') {
