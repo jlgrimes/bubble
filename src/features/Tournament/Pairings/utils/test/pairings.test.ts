@@ -5,6 +5,7 @@ import {
 } from '../pairings';
 import {
   generateEmptyPlayers,
+  SAMPLE_DOWN_PAIR_PLAYER_SUBSET,
   SAMPLE_EMPTY_PLAYERS,
   SAMPLE_MATCH_TIERED_PLAYERS,
   SAMPLE_ODD_MATCH_TIERED_PLAYERS,
@@ -42,6 +43,21 @@ describe('pairings utils', () => {
       ).toEqual([
         ['1', '2'],
         ['5', '6'],
+      ]);
+    });
+
+    it('should put the down pair match at the end of the tier', () => {
+      expect(
+        sortMatchingTables(
+          [
+            ['2', '3'],
+            ['0', '1'],
+          ],
+          SAMPLE_DOWN_PAIR_PLAYER_SUBSET
+        )
+      ).toEqual([
+        ['0', '1'],
+        ['2', '3'],
       ]);
     });
   });

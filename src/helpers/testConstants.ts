@@ -125,6 +125,7 @@ export const SAMPLE_MATCH_TIERED_PLAYERS: Player[] = [
   }
 ];
 
+
 export const SAMPLE_ODD_MATCH_TIERED_PLAYERS: Player[] = [
   {
     id: '0',
@@ -166,6 +167,50 @@ export const SAMPLE_ODD_MATCH_TIERED_PLAYERS: Player[] = [
       losses: 2
     },
     matchPoints: 0
+  }
+];
+
+export const SAMPLE_DOWN_PAIR_PLAYER_SUBSET: Player[] = [
+  {
+    id: '0',
+    name: 'Player',
+    matches: [],
+    record: {
+      wins: 2,
+      ties: 0,
+      losses: 0
+    },
+    matchPoints: 6
+  },  {
+    id: '1',
+    name: 'Player',
+    matches: [],
+    record: {
+      wins: 2,
+      ties: 0,
+      losses: 0
+    },
+    matchPoints: 6
+  }, {
+    id: '2',
+    name: 'Player',
+    matches: [],
+    record: {
+      wins: 2,
+      ties: 0,
+      losses: 0
+    },
+    matchPoints: 6
+  }, {
+    id: '3',
+    name: 'Player',
+    matches: [],
+    record: {
+      wins: 1,
+      ties: 0,
+      losses: 1
+    },
+    matchPoints: 3
   }
 ];
 

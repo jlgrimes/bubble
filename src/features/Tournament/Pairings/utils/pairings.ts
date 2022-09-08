@@ -7,7 +7,7 @@ import { byePlayer } from '../../state/constants';
 
 /**
  * Converts a flat list of players to a map from match points to players that have that number of match points.
- * 
+ *
  * @param players - Player array.
  * @returns - Reduced map from match points to players.
  */
@@ -29,7 +29,10 @@ const reducePlayersToMatchPointTiers = (players: Player[]): Player[][] => {
   ).reverse();
 };
 
-export const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean) => {
+export const trickleDownMatchPointTiers = (
+  tiers: Player[][],
+  randomize: boolean
+) => {
   let fixedTiers: Player[][] = [];
 
   for (let tierIdx = 0; tierIdx < tiers.length; tierIdx++) {
@@ -45,7 +48,10 @@ export const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean
       fixedTiers.push([...tier, tiers[tierIdx + 1][stolenTierIdx]]);
       tiers[tierIdx + 1] = [
         ...tiers[tierIdx + 1].slice(0, stolenTierIdx),
-        ...tiers[tierIdx + 1].slice(stolenTierIdx + 1, tiers[tierIdx + 1].length),
+        ...tiers[tierIdx + 1].slice(
+          stolenTierIdx + 1,
+          tiers[tierIdx + 1].length
+        ),
       ];
     }
   }
@@ -56,13 +62,13 @@ export const trickleDownMatchPointTiers = (tiers: Player[][], randomize: boolean
 /**
  * Builds edges for the max match problem. Excludes cases where
  * we shouldn't have the possibility of pairing together players.
- * 
+ *
  * @param graph - The graph of players.
  * @param players - Flat list of players.
  */
 export const buildEdgesForMatchPointTier = (
   graph: MatchingGraph,
-  players: Player[],
+  players: Player[]
 ) => {
   let pairs = players.flatMap((v, i) => players.slice(i + 1).map(w => [v, w]));
 
@@ -71,19 +77,19 @@ export const buildEdgesForMatchPointTier = (
     if (
       player.matches.some(
         playerMatch => playerMatch.opponentId === comparingPlayer.id
-      ) 
+      ) ||
       /**
        * If a player has dropped, then another player dropped, then another player dropped,
        * the bye player will be removed then readded. However this will be fine on pairings
        * since the “pairs” that the program iterates through are first to last, so the bye player
        * is always the second player. This means that the “pair” for the bye match once the bye
        * gets introduced in will be [player, bye], so the bye will not be introduced as an edge since the logic checks.
-       * 
+       *
        * This is a safeguard for this to say, if either of the pairings have been “already played”,
        * don’t add the edge. Complexity wise, it adds overhead for when the first of the || is false,
        * then it will look for the second one.
        */
-      || comparingPlayer.matches.some(
+      comparingPlayer.matches.some(
         playerMatch => playerMatch.opponentId === player.id
       )
     ) {
@@ -96,36 +102,43 @@ export const buildEdgesForMatchPointTier = (
 
 /**
  * Post-pairing, sorts the tables to be sat at from the max matching.
- * 
+ *
  * @param maxMatching - The max matching.
  * @param players - Flat list of players.
  * @returns - Max matching sorted by how it should be rendered.
  */
-export const sortMatchingTables = (maxMatching: string[][], players: Player[]) => {
+export const sortMatchingTables = (
+  maxMatching: string[][],
+  players: Player[]
+) => {
   for (let pairIdx = 0; pairIdx < maxMatching.length; pairIdx++) {
     if (maxMatching[pairIdx][0] === 'bye') {
-      maxMatching[pairIdx] = [maxMatching[pairIdx][1], 'bye']
+      maxMatching[pairIdx] = [maxMatching[pairIdx][1], 'bye'];
     }
   }
 
-  let sortedMatching = maxMatching.sort(
-    (firstPair, secondPair) => {
-      if (firstPair[1] === 'bye') {
-        return 1;
-      } else if (secondPair[1] === 'bye') {
-        return -1;
-      }
-
-      return Math.max(
-        players.find(player => player.id === secondPair[0])!.matchPoints,
-        players.find(player => player.id === secondPair[1])!.matchPoints
-      ) -
-      Math.max(
-        players.find(player => player.id === firstPair[0])!.matchPoints,
-        players.find(player => player.id === firstPair[1])!.matchPoints
-      )
+  let sortedMatching = maxMatching.sort((firstPair, secondPair) => {
+    if (firstPair[1] === 'bye') {
+      return 1;
+    } else if (secondPair[1] === 'bye') {
+      return -1;
     }
-  );
+
+    /**
+     * This logic means, for any two pairs, firstPair and secondPair, sort them
+     * by the min of the match points that each player has. We sort by the sum of
+     * the match points of each pair, because if we're on the same tier, of course
+     * we should keep them next to each other. If we're on the same tier but someone
+     * is down paired, that pairing should be ranked lower and be put at a lower table.
+     * Similarly, up pairs should be ranked higher and should be put at a higher table.
+     */
+    return (
+      players.find(player => player.id === secondPair[0])!.matchPoints +
+      players.find(player => player.id === secondPair[1])!.matchPoints -
+      (players.find(player => player.id === firstPair[0])!.matchPoints +
+        players.find(player => player.id === firstPair[1])!.matchPoints)
+    );
+  });
 
   // I think I fixed this? uncomment if still broken
   // To fix the case where the down paired player need to be listed first.
@@ -180,7 +193,9 @@ export const getPairings = (
   const maxMatchingGraph = maximumMatchingGraph(graph);
 
   if (maxMatchingGraph.unpairedNodes().length > 1) {
-    throw Error(`More than one unpaired node generated (${maxMatchingGraph.unpairedNodes()}). Probably too many rounds.`);
+    throw Error(
+      `More than one unpaired node generated (${maxMatchingGraph.unpairedNodes()}). Probably too many rounds.`
+    );
   }
 
   let maxMatching: string[][] = [...maxMatchingGraph.matching()];
