@@ -13,7 +13,7 @@ import styled from '@emotion/styled';
 
 interface PlayerListProps {
   players: Player[];
-  updatePlayerName: (playerId: string, newName: string) => void
+  updatePlayerName: (playerId: string, newName: string) => void;
 }
 
 const PlayerListCardContent = styled(Card)`
@@ -27,7 +27,7 @@ const PrettyIcon = styled.div`
 interface PlayerListItemProps {
   player: Player;
   idx: number;
-  updatePlayerName: (playerId: string, newName: string) => void
+  updatePlayerName: (playerId: string, newName: string) => void;
 }
 
 const PlayerNameInput = styled(Input)`
@@ -37,7 +37,9 @@ const PlayerNameInput = styled(Input)`
 export const PlayerListItem = (props: PlayerListItemProps) => {
   const [isHovering, setIsHovering] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
-  const [playerNameInput, setPlayerNameInput] = React.useState<string>(props.player.name);
+  const [playerNameInput, setPlayerNameInput] = React.useState<string>(
+    props.player.name
+  );
 
   const commitPlayerEdit = () => {
     setIsEditing(false);
@@ -55,7 +57,16 @@ export const PlayerListItem = (props: PlayerListItemProps) => {
           </IconButton>
         }
       >
-        <PlayerNameInput value={playerNameInput} onChange={(e) => setPlayerNameInput(e.target.value)} autoFocus />
+        <PlayerNameInput
+          value={playerNameInput}
+          onChange={e => setPlayerNameInput(e.target.value)}
+          onKeyPress={e => {
+            if (e.key === 'Enter') {
+              commitPlayerEdit();
+            }
+          }}
+          autoFocus
+        />
       </ListItem>
     );
   }
@@ -86,7 +97,11 @@ export const PlayerList = (props: PlayerListProps) => {
     <Card>
       <List>
         {props.players.map((player: Player, idx: number) => (
-          <PlayerListItem player={player} idx={idx} updatePlayerName={props.updatePlayerName} />
+          <PlayerListItem
+            player={player}
+            idx={idx}
+            updatePlayerName={props.updatePlayerName}
+          />
         ))}
       </List>
     </Card>
