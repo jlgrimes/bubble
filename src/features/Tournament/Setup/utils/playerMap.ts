@@ -20,3 +20,13 @@ export const updatePlayerName = (players: Player[], playerId: string, newName: s
     return player;
   });
 };
+
+/**
+ * Deletes player from list.
+ * @param players - List of players.
+ * @param playerId - Player ID we want to delete.
+ * @returns 
+ */
+export const deletePlayer = (players: Player[], playerId: string) => {
+  return players.filter((player) => player.id !== playerId);
+}

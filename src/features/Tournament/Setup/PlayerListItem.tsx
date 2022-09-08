@@ -5,10 +5,11 @@ import ListItemText from '@mui/material/ListItemText';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Input from '@mui/material/Input';
 import React from 'react';
 import styled from '@emotion/styled';
-import { updatePlayerName } from './utils/playerMap';
+import { deletePlayer, updatePlayerName } from './utils/playerMap';
 
 const PlayerNameInput = styled(Input)`
   margin: 8px 16px;
@@ -32,6 +33,10 @@ export const PlayerListItem = (props: PlayerListItemProps) => {
     setIsEditing(false);
     props.setPlayers(updatePlayerName(props.players, props.player.id, playerNameInput))
   };
+
+  const commitPlayerDelete = () => {
+    props.setPlayers(deletePlayer(props.players, props.player.id))
+  }
 
   if (isEditing) {
     return (
@@ -64,9 +69,14 @@ export const PlayerListItem = (props: PlayerListItemProps) => {
       disablePadding
       secondaryAction={
         isHovering && (
-          <IconButton onClick={() => setIsEditing(true)}>
-            <EditIcon />
-          </IconButton>
+          <div>
+            <IconButton onClick={() => setIsEditing(true)}>
+              <EditIcon />
+            </IconButton>
+            <IconButton onClick={() => commitPlayerDelete()}>
+              <DeleteIcon />
+            </IconButton>
+          </div>
         )
       }
       onMouseEnter={() => setIsHovering(true)}
