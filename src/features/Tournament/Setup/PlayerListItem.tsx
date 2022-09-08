@@ -8,6 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import Input from '@mui/material/Input';
 import React from 'react';
 import styled from '@emotion/styled';
+import { updatePlayerName } from './utils/playerMap';
 
 const PlayerNameInput = styled(Input)`
   margin: 8px 16px;
@@ -16,7 +17,8 @@ const PlayerNameInput = styled(Input)`
 interface PlayerListItemProps {
   player: Player;
   idx: number;
-  updatePlayerName: (playerId: string, newName: string) => void;
+  players: Player[];
+  setPlayers: (players: Player[]) => void;
 }
 
 export const PlayerListItem = (props: PlayerListItemProps) => {
@@ -28,7 +30,7 @@ export const PlayerListItem = (props: PlayerListItemProps) => {
 
   const commitPlayerEdit = () => {
     setIsEditing(false);
-    props.updatePlayerName(props.player.id, playerNameInput);
+    props.setPlayers(updatePlayerName(props.players, props.player.id, playerNameInput))
   };
 
   if (isEditing) {

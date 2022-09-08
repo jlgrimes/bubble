@@ -5,7 +5,7 @@ import { PlayerListItem } from './PlayerListItem';
 
 interface PlayerListProps {
   players: Player[];
-  updatePlayerName: (playerId: string, newName: string) => void;
+  setPlayers: (players: Player[]) => void;
 }
 
 export const PlayerList = (props: PlayerListProps) => {
@@ -16,7 +16,8 @@ export const PlayerList = (props: PlayerListProps) => {
           <PlayerListItem
             player={player}
             idx={idx}
-            updatePlayerName={props.updatePlayerName}
+            players={props.players}
+            setPlayers={props.setPlayers}
           />
         ))}
       </List>

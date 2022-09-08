@@ -26,17 +26,8 @@ export const TournamentSetupView = () => {
     setCurrentPlayerField('');
   };
 
-  const updatePlayerName = (playerId: string, newName: string) => {
-    setPlayers(players.map((player) => {
-      if (player.id === playerId) {
-        return {
-          ...player,
-          name: newName
-        }
-      }
-
-      return player;
-    }))
+  const updatePlayers = (players: Player[]) => {
+    setPlayers(players);
   };
 
   return (
@@ -85,7 +76,7 @@ export const TournamentSetupView = () => {
                 }
               }}
             />
-            <PlayerList players={players} updatePlayerName={updatePlayerName} />
+            <PlayerList players={players} setPlayers={updatePlayers} />
           </Stack>
         </Grid>
       </Grid>
