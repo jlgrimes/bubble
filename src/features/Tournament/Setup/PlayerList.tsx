@@ -13,6 +13,7 @@ import styled from '@emotion/styled';
 
 interface PlayerListProps {
   players: Player[];
+  updatePlayerName: (playerId: string, newName: string) => void
 }
 
 const PlayerListCardContent = styled(Card)`
@@ -26,6 +27,7 @@ const PrettyIcon = styled.div`
 interface PlayerListItemProps {
   player: Player;
   idx: number;
+  updatePlayerName: (playerId: string, newName: string) => void
 }
 
 const PlayerNameInput = styled(Input)`
@@ -35,6 +37,12 @@ const PlayerNameInput = styled(Input)`
 export const PlayerListItem = (props: PlayerListItemProps) => {
   const [isHovering, setIsHovering] = React.useState(false);
   const [isEditing, setIsEditing] = React.useState(false);
+  const [playerNameInput, setPlayerNameInput] = React.useState<string>(props.player.name);
+
+  const commitPlayerEdit = () => {
+    setIsEditing(false);
+    props.updatePlayerName(props.player.id, playerNameInput);
+  };
 
   if (isEditing) {
     return (
@@ -42,12 +50,12 @@ export const PlayerListItem = (props: PlayerListItemProps) => {
         key={props.idx}
         disablePadding
         secondaryAction={
-          <IconButton onClick={() => setIsEditing(false)}>
+          <IconButton onClick={() => commitPlayerEdit()}>
             <SaveIcon />
           </IconButton>
         }
       >
-        <PlayerNameInput defaultValue={props.player.name} autoFocus />
+        <PlayerNameInput value={playerNameInput} onChange={(e) => setPlayerNameInput(e.target.value)} autoFocus />
       </ListItem>
     );
   }
@@ -78,7 +86,7 @@ export const PlayerList = (props: PlayerListProps) => {
     <Card>
       <List>
         {props.players.map((player: Player, idx: number) => (
-          <PlayerListItem player={player} idx={idx} />
+          <PlayerListItem player={player} idx={idx} updatePlayerName={props.updatePlayerName} />
         ))}
       </List>
     </Card>
