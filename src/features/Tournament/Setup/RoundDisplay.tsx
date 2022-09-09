@@ -109,14 +109,13 @@ const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
             }
             label='Let Bubble decide rounds for me'
           />
-          {!recommendedOption && <ManualRoundModControls numPlayers={props.numPlayers} />}
         </FormGroup>
         <DialogContentText>
           Bubble intelligently plans your tournament's swiss and top cut rounds
           based off how many people are registered. You can disable this mode to
           set them manually (not recommended).
         </DialogContentText>
-        {}
+        {!recommendedOption && <ManualRoundModControls numPlayers={props.numPlayers} />}
       </DialogContent>
       <DialogActions>
         <Button aria-label='Cancel' onClick={props.dismissModal}>
