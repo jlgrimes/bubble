@@ -11,7 +11,7 @@ interface PlayerListProps {
 export const PlayerList = (props: PlayerListProps) => {
   return (
     <Card>
-      <List>
+      <List data-testid='setup-player-list'>
         {props.players.map((player: Player, idx: number) => (
           <PlayerListItem
             player={player}

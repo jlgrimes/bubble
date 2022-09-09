@@ -29,9 +29,11 @@ export const PlayerEntry = (props: PlayerEntryProps) => {
     <Stack spacing={2}>
       <Input
         id='add-player-input'
+        data-testid='add-player-input'
         fullWidth
         endAdornment={
           <IconButton
+            data-testid='add-player-button'
             disabled={currentPlayerField === ''}
             onClick={() => submitInput()}
           >

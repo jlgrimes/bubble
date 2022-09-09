@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Input from '@mui/material/Input';
-import React from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import { deletePlayer, updatePlayerName } from './utils/playerMap';
 
@@ -23,33 +23,53 @@ interface PlayerListItemProps {
 }
 
 export const PlayerListItem = (props: PlayerListItemProps) => {
-  const [isHovering, setIsHovering] = React.useState(false);
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [playerNameInput, setPlayerNameInput] = React.useState<string>(
-    props.player.name
-  );
+  const { setPlayers, players, player } = props;
 
-  const commitPlayerEdit = () => {
+  const [isHovering, setIsHovering] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [playerNameInput, setPlayerNameInput] = useState<string>(player.name);
+
+  const commitPlayerEdit = useCallback(() => {
     setIsEditing(false);
-    props.setPlayers(updatePlayerName(props.players, props.player.id, playerNameInput))
-  };
+    setPlayers(updatePlayerName(players, player.id, playerNameInput));
+  }, [setPlayers, players, player.id, playerNameInput]);
 
-  const commitPlayerDelete = () => {
-    props.setPlayers(deletePlayer(props.players, props.player.id))
-  }
+  const commitPlayerDelete = useCallback(() => {
+    setIsEditing(false);
+    setPlayers(deletePlayer(players, player.id));
+  }, [setPlayers, players, player.id]);
+
+  const DeleteButton = memo(() => {
+    return (
+      <IconButton
+        data-testid={`setup-player-${props.idx + 1}-delete-button`}
+        onClick={() => commitPlayerDelete()}
+      >
+        <DeleteIcon />
+      </IconButton>
+    );
+  });
 
   if (isEditing) {
     return (
       <ListItem
+        data-testid={`setup-player-${props.idx + 1}-editing`}
         key={props.idx}
         disablePadding
         secondaryAction={
-          <IconButton onClick={() => commitPlayerEdit()}>
-            <SaveIcon />
-          </IconButton>
+          <>
+            <IconButton
+              data-testid={`setup-player-${props.idx + 1}-save-edit-button`}
+              onClick={() => commitPlayerEdit()}
+            >
+              <SaveIcon />
+            </IconButton>
+            <DeleteButton />
+          </>
         }
       >
         <PlayerNameInput
+          data-testid={`setup-player-${props.idx + 1}-edit-input`}
           value={playerNameInput}
           onChange={e => setPlayerNameInput(e.target.value)}
           onKeyPress={e => {
@@ -65,25 +85,31 @@ export const PlayerListItem = (props: PlayerListItemProps) => {
 
   return (
     <ListItem
+      data-testid={`setup-player-${props.idx + 1}`}
       key={props.idx}
       disablePadding
       secondaryAction={
         isHovering && (
-          <div>
-            <IconButton onClick={() => setIsEditing(true)}>
+          <>
+            <IconButton
+              data-testid={`setup-player-${props.idx + 1}-edit-button`}
+              onClick={() => setIsEditing(true)}
+            >
               <EditIcon />
             </IconButton>
-            <IconButton onClick={() => commitPlayerDelete()}>
-              <DeleteIcon />
-            </IconButton>
-          </div>
+            <DeleteButton />
+          </>
         )
       }
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <ListItemButton disableRipple onClick={() => setIsEditing(true)}>
-        <ListItemText>{props.player.name}</ListItemText>
+      <ListItemButton
+        data-testid={`setup-player-${props.idx + 1}-list-item-button`}
+        disableRipple
+        onClick={() => setIsEditing(true)}
+      >
+        <ListItemText>{player.name}</ListItemText>
       </ListItemButton>
     </ListItem>
   );
