@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
 
 export const PairingHeaderCard = styled.div`
-  padding: 16px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;

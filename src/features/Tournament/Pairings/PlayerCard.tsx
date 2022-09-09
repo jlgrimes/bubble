@@ -3,12 +3,9 @@ import Typography from '@mui/material/Typography';
 import { PairingHeaderCard } from './PairingHeaderCard';
 import { MatchResult } from './types';
 
-const PlayerName = styled(Typography)`
-  line-height: 0.6;
-`;
+const PlayerName = styled(Typography)``;
 
 const PlayerRecord = styled(Typography)`
-  line-height: 0.6;
 `;
 
 interface PlayerCardProps {
@@ -18,19 +15,24 @@ interface PlayerCardProps {
   dropped?: boolean;
 }
 
-export const PlayerCardContainer = styled(PairingHeaderCard)`
-  background-color: ${(props: PlayerCardProps) => props.matchResult === 'win' ? '#c3e6cb' : null};
-  opacity: ${(props: PlayerCardProps) => props.matchResult === 'loss' ? 0.5 : 1};
+export const PlayerCardContainer = styled.div`
+  padding: 12px 0;
+  background-color: ${(props: PlayerCardProps) =>
+    props.matchResult === 'win' ? '#c3e6cb' : null};
+  opacity: ${(props: PlayerCardProps) =>
+    props.matchResult === 'loss' ? 0.5 : 1};
   width: 100%;
-  text-align: center;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const PlayerCard = (props: PlayerCardProps) => {
   return (
-    <PlayerCardContainer {...props} aria-label={props.name}>
-      <PlayerName>{props.name}</PlayerName>
-      <PlayerRecord variant='caption'>{props.record}</PlayerRecord>
-    </PlayerCardContainer>
+    <PairingHeaderCard>
+      <PlayerCardContainer {...props} aria-label={props.name}>
+        <PlayerName>{props.name}</PlayerName>
+        <PlayerRecord variant='caption'>{props.record}</PlayerRecord>
+      </PlayerCardContainer>
+    </PairingHeaderCard>
   );
 };
