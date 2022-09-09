@@ -3,13 +3,12 @@ import { Player } from './Player/types';
 import { useDispatch } from 'react-redux';
 import { loadPlayers } from './state/tournamentSlice';
 import { ButtonWithDisabledTooltip } from '../../common/ButtonWithDisabledTooltip';
-import Typography from '@mui/material/Typography';
-import { prettyCut, prettyRecommendedRounds } from './Pairings/utils/rounds';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import { PlayerEntry } from './Setup/PlayerEntry';
+import { RoundDisplay } from './Setup/RoundDisplay';
 
 export const TournamentSetupView = () => {
   const [players, setPlayers] = React.useState<Player[]>([]);
@@ -22,9 +21,7 @@ export const TournamentSetupView = () => {
           <Card sx={{ p: 3 }}>
             <CardContent>
               <Stack>
-                <Typography variant='h5'>{`${prettyRecommendedRounds(
-                  players.length
-                )}, ${prettyCut(players.length)}`}</Typography>
+                <RoundDisplay players={players} />
                 <ButtonWithDisabledTooltip
                   onClick={() => {
                     dispatch(loadPlayers(players));
