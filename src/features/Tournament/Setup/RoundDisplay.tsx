@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { ManualRoundSettings } from './ManualRoundSettings';
 
 import { EditNumberRoundsModal } from './TournamentOptions/EditRoundsModal';
+import { COLORS } from '../../../app/colors';
 
 const RoundDisplayContainer = styled.div`
   display: flex;
@@ -23,6 +24,13 @@ const RoundDisplayContainer = styled.div`
       font-size: 1rem;
     }
   }
+`;
+
+const CustomRoundWarning = styled.div`
+  font-size: 0.875rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: ${COLORS.customWarning}
 `;
 
 interface RoundDisplayProps {
@@ -42,25 +50,30 @@ export const RoundDisplay = (props: RoundDisplayProps) => {
     recommendedTopCut(props.players.length);
 
   return (
-    <RoundDisplayContainer>
-      <Typography variant='h5'>{`${prettyRounds(
-        numberRounds
-      )}, ${prettyCut(topCut)}`}</Typography>
-      <IconButton
-        className='modify-button'
-        onClick={() => setEditRoundsDisplayOpen(true)}
-      >
-        <EditIcon />
-      </IconButton>
-      {editRoundsDisplayOpen && (
-        <EditNumberRoundsModal
-          open={editRoundsDisplayOpen}
-          dismissModal={() => setEditRoundsDisplayOpen(false)}
-          numPlayers={props.players.length}
-          manualRoundSettings={props.manualRoundSettings}
-          setManualRoundSettings={props.setManualRoundSettings}
-        />
+    <>
+      <RoundDisplayContainer>
+        <Typography variant='h5'>{`${prettyRounds(numberRounds)}, ${prettyCut(
+          topCut
+        )}`}</Typography>
+        <IconButton
+          className='modify-button'
+          onClick={() => setEditRoundsDisplayOpen(true)}
+        >
+          <EditIcon />
+        </IconButton>
+        {editRoundsDisplayOpen && (
+          <EditNumberRoundsModal
+            open={editRoundsDisplayOpen}
+            dismissModal={() => setEditRoundsDisplayOpen(false)}
+            numPlayers={props.players.length}
+            manualRoundSettings={props.manualRoundSettings}
+            setManualRoundSettings={props.setManualRoundSettings}
+          />
+        )}
+      </RoundDisplayContainer>
+      {props.manualRoundSettings && (
+        <CustomRoundWarning>Custom</CustomRoundWarning>
       )}
-    </RoundDisplayContainer>
+    </>
   );
 };

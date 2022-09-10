@@ -9,15 +9,16 @@ import { PairingHeaderCard } from './PairingHeaderCard';
 import type { Match } from './types';
 import { ByeCard } from './ByeCard';
 import Grid from '@mui/material/Grid';
+import { COLORS } from '../../../app/colors';
 
 const PairingHeaderContainer = styled(Grid, {
   shouldForwardProp: prop => prop !== 'completedMatch',
 })((props: PairingGridProps) => ({
   backgroundColor:
     props.completedMatch?.result === 'tie'
-      ? '#ffeeba'
+      ? COLORS.gameTie
       : props.completedMatch?.result === 'double-loss'
-      ? '#f5c6cb'
+      ? COLORS.gameDoubleLoss
       : undefined,
 }));
 
