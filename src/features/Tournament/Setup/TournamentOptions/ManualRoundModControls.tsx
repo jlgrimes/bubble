@@ -83,7 +83,9 @@ export const ManualRoundModControls = (props: ManualRoundModControlsProps) => {
     <ManualFormGroup>
       <ManualFormControl>
         <FormControl>
-          <FormLabel id='number-rounds-slider'>Number of rounds</FormLabel>
+          <FormLabel id='number-rounds-slider'>
+            Number of rounds
+          </FormLabel>
           <RoundForm>
             <Input
               value={props.numRounds}
@@ -95,11 +97,11 @@ export const ManualRoundModControls = (props: ManualRoundModControlsProps) => {
                 min: 1,
                 max: 10,
                 type: 'number',
-                'aria-labelledby': 'number-rounds-slider',
+                'aria-label': 'Number of rounds input',
               }}
             />
             <Slider
-              aria-label='number-rounds-slider'
+              aria-label='Number of rounds slider'
               value={props.numRounds}
               onChange={(_, value) => props.setNumRounds(value as number)}
               valueLabelDisplay='auto'
