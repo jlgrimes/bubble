@@ -1,7 +1,7 @@
 import React from 'react';
 import { Player } from './Player/types';
 import { useDispatch } from 'react-redux';
-import { loadPlayers } from './state/tournamentSlice';
+import { initializeTournament, loadPlayers } from './state/tournamentSlice';
 import { ButtonWithDisabledTooltip } from '../../common/ButtonWithDisabledTooltip';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -25,6 +25,7 @@ export const TournamentSetupView = () => {
                 <ButtonWithDisabledTooltip
                   onClick={() => {
                     dispatch(loadPlayers(players));
+                    dispatch(initializeTournament());
                   }}
                   disabled={players.length <= 2}
                   disabledTooltipText='Must have more than 2 players to start a tournament.'
