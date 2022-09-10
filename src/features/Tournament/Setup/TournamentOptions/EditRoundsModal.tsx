@@ -66,11 +66,9 @@ export const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
   );
 
   const applyModalChanges = useCallback(() => {
-    console.log(topCut);
     if (recommendedOption) {
       setManualRoundSettings(undefined);
     } else {
-      console.log('goin in');
       setManualRoundSettings({
         numRounds: numRounds,
         topCut: topCut,
