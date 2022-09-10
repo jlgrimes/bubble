@@ -1,4 +1,7 @@
-import { minPlayersForNumberOfRounds, prettyRounds } from '../../Pairings/utils/rounds';
+import {
+  minPlayersForNumberOfRounds,
+  prettyRounds,
+} from '../../Pairings/utils/rounds';
 import { TopCutType } from '../../state/TournamentState';
 
 export const getNumRoundsWarningString = (
@@ -6,7 +9,11 @@ export const getNumRoundsWarningString = (
   recommendedNumRounds: number
 ): string | undefined => {
   if (manualNumRounds > recommendedNumRounds) {
-    return `Cannot run a tournament with ${prettyRounds(manualNumRounds)} with less than ${minPlayersForNumberOfRounds(manualNumRounds)} players.Please add more players or decrease number of rounds.`;
+    return `Cannot run a tournament with ${prettyRounds(
+      manualNumRounds
+    )} with less than ${minPlayersForNumberOfRounds(
+      manualNumRounds
+    )} players. Please add more players or decrease number of rounds.`;
   }
 };
 
@@ -22,3 +29,12 @@ export const getTopCutWarningString = (
     return 'Need at least 4 players to run top 4. Please select another option.';
   }
 };
+
+export const shouldDisableSaveEditRounds = (
+  manualNumRounds: number,
+  recommendedNumRounds: number,
+  manualTopCut: TopCutType,
+  recommendedCut: TopCutType
+) : boolean =>
+  !!getNumRoundsWarningString(manualNumRounds, recommendedNumRounds) ||
+  !!getTopCutWarningString(manualTopCut, recommendedCut);

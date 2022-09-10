@@ -14,11 +14,12 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ManualRoundSettings } from '../ManualRoundSettings';
 import { TopCutType } from '../../state/TournamentState';
 
 import { ManualRoundModControls } from '../TournamentOptions/ManualRoundModControls';
+import { shouldDisableSaveEditRounds } from '../utils/errors';
 
 interface EditNumberRoundsModalProps {
   /**
@@ -38,7 +39,11 @@ interface EditNumberRoundsModalProps {
 }
 
 export const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
-  const [recommendedOption, setRecommendedOption] = useState<boolean>(!props.manualRoundSettings);
+  const { setManualRoundSettings, dismissModal } = props;
+
+  const [recommendedOption, setRecommendedOption] = useState<boolean>(
+    !props.manualRoundSettings
+  );
   const [numRounds, setNumRounds] = useState<number>(
     props.manualRoundSettings?.numRounds ?? recommendedRounds(props.numPlayers)
   );
@@ -46,18 +51,34 @@ export const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
     props.manualRoundSettings?.topCut ?? recommendedTopCut(props.numPlayers)
   );
 
-  const applyModalChanges = () => {
+  const recommendedNumRounds = useMemo(
+    () => recommendedRounds(props.numPlayers),
+    [props.numPlayers]
+  );
+
+  const recommendedCut = useMemo(
+    () => recommendedTopCut(props.numPlayers),
+    [props.numPlayers]
+  );
+
+  const applyModalChanges = useCallback(() => {
     if (recommendedOption) {
-      props.setManualRoundSettings(undefined);
+      setManualRoundSettings(undefined);
     } else {
-      props.setManualRoundSettings({
+      setManualRoundSettings({
         numRounds,
         topCut,
       });
     }
 
-    props.dismissModal();
-  };
+    dismissModal();
+  }, [
+    recommendedOption,
+    setManualRoundSettings,
+    dismissModal,
+    numRounds,
+    topCut,
+  ]);
 
   return (
     <Dialog open={props.open} onClose={props.dismissModal}>
@@ -97,7 +118,17 @@ export const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
         <Button aria-label='Cancel' onClick={props.dismissModal}>
           Cancel
         </Button>
-        <Button aria-label='Save changes' onClick={applyModalChanges} autoFocus>
+        <Button
+          aria-label='Save changes'
+          onClick={applyModalChanges}
+          autoFocus
+          disabled={shouldDisableSaveEditRounds(
+            numRounds,
+            recommendedNumRounds,
+            topCut,
+            recommendedCut
+          )}
+        >
           Save
         </Button>
       </DialogActions>
