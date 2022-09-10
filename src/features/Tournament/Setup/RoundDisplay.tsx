@@ -73,7 +73,7 @@ export const RoundDisplay = (props: RoundDisplayProps) => {
         )}
       </RoundDisplayContainer>
       {props.manualRoundSettings && (
-        <CustomRoundWarning>Custom</CustomRoundWarning>
+        <CustomRoundWarning role='heading'>Custom</CustomRoundWarning>
       )}
     </div>
   );
