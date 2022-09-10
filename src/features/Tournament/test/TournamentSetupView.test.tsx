@@ -6,14 +6,14 @@ import '@testing-library/jest-dom/extend-expect';
 
 describe('Tournament Setup', () => {
   function addMockPlayer(shouldTestThroughEnterKey?: boolean) {
-    const addPlayerInput = screen.getByTestId('add-player-input');
+    const addPlayerInput = screen.getByRole('textbox', { name: 'Add player'});
     fireEvent.click(addPlayerInput);
     userEvent.type(addPlayerInput, 'Jared');
 
     if (shouldTestThroughEnterKey) {
-      userEvent.type(screen.getByTestId('add-player-input'), '{enter}');
+      userEvent.type(addPlayerInput, '{enter}');
     } else {
-      fireEvent.click(screen.getByTestId('add-player-button'));
+      fireEvent.click(screen.getByRole('button', { name: 'Add player button'}));
     }
   }
 

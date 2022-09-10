@@ -56,7 +56,7 @@ export const RoundDisplay = (props: RoundDisplayProps) => {
           topCut
         )}`}</Typography>
         <IconButton
-          aria-label='edit tournament button'
+          aria-label='Edit tournament button'
           className='modify-button'
           onClick={() => setEditRoundsDisplayOpen(true)}
         >

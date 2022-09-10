@@ -8,7 +8,7 @@ describe('Tournament options', () => {
   describe('user interface checks', () => {
     it('should display custom message if recommended checkbox is unchecked', () => {
       renderWithProviders(<TournamentSetupView />);
-      fireEvent.click(screen.getByRole('button', { name: 'edit tournament button'}));
+      fireEvent.click(screen.getByRole('button', { name: 'Edit tournament button'}));
 
     });
   });
