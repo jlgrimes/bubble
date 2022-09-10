@@ -24,6 +24,8 @@ import Slider from '@mui/material/Slider';
 
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { ManualRoundSettings } from './ManualRoundSettings';
+import { TopCutType } from '../state/TournamentState';
 
 const RoundDisplayContainer = styled.div`
   display: flex;
@@ -38,19 +40,14 @@ const RoundDisplayContainer = styled.div`
 
 interface ManualRoundModControlsProps {
   numPlayers: number;
+  numRounds: number;
+  setNumRounds: (numRounds: number) => void;
+  topCut: TopCutType;
+  setTopCut: (topCut: TopCutType) => void;
 }
 
 const ManualRoundModControls = (props: ManualRoundModControlsProps) => {
-  const [numRounds, setNumRounds] = useState<number>(
-    recommendedRounds(props.numPlayers)
-  );
-  const [topCutEnabled, setTopCutEnabled] = useState<boolean>(
-    !!recommendedTopCut(props.numPlayers)
-  );
-
-  const dispatch = useDispatch();
-
-  const displayWarning: boolean = numRounds > recommendedRounds(props.numPlayers);
+  // const displayWarning: boolean = numRounds > recommendedRounds(props.numPlayers);
 
   return (
     <FormGroup>
@@ -58,8 +55,8 @@ const ManualRoundModControls = (props: ManualRoundModControlsProps) => {
         control={
           <Slider
             aria-label='Number of rounds'
-            value={numRounds}
-            onChange={(_, value) => setNumRounds(value as number)}
+            value={props.numRounds}
+            onChange={(_, value) => props.setNumRounds(value as number)}
             valueLabelDisplay='auto'
             step={1}
             marks
@@ -70,7 +67,18 @@ const ManualRoundModControls = (props: ManualRoundModControlsProps) => {
         label='Number of rounds'
       />
       <FormControlLabel
-        control={<Checkbox checked={topCutEnabled} />}
+        control={
+          <Checkbox
+            checked={!!props.topCut}
+            onChange={(_, checked) => {
+              if (checked) {
+                props.setTopCut(recommendedTopCut(props.numPlayers));
+              } else {
+                props.setTopCut(undefined);
+              }
+            }}
+          />
+        }
         label='Top cut'
       />
     </FormGroup>
@@ -90,10 +98,18 @@ interface EditNumberRoundsModalProps {
    * Number of players currently in the tournament.
    */
   numPlayers: number;
+  manualRoundSettings: ManualRoundSettings | undefined;
+  setManualRoundSettings: (settings: ManualRoundSettings) => void;
 }
 
 const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
   const [recommendedOption, setRecommendedOption] = useState<boolean>(true);
+  const [numRounds, setNumRounds] = useState<number>(
+    props.manualRoundSettings?.numRounds ?? recommendedRounds(props.numPlayers)
+  );
+  const [topCut, setTopCut] = useState<TopCutType>(
+    props.manualRoundSettings?.topCut ?? recommendedTopCut(props.numPlayers)
+  );
 
   return (
     <Dialog open={props.open} onClose={props.dismissModal}>
@@ -115,7 +131,19 @@ const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
           based off how many people are registered. You can disable this mode to
           set them manually (not recommended).
         </DialogContentText>
-        {!recommendedOption && <ManualRoundModControls numPlayers={props.numPlayers} />}
+        {!recommendedOption && (
+          <ManualRoundModControls
+            numPlayers={props.numPlayers}
+            numRounds={numRounds}
+            setNumRounds={(numRounds: number) => {
+              setNumRounds(numRounds);
+            }}
+            topCut={topCut}
+            setTopCut={(topCut: TopCutType) => {
+              setTopCut(topCut);
+            }}
+          />
+        )}
       </DialogContent>
       <DialogActions>
         <Button aria-label='Cancel' onClick={props.dismissModal}>
@@ -135,6 +163,8 @@ const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
 
 interface RoundDisplayProps {
   players: Player[];
+  manualRoundSettings: ManualRoundSettings | undefined;
+  setManualRoundSettings: (settings: ManualRoundSettings) => void;
 }
 
 export const RoundDisplay = (props: RoundDisplayProps) => {
@@ -152,11 +182,15 @@ export const RoundDisplay = (props: RoundDisplayProps) => {
       >
         <EditIcon />
       </IconButton>
-      <EditNumberRoundsModal
-        open={editRoundsDisplayOpen}
-        dismissModal={() => setEditRoundsDisplayOpen(false)}
-        numPlayers={props.players.length}
-      />
+      {editRoundsDisplayOpen && (
+        <EditNumberRoundsModal
+          open={editRoundsDisplayOpen}
+          dismissModal={() => setEditRoundsDisplayOpen(false)}
+          numPlayers={props.players.length}
+          manualRoundSettings={props.manualRoundSettings}
+          setManualRoundSettings={props.setManualRoundSettings}
+        />
+      )}
     </RoundDisplayContainer>
   );
 };

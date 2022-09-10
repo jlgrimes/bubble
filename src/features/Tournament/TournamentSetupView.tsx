@@ -9,9 +9,16 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import { PlayerEntry } from './Setup/PlayerEntry';
 import { RoundDisplay } from './Setup/RoundDisplay';
+import { TopCutType } from './state/TournamentState';
+import { recommendedRounds, recommendedTopCut } from './Pairings/utils/rounds';
+import { ManualRoundSettings } from './Setup/ManualRoundSettings';
 
 export const TournamentSetupView = () => {
   const [players, setPlayers] = React.useState<Player[]>([]);
+  const [manualRoundSettings, setManualRoundSettings] = React.useState<
+    ManualRoundSettings | undefined
+  >();
+
   const dispatch = useDispatch();
 
   return (
@@ -21,11 +28,17 @@ export const TournamentSetupView = () => {
           <Card sx={{ p: 3 }}>
             <CardContent>
               <Stack>
-                <RoundDisplay players={players} />
+                <RoundDisplay
+                  players={players}
+                  manualRoundSettings={manualRoundSettings}
+                  setManualRoundSettings={(settings: ManualRoundSettings) => {
+                    setManualRoundSettings(settings);
+                  }}
+                />
                 <ButtonWithDisabledTooltip
                   onClick={() => {
                     dispatch(loadPlayers(players));
-                    dispatch(initializeTournament());
+                    dispatch(initializeTournament(manualRoundSettings));
                   }}
                   disabled={players.length <= 2}
                   disabledTooltipText='Must have more than 2 players to start a tournament.'

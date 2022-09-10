@@ -20,6 +20,7 @@ import {
   getTopCutPlayers,
 } from '../Pairings/utils/top-cut';
 import { devMode } from '../../../helpers/url';
+import { ManualRoundSettings } from '../Setup/ManualRoundSettings';
 
 const initialDevState: TournamentState = {
   round: 0,
@@ -69,7 +70,7 @@ const tournamentSlice = createSlice({
         player => player.id !== action.payload
       );
     },
-    initializeTournament(state) {
+    initializeTournament(state, action: PayloadAction<ManualRoundSettings | undefined>) {
       // If we pass in pairings through tests, don't generate them
       if (state.pairings.length === 0) {
         // If there's an odd number of players, add the bye player.
@@ -77,13 +78,24 @@ const tournamentSlice = createSlice({
           state.players.push(byePlayer);
         }
 
-        state.maxRounds = recommendedRounds(state.players.length);
+        if (action.payload) {
+          state.maxRounds = action.payload.numRounds;
+        } else {
+          state.maxRounds = recommendedRounds(state.players.length);
+        }
+
         state.pairings = getPairings(
           state.players,
           !state.deterministicPairing
         );
       }
-      state.topCut = recommendedTopCut(state.players.length);
+
+      if (action.payload) {
+        state.topCut = action.payload.topCut
+      } else {
+        state.topCut = recommendedTopCut(state.players.length);
+      }
+
       state.round = 1;
       state.matchResults = addByeWin(state.pairings, state.matchResults);
     },
