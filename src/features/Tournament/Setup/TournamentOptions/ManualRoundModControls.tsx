@@ -1,12 +1,16 @@
-import { recommendedTopCut } from '../../Pairings/utils/rounds';
+import { recommendedRounds, recommendedTopCut } from '../../Pairings/utils/rounds';
 
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Slider from '@mui/material/Slider';
+import DialogContentText from '@mui/material/DialogContentText';
 
 import { useMemo } from 'react';
 import { TopCutType } from '../../state/TournamentState';
+import styled from '@emotion/styled';
+import { COLORS } from '../../../../app/colors';
+import { getNumRoundsWarningString } from '../utils/errorMessages';
 
 interface ManualRoundModControlsProps {
   numPlayers: number;
@@ -16,12 +20,20 @@ interface ManualRoundModControlsProps {
   setTopCut: (topCut: TopCutType) => void;
 }
 
+const WarningString = styled(DialogContentText)`
+  color: ${COLORS.appWarning};
+`;
+
 export const ManualRoundModControls = (props: ManualRoundModControlsProps) => {
+  const recommendedNumRounds = useMemo(
+    () => recommendedRounds(props.numPlayers),
+    [props.numPlayers]
+  );
+
   const recommendedCut = useMemo(
     () => recommendedTopCut(props.numPlayers),
     [props.numPlayers]
   );
-  // const displayWarning: boolean = numRounds > recommendedRounds(props.numPlayers);
 
   return (
     <FormGroup>
@@ -40,6 +52,7 @@ export const ManualRoundModControls = (props: ManualRoundModControlsProps) => {
         }
         label='Number of rounds'
       />
+      <WarningString>{getNumRoundsWarningString(props.numRounds, recommendedNumRounds)}</WarningString>
       <FormControlLabel
         control={
           <Checkbox

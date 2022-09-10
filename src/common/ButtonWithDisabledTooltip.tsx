@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Tooltip } from './Tooltip';
-import Button, { ButtonProps } from '@mui/material/Button';
 import LoadingButton, { LoadingButtonProps} from '@mui/lab/LoadingButton';
 
 const ButtonWithDisabledTooltipContainer = styled.div`
@@ -35,7 +34,7 @@ export const ButtonWithDisabledTooltip = (props: ButtonWithDisabledTooltipProps)
             <Tooltip
               title={disabledTooltipText}
             >
-              <HelpOutlineOutlinedIcon />
+              <InfoOutlinedIcon />
             </Tooltip>
           )
         }

@@ -25,7 +25,7 @@ export const TournamentSetupView = () => {
         <Grid item xs={12} md={4} lg={3}>
           <Card sx={{ p: 3 }}>
             <CardContent>
-              <Stack>
+              <Stack spacing={2}>
                 <RoundDisplay
                   players={players}
                   manualRoundSettings={manualRoundSettings}

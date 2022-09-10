@@ -30,7 +30,7 @@ const CustomRoundWarning = styled.div`
   font-size: 0.875rem;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: ${COLORS.customWarning}
+  color: ${COLORS.appWarning};
 `;
 
 interface RoundDisplayProps {
@@ -50,7 +50,7 @@ export const RoundDisplay = (props: RoundDisplayProps) => {
     recommendedTopCut(props.players.length);
 
   return (
-    <>
+    <div>
       <RoundDisplayContainer>
         <Typography variant='h5'>{`${prettyRounds(numberRounds)}, ${prettyCut(
           topCut
@@ -74,6 +74,6 @@ export const RoundDisplay = (props: RoundDisplayProps) => {
       {props.manualRoundSettings && (
         <CustomRoundWarning>Custom</CustomRoundWarning>
       )}
-    </>
+    </div>
   );
 };
