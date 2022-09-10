@@ -45,10 +45,14 @@ export const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
     !props.manualRoundSettings
   );
   const [numRounds, setNumRounds] = useState<number>(
-    props.manualRoundSettings?.numRounds ?? recommendedRounds(props.numPlayers)
+    props.manualRoundSettings
+      ? props.manualRoundSettings.numRounds
+      : recommendedRounds(props.numPlayers)
   );
   const [topCut, setTopCut] = useState<TopCutType>(
-    props.manualRoundSettings?.topCut ?? recommendedTopCut(props.numPlayers)
+    props.manualRoundSettings
+      ? props.manualRoundSettings.topCut
+      : recommendedTopCut(props.numPlayers)
   );
 
   const recommendedNumRounds = useMemo(
@@ -62,12 +66,14 @@ export const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
   );
 
   const applyModalChanges = useCallback(() => {
+    console.log(topCut);
     if (recommendedOption) {
       setManualRoundSettings(undefined);
     } else {
+      console.log('goin in');
       setManualRoundSettings({
-        numRounds,
-        topCut,
+        numRounds: numRounds,
+        topCut: topCut,
       });
     }
 

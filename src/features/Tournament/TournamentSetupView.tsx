@@ -30,6 +30,7 @@ export const TournamentSetupView = () => {
                   players={players}
                   manualRoundSettings={manualRoundSettings}
                   setManualRoundSettings={(settings: ManualRoundSettings | undefined) => {
+                    console.log(settings)
                     setManualRoundSettings(settings);
                   }}
                 />

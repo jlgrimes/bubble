@@ -42,12 +42,12 @@ interface RoundDisplayProps {
 export const RoundDisplay = (props: RoundDisplayProps) => {
   const [editRoundsDisplayOpen, setEditRoundsDisplayOpen] =
     useState<boolean>(false);
-  const numberRounds =
-    props.manualRoundSettings?.numRounds ??
-    recommendedRounds(props.players.length);
-  const topCut =
-    props.manualRoundSettings?.topCut ??
-    recommendedTopCut(props.players.length);
+  const numberRounds = props.manualRoundSettings
+    ? props.manualRoundSettings.numRounds
+    : recommendedRounds(props.players.length);
+  const topCut = props.manualRoundSettings
+    ? props.manualRoundSettings.topCut
+    : recommendedTopCut(props.players.length);
 
   return (
     <div>
