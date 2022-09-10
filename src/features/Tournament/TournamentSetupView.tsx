@@ -9,8 +9,6 @@ import CardContent from '@mui/material/CardContent';
 import Stack from '@mui/material/Stack';
 import { PlayerEntry } from './Setup/PlayerEntry';
 import { RoundDisplay } from './Setup/RoundDisplay';
-import { TopCutType } from './state/TournamentState';
-import { recommendedRounds, recommendedTopCut } from './Pairings/utils/rounds';
 import { ManualRoundSettings } from './Setup/ManualRoundSettings';
 
 export const TournamentSetupView = () => {
@@ -31,7 +29,7 @@ export const TournamentSetupView = () => {
                 <RoundDisplay
                   players={players}
                   manualRoundSettings={manualRoundSettings}
-                  setManualRoundSettings={(settings: ManualRoundSettings) => {
+                  setManualRoundSettings={(settings: ManualRoundSettings | undefined) => {
                     setManualRoundSettings(settings);
                   }}
                 />

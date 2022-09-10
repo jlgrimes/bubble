@@ -34,17 +34,30 @@ interface EditNumberRoundsModalProps {
    */
   numPlayers: number;
   manualRoundSettings: ManualRoundSettings | undefined;
-  setManualRoundSettings: (settings: ManualRoundSettings) => void;
+  setManualRoundSettings: (settings: ManualRoundSettings | undefined) => void;
 }
 
 export const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
-  const [recommendedOption, setRecommendedOption] = useState<boolean>(true);
+  const [recommendedOption, setRecommendedOption] = useState<boolean>(!props.manualRoundSettings);
   const [numRounds, setNumRounds] = useState<number>(
     props.manualRoundSettings?.numRounds ?? recommendedRounds(props.numPlayers)
   );
   const [topCut, setTopCut] = useState<TopCutType>(
     props.manualRoundSettings?.topCut ?? recommendedTopCut(props.numPlayers)
   );
+
+  const applyModalChanges = () => {
+    if (recommendedOption) {
+      props.setManualRoundSettings(undefined);
+    } else {
+      props.setManualRoundSettings({
+        numRounds,
+        topCut,
+      });
+    }
+
+    props.dismissModal();
+  };
 
   return (
     <Dialog open={props.open} onClose={props.dismissModal}>
@@ -84,11 +97,7 @@ export const EditNumberRoundsModal = (props: EditNumberRoundsModalProps) => {
         <Button aria-label='Cancel' onClick={props.dismissModal}>
           Cancel
         </Button>
-        <Button
-          aria-label='Save changes'
-          onClick={props.dismissModal}
-          autoFocus
-        >
+        <Button aria-label='Save changes' onClick={applyModalChanges} autoFocus>
           Save
         </Button>
       </DialogActions>

@@ -38,9 +38,7 @@ export const recommendedTopCut = (numPlayers: number): TopCutType => {
   return 'top-eight';
 };
 
-export const prettyRecommendedRounds = (numPlayers: number): string => {
-  const numRounds = recommendedRounds(numPlayers);
-
+export const prettyRounds = (numRounds: number): string => {
   if (numRounds === 1) {
     return '1 round';
   }
@@ -48,12 +46,10 @@ export const prettyRecommendedRounds = (numPlayers: number): string => {
   return `${numRounds} rounds`;
 };
 
-export const prettyCut = (numPlayers: number): string => {
-  const recommendedCut = recommendedTopCut(numPlayers);
-
-  if (recommendedCut === 'top-eight') {
+export const prettyCut = (topCut: TopCutType): string => {
+  if (topCut === 'top-eight') {
     return 'top 8 cut';
-  } else if (recommendedCut === 'top-four') {
+  } else if (topCut === 'top-four') {
     return 'top 4 cut';
   }
 

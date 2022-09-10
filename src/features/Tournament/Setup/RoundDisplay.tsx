@@ -1,6 +1,11 @@
 import Typography from '@mui/material/Typography';
 import { Player } from '../Player/types';
-import { prettyCut, prettyRecommendedRounds } from '../Pairings/utils/rounds';
+import {
+  prettyCut,
+  prettyRounds,
+  recommendedRounds,
+  recommendedTopCut,
+} from '../Pairings/utils/rounds';
 import styled from '@emotion/styled';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,18 +28,24 @@ const RoundDisplayContainer = styled.div`
 interface RoundDisplayProps {
   players: Player[];
   manualRoundSettings: ManualRoundSettings | undefined;
-  setManualRoundSettings: (settings: ManualRoundSettings) => void;
+  setManualRoundSettings: (settings: ManualRoundSettings | undefined) => void;
 }
 
 export const RoundDisplay = (props: RoundDisplayProps) => {
   const [editRoundsDisplayOpen, setEditRoundsDisplayOpen] =
     useState<boolean>(false);
+  const numberRounds =
+    props.manualRoundSettings?.numRounds ??
+    recommendedRounds(props.players.length);
+  const topCut =
+    props.manualRoundSettings?.topCut ??
+    recommendedTopCut(props.players.length);
 
   return (
     <RoundDisplayContainer>
-      <Typography variant='h5'>{`${prettyRecommendedRounds(
-        props.players.length
-      )}, ${prettyCut(props.players.length)}`}</Typography>
+      <Typography variant='h5'>{`${prettyRounds(
+        numberRounds
+      )}, ${prettyCut(topCut)}`}</Typography>
       <IconButton
         className='modify-button'
         onClick={() => setEditRoundsDisplayOpen(true)}
