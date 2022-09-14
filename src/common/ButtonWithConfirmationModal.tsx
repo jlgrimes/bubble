@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { markButtonProps } from './props';
 
 interface ButtonWithConfirmationModalProps extends ButtonProps {
   onClick: () => void;
@@ -12,7 +13,9 @@ interface ButtonWithConfirmationModalProps extends ButtonProps {
   modalContent: string;
 }
 
-export const ButtonWithConfirmationModal = (props: ButtonWithConfirmationModalProps) => {
+export const ButtonWithConfirmationModal = (
+  props: ButtonWithConfirmationModalProps
+) => {
   const { onClick, modalTitle, modalContent, ...rest } = props;
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -24,10 +27,7 @@ export const ButtonWithConfirmationModal = (props: ButtonWithConfirmationModalPr
 
   return (
     <>
-      <Button
-        {...rest}
-        onClick={() => setModalOpen(true)}
-      >
+      <Button {...rest} onClick={() => setModalOpen(true)}>
         {props.children}
       </Button>
       <Dialog
@@ -36,23 +36,26 @@ export const ButtonWithConfirmationModal = (props: ButtonWithConfirmationModalPr
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
       >
-        <DialogTitle id='alert-dialog-title'>
-          {modalTitle}
-        </DialogTitle>
+        <DialogTitle id='alert-dialog-title'>{modalTitle}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
             {modalContent}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button aria-label='No' onClick={handleDismiss}>
+          <Button aria-label='No' onClick={handleDismiss} {...markButtonProps}>
             No
           </Button>
-          <Button aria-label='Yes' onClick={handleConfirm} autoFocus>
+          <Button
+            aria-label='Yes'
+            onClick={handleConfirm}
+            autoFocus
+            {...markButtonProps}
+          >
             Yes
           </Button>
         </DialogActions>
       </Dialog>
     </>
-  )
-}
+  );
+};

@@ -51,6 +51,7 @@ export const RoundDisplay = (props: RoundDisplayProps) => {
 
   return (
     <div>
+      <Typography variant='h5'>New tournament</Typography>
       <RoundDisplayContainer>
         <Typography variant='h5'>{`${prettyRounds(numberRounds)}, ${prettyCut(
           topCut

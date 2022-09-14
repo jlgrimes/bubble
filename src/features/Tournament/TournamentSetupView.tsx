@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import { PlayerEntry } from './Setup/PlayerEntry';
 import { RoundDisplay } from './Setup/RoundDisplay';
 import { ManualRoundSettings } from './Setup/ManualRoundSettings';
+import { Typography } from '@mui/material';
 
 export const TournamentSetupView = () => {
   const [players, setPlayers] = React.useState<Player[]>([]);
