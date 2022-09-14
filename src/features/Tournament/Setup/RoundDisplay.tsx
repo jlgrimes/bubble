@@ -27,7 +27,9 @@ const RoundDisplayContainer = styled.div`
 `;
 
 const CustomRoundWarning = styled.div`
+  padding-top: 6px;
   font-size: 0.875rem;
+  font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: ${COLORS.appWarning};
@@ -51,7 +53,7 @@ export const RoundDisplay = (props: RoundDisplayProps) => {
 
   return (
     <div>
-      <Typography variant='h5'>New tournament</Typography>
+      <Typography>New tournament</Typography>
       <RoundDisplayContainer>
         <Typography variant='h5'>{`${prettyRounds(numberRounds)}, ${prettyCut(
           topCut
