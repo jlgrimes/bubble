@@ -32,7 +32,7 @@ function App() {
         <Toolbar>
           <SiteLogo>
             <Typography variant="h6">
-              bubble
+              Bubble
             </Typography>
             <BubbleChartIcon />
           </SiteLogo>

@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 
 interface PageRendererProps {
   /**
@@ -14,12 +14,12 @@ export const PageRenderer = (props: PageRendererProps) => {
   React.useEffect(() => {
     const filePath = require('./About.md');
 
-    fetch(filePath).then((res) => res.text()).then((text) => {
-      setMarkdown(text);
-    });
+    fetch(filePath)
+      .then(res => res.text())
+      .then(text => {
+        setMarkdown(text);
+      });
   }, []);
 
-  return (
-    <ReactMarkdown>{markdown}</ReactMarkdown>
-  )
-}
+  return <ReactMarkdown linkTarget='_blank'>{markdown}</ReactMarkdown>;
+};
